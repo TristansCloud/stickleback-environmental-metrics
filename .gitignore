@@ -21,4 +21,5 @@ Thumbs.db
 
 # Small local results from explicitly authorized online smoke checks.
 /data/cache/
+/data/ee_app_validation/
 /docs/online_smoke_test_*.json

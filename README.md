@@ -34,6 +34,14 @@ keeps network access disabled by default and caps the scope at 40 sites.
 
 The repository does not yet ship DEM/climate rasters or execute a production-scale OSM/catchment run. Those inputs and source/version configuration remain the next integration step.
 
+### Earth Engine validation viewer
+
+The reusable, read-only validation-App source and its deployment guidance are
+in [apps/earth_engine_validation](apps/earth_engine_validation/README.md).
+It prepares frozen, versioned pilot evidence locally and uses a stable registry
+asset to select one approved immutable release. Generated review bundles remain
+local and are intentionally excluded from Git.
+
 ### Earth Engine pilot configuration
 
 The checked-in [config/earth_engine.toml.example](config/earth_engine.toml.example)

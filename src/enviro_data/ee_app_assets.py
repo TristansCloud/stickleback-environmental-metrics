@@ -11,13 +11,14 @@ import csv
 import hashlib
 import json
 import os
+import re
 import shutil
 import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Mapping
 
-SCHEMA_VERSION = "ee_app_validation_assets_v2"
+SCHEMA_VERSION = "ee_app_validation_assets_v3"
 
 
 def _sha256(path: Path) -> str:
@@ -46,9 +47,22 @@ def _primitive(value: Any) -> Any:
     return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
 
 
+def _ee_property_key(key: str) -> str:
+    """Return a conservative Earth Engine-safe property key.
+
+    Dots in source headers (for example ``Population.name``) are valid JSON
+    but are rejected by EE table ingestion.  Restrict all emitted keys to the
+    portable identifier subset, while leaving established aliases unchanged.
+    """
+    safe = re.sub(r"[^A-Za-z0-9_]", "_", key)
+    if not safe:
+        return "field"
+    return f"_{safe}" if safe[0].isdigit() else safe
+
+
 def _flatten(prefix: str, value: Mapping[str, Any], into: dict[str, Any]) -> None:
     for key, item in sorted(value.items()):
-        name = f"{prefix}_{key}" if prefix else key
+        name = _ee_property_key(f"{prefix}_{key}" if prefix else key)
         if isinstance(item, Mapping):
             _flatten(name, item, into)
         else:

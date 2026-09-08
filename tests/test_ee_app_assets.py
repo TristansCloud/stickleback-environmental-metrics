@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -50,6 +51,9 @@ def test_prepare_assets_preserves_nulls_and_is_idempotent(tmp_path: Path, monkey
     assert osm["selected_osm_id"] == "7"
     assert osm["snapshot_checksum_sha256"]
     assert osm["match_status"] == "matched_frozen_geometry"
+    for filename in ("pilot_sites.geojson", "osm_matched_features.geojson", "copernicus_windows.geojson"):
+        features = json.loads((out / filename).read_text())["features"]
+        assert all(re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", key) for feature in features for key in feature["properties"])
 
 
 def test_rejects_selected_osm_geometry_absent_from_frozen_cache(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
