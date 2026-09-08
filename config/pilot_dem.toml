@@ -1,0 +1,29 @@
+# Bounded pilot configuration. Keep max_sites=40 until the pilot is accepted.
+max_sites = 40
+network_enabled = false
+cache_dir = "../data/cache/dem"
+pilot_sites_csv = "../pilot_sites_v1.csv"
+read_timeout_s = 30
+max_download_bytes = 500000000
+selection_status = "provisional_first_pass"
+scope = "deterministic_40_site_pilot_only"
+future_source_comparison = true
+
+[datasets.copernicus_dem]
+role = "local_topography"
+provider = "Copernicus Data Space"
+accepted_for_first_pass = true
+terrain_representation = "DSM"
+source_url = "SET_PER_TILE_COG_URL"
+item_id = "SET_PER_TILE_ITEM_ID"
+vertical_datum = "REQUIRES_PROVIDER_METADATA"
+resolution_m = 30
+
+[datasets.merit_hydro]
+role = "hydrologic_context"
+provider = "MERIT Hydro"
+accepted_for_first_pass = true
+source_url = "SET_PER_TILE_COG_URL"
+item_id = "SET_PER_TILE_ITEM_ID"
+vertical_datum = "hydrologically_adjusted_surface"
+resolution_m = 90

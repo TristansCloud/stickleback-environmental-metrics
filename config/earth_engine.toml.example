@@ -1,0 +1,19 @@
+# Earth Engine pilot configuration template.
+#
+# Copy this file to config/earth_engine.toml and set project_id locally.
+# Do not put OAuth tokens, service-account keys, passwords, or other secrets
+# in this file. Earth Engine authentication is handled by the local ee CLI /
+# Python credential store.
+
+project_id = "YOUR_GOOGLE_CLOUD_PROJECT_ID"
+asset_id = "MERIT/Hydro/v1_0_1"
+max_sites = 40
+pilot_sites_csv = "../pilot_sites_v1.csv"
+cache_dir = "../data/cache/merit_hydro"
+network_enabled = false
+
+# Keep the export bounded to the pilot and record these choices in provenance.
+bands = ["elv", "dir", "upa", "upg", "hnd", "wth", "wat"]
+sampling_scale_m = 90
+sampling_projection = "EPSG:4326"
+sampling_reducer = "first"

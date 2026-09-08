@@ -1,0 +1,24 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+*.egg-info/
+.coverage
+coverage.xml
+htmlcov/
+
+# Environment files and local IDE settings.
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local Earth Engine settings (project IDs/config choices may be machine-local).
+/config/earth_engine.toml
+
+# Small local results from explicitly authorized online smoke checks.
+/data/cache/
+/docs/online_smoke_test_*.json

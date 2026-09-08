@@ -1,0 +1,1139 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          37.0803,
+          72.5801
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C72.5801%2C37.0803%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C72.5801%2C37.0803%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C72.5801%2C37.0803%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0001",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          27.5854,
+          69.5856
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C69.5856%2C27.5854%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C69.5856%2C27.5854%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C69.5856%2C27.5854%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0002",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -20.09427,
+          66.11091
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C66.11091%2C-20.09427%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C66.11091%2C-20.09427%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C66.11091%2C-20.09427%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0028",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -19.14021,
+          66.0693
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C66.0693%2C-19.14021%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C66.0693%2C-19.14021%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C66.0693%2C-19.14021%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0031",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          34.70589,
+          65.53083
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C65.53083%2C34.70589%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C65.53083%2C34.70589%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C65.53083%2C34.70589%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0050",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          177.50497,
+          64.71699
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C64.71699%2C177.50497%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C64.71699%2C177.50497%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C64.71699%2C177.50497%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0067",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -51.01237,
+          64.08018
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C64.08018%2C-51.01237%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C64.08018%2C-51.01237%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C64.08018%2C-51.01237%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0084",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -21.30293,
+          63.89123
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C63.89123%2C-21.30293%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C63.89123%2C-21.30293%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C63.89123%2C-21.30293%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0091",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -150.0625,
+          62.3147
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C62.3147%2C-150.0625%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C62.3147%2C-150.0625%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C62.3147%2C-150.0625%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0093",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          34.46461,
+          61.75867
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C61.75867%2C34.46461%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C61.75867%2C34.46461%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C61.75867%2C34.46461%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0097",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -45.54507,
+          60.76034
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C60.76034%2C-45.54507%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C60.76034%2C-45.54507%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C60.76034%2C-45.54507%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0142",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -149.41967,
+          60.12519
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C60.12519%2C-149.41967%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C60.12519%2C-149.41967%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C60.12519%2C-149.41967%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0160",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -7.490911,
+          57.62713
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C57.62713%2C-7.490911%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C57.62713%2C-7.490911%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C57.62713%2C-7.490911%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0174",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          162.03882,
+          56.2006
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C56.2006%2C162.03882%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C56.2006%2C162.03882%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C56.2006%2C162.03882%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0202",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          8.85673,
+          56.03729
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C56.03729%2C8.85673%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C56.03729%2C8.85673%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C56.03729%2C8.85673%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0205",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          25.21525,
+          54.38339
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C54.38339%2C25.21525%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C54.38339%2C25.21525%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C54.38339%2C25.21525%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0212",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          14.30553,
+          53.92511
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C53.92511%2C14.30553%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C53.92511%2C14.30553%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C53.92511%2C14.30553%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0233",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -132.31938,
+          53.49779
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C53.49779%2C-132.31938%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C53.49779%2C-132.31938%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C53.49779%2C-132.31938%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0255",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          8.174167,
+          52.23464
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C52.23464%2C8.174167%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C52.23464%2C8.174167%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C52.23464%2C8.174167%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0276",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          19.24622,
+          50.05363
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C50.05363%2C19.24622%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C50.05363%2C19.24622%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C50.05363%2C19.24622%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0340",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -125.60095,
+          49.09369
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C49.09369%2C-125.60095%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C49.09369%2C-125.60095%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C49.09369%2C-125.60095%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0389",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -57.692,
+          48.9985
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C48.9985%2C-57.692%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C48.9985%2C-57.692%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C48.9985%2C-57.692%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0391",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          9.725,
+          48.2344
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C48.2344%2C9.725%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C48.2344%2C9.725%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C48.2344%2C9.725%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0417",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          6.19172,
+          46.19677
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C46.19677%2C6.19172%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C46.19677%2C6.19172%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C46.19677%2C6.19172%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0478",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -61.97801,
+          45.37881
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C45.37881%2C-61.97801%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C45.37881%2C-61.97801%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C45.37881%2C-61.97801%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0493",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          37.4438,
+          44.8009
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C44.8009%2C37.4438%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C44.8009%2C37.4438%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C44.8009%2C37.4438%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0498",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -124.07035,
+          44.52074
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C44.52074%2C-124.07035%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C44.52074%2C-124.07035%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C44.52074%2C-124.07035%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0502",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          5.08576,
+          43.90934
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C43.90934%2C5.08576%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C43.90934%2C5.08576%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C43.90934%2C5.08576%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0509",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          143.87321,
+          43.64592
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C43.64592%2C143.87321%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C43.64592%2C143.87321%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C43.64592%2C143.87321%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0514",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          145.55628,
+          43.25792
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C43.25792%2C145.55628%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C43.25792%2C145.55628%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C43.25792%2C145.55628%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0519",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          27.88162,
+          42.83847
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C42.83847%2C27.88162%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C42.83847%2C27.88162%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C42.83847%2C27.88162%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0528",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -7.72533,
+          42.10155
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C42.10155%2C-7.72533%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C42.10155%2C-7.72533%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C42.10155%2C-7.72533%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0543",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -124.07663,
+          40.84116
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C40.84116%2C-124.07663%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C40.84116%2C-124.07663%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C40.84116%2C-124.07663%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0558",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          19.50981,
+          40.32427
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C40.32427%2C19.50981%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C40.32427%2C19.50981%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C40.32427%2C19.50981%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0565",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          141.8973,
+          39.36487
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C39.36487%2C141.8973%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C39.36487%2C141.8973%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C39.36487%2C141.8973%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0573",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -122.45375,
+          37.80372
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C37.80372%2C-122.45375%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C37.80372%2C-122.45375%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C37.80372%2C-122.45375%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0584",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -122.48398,
+          37.78816
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C37.78816%2C-122.48398%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C37.78816%2C-122.48398%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C37.78816%2C-122.48398%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0585",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -8.61944,
+          37.63778
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C37.63778%2C-8.61944%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C37.63778%2C-8.61944%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C37.63778%2C-8.61944%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0587",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            29.6055076,
+            37.1527929
+          ],
+          [
+            29.6049071,
+            37.1529059
+          ],
+          [
+            29.6043984,
+            37.1529325
+          ],
+          [
+            29.603948,
+            37.1528261
+          ],
+          [
+            29.6033392,
+            37.1525935
+          ],
+          [
+            29.6028555,
+            37.1525802
+          ],
+          [
+            29.6022383,
+            37.1525669
+          ],
+          [
+            29.6016545,
+            37.152414
+          ],
+          [
+            29.601029,
+            37.152075
+          ],
+          [
+            29.5998363,
+            37.1517825
+          ],
+          [
+            29.5994527,
+            37.1514501
+          ],
+          [
+            29.5990941,
+            37.1511177
+          ],
+          [
+            29.5978264,
+            37.1505594
+          ],
+          [
+            29.5970841,
+            37.1504397
+          ],
+          [
+            29.5955579,
+            37.1504796
+          ],
+          [
+            29.5911126,
+            37.1506125
+          ],
+          [
+            29.5897365,
+            37.1507122
+          ],
+          [
+            29.5885355,
+            37.1508651
+          ],
+          [
+            29.5875264,
+            37.1509914
+          ],
+          [
+            29.5871594,
+            37.1511111
+          ],
+          [
+            29.5861503,
+            37.1516562
+          ],
+          [
+            29.5849576,
+            37.1518689
+          ],
+          [
+            29.5840152,
+            37.1521148
+          ],
+          [
+            29.5832479,
+            37.1522943
+          ],
+          [
+            29.5819886,
+            37.1528992
+          ],
+          [
+            29.5814715,
+            37.1530588
+          ],
+          [
+            29.5811462,
+            37.1530122
+          ],
+          [
+            29.5801704,
+            37.1526666
+          ],
+          [
+            29.5787109,
+            37.152733
+          ],
+          [
+            29.5779936,
+            37.1532316
+          ],
+          [
+            29.5768094,
+            37.1541157
+          ],
+          [
+            29.5760587,
+            37.1545145
+          ],
+          [
+            29.5738069,
+            37.1554252
+          ],
+          [
+            29.5700956,
+            37.1560167
+          ],
+          [
+            29.5681607,
+            37.1566083
+          ],
+          [
+            29.5675519,
+            37.1573129
+          ],
+          [
+            29.5672683,
+            37.1574192
+          ],
+          [
+            29.5669057,
+            37.1574524
+          ],
+          [
+            29.5660136,
+            37.1574656
+          ],
+          [
+            29.5652965,
+            37.1576849
+          ],
+          [
+            29.5646796,
+            37.1582431
+          ],
+          [
+            29.5640293,
+            37.1585886
+          ],
+          [
+            29.5627369,
+            37.15918
+          ],
+          [
+            29.5611612,
+            37.1598644
+          ],
+          [
+            29.5604024,
+            37.1603361
+          ],
+          [
+            29.5595187,
+            37.1612996
+          ],
+          [
+            29.5587766,
+            37.1621434
+          ],
+          [
+            29.5579095,
+            37.1625952
+          ],
+          [
+            29.5573676,
+            37.1628677
+          ],
+          [
+            29.5566923,
+            37.1632464
+          ],
+          [
+            29.5561503,
+            37.1634191
+          ],
+          [
+            29.5556001,
+            37.1637048
+          ],
+          [
+            29.5550642,
+            37.1640302
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "evidence_status": "selected_geometry_frozen",
+        "failure_diagnostics": "{\"candidate_count\": 1, \"tied_osm_ids\": []}",
+        "manual_review": false,
+        "match_distance_m": 988.369,
+        "match_method": "nearest_feature",
+        "osm_base_timestamp": "2026-06-01T08:52:28Z",
+        "osm_id": "257053971",
+        "osm_tags_json": "{\"source\": \"bing\", \"waterway\": \"stream\"}",
+        "osm_type": "way",
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "cache",
+        "raw_response_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\osm_pilot\\raw_responses\\238b308cbd41b40fdacd9049.json",
+        "raw_response_sha256": "4787431c021fd2e8fd7e7281df92664ae3dee0590b016da691d1b4ab1f7e5480",
+        "sample_id": "S0591",
+        "water_feature_class": "stream"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          136.56669,
+          35.25527
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "evidence_status": "no_selected_feature",
+        "failure_diagnostics": "\"HTTPError: 406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%28around%3A1000.0%2C35.25527%2C136.56669%29%5Bnatural%3Dwater%5D%3Bway%28around%3A1000.0%2C35.25527%2C136.56669%29%5Bwaterway%5D%3Bway%28around%3A1000.0%2C35.25527%2C136.56669%29%5Blanduse%3Dreservoir%5D%3B%29%3Bout+geom+tags%3B\"",
+        "manual_review": false,
+        "match_distance_m": null,
+        "match_method": "unavailable",
+        "osm_id": null,
+        "osm_type": null,
+        "query_date": "2026-09-07T22:10:38.393393+00:00",
+        "query_source": "failed",
+        "sample_id": "S0599",
+        "water_feature_class": null
+      },
+      "type": "Feature"
+    }
+  ],
+  "type": "FeatureCollection"
+}

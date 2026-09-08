@@ -1,0 +1,559 @@
+{
+  "artifacts": {
+    "copernicus_windows.geojson": "fefa590a3f25d9c3c35c26ff02d34b86b9e3758ebc8aa54ef51a05cd31b1e9bd",
+    "osm_matched_features.geojson": "f9ee5bfaaa3d05416fcbcc34f72a3293586d179993f0bc451b22bcbba6941b56",
+    "pilot_sites.csv": "8e293908ce09179567255be54313217bb2a9aa4d79df587a52921f11198b833e",
+    "pilot_sites.geojson": "df6addd626a72d7e7ac2a903ddcd58813765bf54e891bcd9a9ceacd4c2071d96"
+  },
+  "bundle_version": "ee_app_validation_assets_v2_5ed492aade15158c",
+  "copernicus_inputs": [
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0001_copernicus_3x3.tif",
+      "sha256": "463ab8c48f38ef4b299d74d39ae064ea055c8d80f68cb49a109c41a820c12c83",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0001_copernicus_3x3.tif.json",
+      "sidecar_sha256": "47e986974d52bbec5c2351143d793304353219b00275da19530c657cf6f509c3"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0002_copernicus_3x3.tif",
+      "sha256": "2ab8c0b75c72726cfb936e3017b449d1c8eb081d535a56cd61d6f51b02dc3c56",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0002_copernicus_3x3.tif.json",
+      "sidecar_sha256": "1fe7deabb8543786ec0e0ad9d6adc3f0eda024919bc053c5e8f513e37de1ec50"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0028_copernicus_3x3.tif",
+      "sha256": "3c2c241910db383bcdf8dd6e092b7421adef25d6c2e0612481b3a0644b43c16d",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0028_copernicus_3x3.tif.json",
+      "sidecar_sha256": "aeb94a4caed1f67fe170ca94718ccd6addd5ab9c533556dbd4d11874cba0439e"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0031_copernicus_3x3.tif",
+      "sha256": "9d0d3def68e28e6f587a588b1e578981a75c87a16b7092013b4a3167a9310367",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0031_copernicus_3x3.tif.json",
+      "sidecar_sha256": "eb14ea670281d02068f2b35c2ea14378a6eb1387783e73a03c4119b951645f0b"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0050_copernicus_3x3.tif",
+      "sha256": "0f7654bd5208cec50382b6d6e770dba8ece6098606c841d9638b2d93b99ec860",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0050_copernicus_3x3.tif.json",
+      "sidecar_sha256": "420bd58b9ef7289fad96a34f4b50ca1a4c439dd13c2f430c0c0795ae66943712"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0067_copernicus_3x3.tif",
+      "sha256": "a33c579b0eb6363062753275e3b67bcb7d70034aadb0db00f2eba5f188038c22",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0067_copernicus_3x3.tif.json",
+      "sidecar_sha256": "8b293beb845cb94574f5a35d93008e6aefbd29368ed2e4958b403c0ed3635f81"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0084_copernicus_3x3.tif",
+      "sha256": "76660f3f9d26f371f2e5d2781ade45a07af4aa25d979c98b3150c234241c029d",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0084_copernicus_3x3.tif.json",
+      "sidecar_sha256": "2b26d44d3b8aea56512d51e0213ed220990fcb7cc81566f2853035cde0d72587"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0091_copernicus_3x3.tif",
+      "sha256": "30a4ec51c3377da62f8ad667c2d045e7d53b469b3feea56b48c21f364f8cf741",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0091_copernicus_3x3.tif.json",
+      "sidecar_sha256": "ffcf48aec9efbf77a5e704c15fa3428b92f39091a655b0e893427b9de21308eb"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0093_copernicus_3x3.tif",
+      "sha256": "dc669ab31863253b4a9bc51322003adb7be9a815292b65b24a02fd4e4f87438c",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0093_copernicus_3x3.tif.json",
+      "sidecar_sha256": "f4cbd5f5c679d501e380de953197d8e27e59bb5c6ce76a1820cf20894a0a3355"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0097_copernicus_3x3.tif",
+      "sha256": "ead2500dd136bd6c05add4745d4a7913182a028d747eb41bce34fe84ef5df25c",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0097_copernicus_3x3.tif.json",
+      "sidecar_sha256": "995917845c865cf37bd109f7fd7113b85083a0b8c871c26667b0edc785aa6fcd"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0142_copernicus_3x3.tif",
+      "sha256": "2c5e3e0963a7fa9ffc32c0321582d1e32145ad1338242f8bc0f7c43e80bbdccb",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0142_copernicus_3x3.tif.json",
+      "sidecar_sha256": "f74e28b920871fe3f7df1effdc655d327ee87fa7436433bd44f20f78fc9e0aa0"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0160_copernicus_3x3.tif",
+      "sha256": "64a503bbefd37d09052081da7f7490936b4d62db4fa86627a7263fa431a95c79",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0160_copernicus_3x3.tif.json",
+      "sidecar_sha256": "37932149c574298ab433defdd24360d76ff82a33c680955b37fc7b191f1fdabd"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0174_copernicus_3x3.tif",
+      "sha256": "501737023a186d1992b942384e5bbbcef5b7ad54afa95506d3eb19bb1fd97c55",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0174_copernicus_3x3.tif.json",
+      "sidecar_sha256": "59002927d692cd8b797b9154dac10977dbf27e66cff28f3ea1374bfdf06a88cb"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0202_copernicus_3x3.tif",
+      "sha256": "44708b4aa006a7c7e86bd6a52fe71c432028e96d4c82293484903fde4667121f",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0202_copernicus_3x3.tif.json",
+      "sidecar_sha256": "f709f3ac62c8cb3c3ba64e1c42967b497777d9f6a30f63dc8e3fb8788044ca28"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0205_copernicus_3x3.tif",
+      "sha256": "02a5af8161f155aca9ce26c10e318b3f34e4249c8e6d06c1802ad7dfd9e36954",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0205_copernicus_3x3.tif.json",
+      "sidecar_sha256": "b8c0eae2e9023608b704ce8f6d2192caf810932c46633be7cb1db21940cf6d7d"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0212_copernicus_3x3.tif",
+      "sha256": "f51f93ab30053f93655284adff3089d242577dbef2ee9f4403e4f527834d6c50",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0212_copernicus_3x3.tif.json",
+      "sidecar_sha256": "6f6cbf22d072633172ae3baa6e15dc0dd248d66386a65bf2a69d67250ef40277"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0233_copernicus_3x3.tif",
+      "sha256": "4adcebb7e523a1935c6217e8acc5b9fbd4a063617b8c298f484257fdd3647825",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0233_copernicus_3x3.tif.json",
+      "sidecar_sha256": "fc6abd87e5be8e19268536ef5a7e5038079458cae2428bce07a6f2455c260a23"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0255_copernicus_3x3.tif",
+      "sha256": "823d14200b3a94014ecd7408a52113db90bb6f9af8bbae54aff341eb40b32123",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0255_copernicus_3x3.tif.json",
+      "sidecar_sha256": "86e1e2e37a9e6b21f3e685b3297e88cc2772c81b2079c66ca04edc8788fb8be0"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0276_copernicus_3x3.tif",
+      "sha256": "ea63de09c4a990ca498c87f29d07ebfe35e9a31a19c460b01c15a33ff02208a1",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0276_copernicus_3x3.tif.json",
+      "sidecar_sha256": "33393bdb8b826cb9c71d7efe3df0899067f3ed7a6b1f39cc25fc2e80ad38e4f7"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0340_copernicus_3x3.tif",
+      "sha256": "96afe63001162945941d7bcb81d2bece0a0b937d9c9f59bf85f09094339ba60a",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0340_copernicus_3x3.tif.json",
+      "sidecar_sha256": "bf9becb75cf894f80a1adfa6a8bcfa4a70e1897ed7565685144a91909388a696"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0389_copernicus_3x3.tif",
+      "sha256": "8599c121050f702ab5ba783cedbf96cbe12c99843c484d4c86349aa8b42f3088",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0389_copernicus_3x3.tif.json",
+      "sidecar_sha256": "005d8b5b968b720bbf1d12c69e9780ca8fef1e2e157ecd65017e9e5c6a12a45c"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0391_copernicus_3x3.tif",
+      "sha256": "ab6883cf2db274b2818dda0538d727d7cdb37ec850034fa92d1a9f460d6362a1",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0391_copernicus_3x3.tif.json",
+      "sidecar_sha256": "b2e7b91ffa0faaa09b1d62e5b0be3073bfcf11680ac70bcbe7cc591be314d471"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0417_copernicus_3x3.tif",
+      "sha256": "3d68ec35f4ffdfe64c990d547995d9a9aa757008dd33d04d5d837f8968fd2289",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0417_copernicus_3x3.tif.json",
+      "sidecar_sha256": "2aff841e519ebc1eb5ea9f17043c66225dc00b5d5455da0a35ea458323e07651"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0478_copernicus_3x3.tif",
+      "sha256": "2f9ad351a14e45ea0cbb46fcfdc8598c0855fc0ded2faf71b49a6846e3aaf2fb",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0478_copernicus_3x3.tif.json",
+      "sidecar_sha256": "6bd4c52aa243a57e6f8303bd1c46a9a524be03a1d38acc546fc1456794f9aa7f"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0493_copernicus_3x3.tif",
+      "sha256": "c8ff4d2c7b569ab274a9680892a6cf1421e5f7612fb944b2d9d36a20de359aee",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0493_copernicus_3x3.tif.json",
+      "sidecar_sha256": "65b82802dbceda3f1251af668ff073a6cf7ee32066dd12cb89e0ef24936134b2"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0498_copernicus_3x3.tif",
+      "sha256": "629fd649e921a1067d76f10cfc43dc04e17117a44c689b0def1e12ca06055e88",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0498_copernicus_3x3.tif.json",
+      "sidecar_sha256": "02e1c3ebd600e2cda8b29a5e75c1572a05acb6371834e4610c3a1f7fbc513cce"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0502_copernicus_3x3.tif",
+      "sha256": "8c23503366a9b4cca4b4377023031c28f7a526e205e7a00da35ed4cd1da4d1d4",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0502_copernicus_3x3.tif.json",
+      "sidecar_sha256": "28c26823f4d68179a0111c139f318bb6155b2a295831999765562dcd6946dbf7"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0509_copernicus_3x3.tif",
+      "sha256": "f11d91fbf962cfacc489931d12d280a33159ce15fddb1fb93218ef4b1d2cef6e",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0509_copernicus_3x3.tif.json",
+      "sidecar_sha256": "a4d6abca7d859ce063c6bced266c665bd0e10a6f09a18cd3bf5f0a8b5863d6af"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0514_copernicus_3x3.tif",
+      "sha256": "71d11fc0211eb8e346667f0ce3a24ccbf0e0ddb35343f31a7e1fb0bd289c8d41",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0514_copernicus_3x3.tif.json",
+      "sidecar_sha256": "e09c91b38a2f7e80aab0d5456c2b90d1f0a0197481c6665ec40326d892002907"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0519_copernicus_3x3.tif",
+      "sha256": "3d0b525ab8b000c066439a695252dc3f6b0be664fe7e392a105b7c86b7ecad03",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0519_copernicus_3x3.tif.json",
+      "sidecar_sha256": "5ae199a7615acf81a35be2b492640e3995bf0427b71b40f48bb6abdfed7bbb89"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0528_copernicus_3x3.tif",
+      "sha256": "a82db3b6f2d0200ea5b3fbd267a8b5137b27dc032f9637fa3d23d20474fd1f81",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0528_copernicus_3x3.tif.json",
+      "sidecar_sha256": "5adc281631e64e5c02fe010338ce1c06dd6532a9e03ece122e31dba49cbe5e1c"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0543_copernicus_3x3.tif",
+      "sha256": "c3e5b9832e459f9ab50084973d41838ab3d3c8fed6c1a6778db430fb3d3dc035",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0543_copernicus_3x3.tif.json",
+      "sidecar_sha256": "86d797626c67dadf809a8f013a01be118a8be250231ae639996570efdff31829"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0558_copernicus_3x3.tif",
+      "sha256": "d0d95a4ed89b429337e2563e56ef3076f458ae5ec72aff6062d7c67faae39e1d",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0558_copernicus_3x3.tif.json",
+      "sidecar_sha256": "12d1c3139d184378797cbabb0de06c901a0714b59cde727247ee345d1429f9e4"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0565_copernicus_3x3.tif",
+      "sha256": "fc445bd0d312ab70d2435bbe7e3e643006af99b5fa1d55dbe1332a00adc9f906",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0565_copernicus_3x3.tif.json",
+      "sidecar_sha256": "9dda2e2d2fbc62fbaac742b0958e7b12753df928f19d2c8174c380e08bfd2047"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0573_copernicus_3x3.tif",
+      "sha256": "3cff9eb168da377fa5771d74eef3fac6d2d0aaf4ef488f212e4d956237ff3be2",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0573_copernicus_3x3.tif.json",
+      "sidecar_sha256": "9ad8ddfee6b0127a575c0c6482d341b6307b348d2ec7fee101cebce0a5d16fd6"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0584_copernicus_3x3.tif",
+      "sha256": "c2f567e30b7e2f154b105c92c1172a7f62c866fc4972304b6632233f539d2358",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0584_copernicus_3x3.tif.json",
+      "sidecar_sha256": "f09fdb1dabfe8e867853b10ec58a88ab74768b854890db7adc563bdb3c2ccd09"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0585_copernicus_3x3.tif",
+      "sha256": "011fe84f448800ba02530452cb041e30ee01452c8764c70408dfe7ac827d0a56",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0585_copernicus_3x3.tif.json",
+      "sidecar_sha256": "c3634fc8873ebfaeb0b323b872efcd97858b40fa86c6ddc29f5458e1d64e6140"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0587_copernicus_3x3.tif",
+      "sha256": "1c2a0761a197560c52a9f17b9ebbf7c8c3aad7b5e48e956a37dacdfcff3c1fab",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0587_copernicus_3x3.tif.json",
+      "sidecar_sha256": "887abc7bc1a2a7dc8e7fa4297ba0321f156f5f992d03e6759593da7306eca2c1"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0591_copernicus_3x3.tif",
+      "sha256": "4be933895c48cd672f4ac89faf3f7cf6f477e693140db53dcbaee9355ca3dbd5",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0591_copernicus_3x3.tif.json",
+      "sidecar_sha256": "64db562eb59583b535e2ef7c46659da50b3309dda51fad8bb092028b2cf6d9c5"
+    },
+    {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0599_copernicus_3x3.tif",
+      "sha256": "c09d5688c7862dd1b02e77c904fc83091a0a6d7e8237ad8d128f5641a5fdb422",
+      "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0599_copernicus_3x3.tif.json",
+      "sidecar_sha256": "c0a9b0c6272fedf3a37eee021f7e6175a34cd42ae2ccd7f27ead7bfc8a640740"
+    }
+  ],
+  "counts": {
+    "copernicus_windows": 40,
+    "osm_matched_features": 40,
+    "pilot_sites": 40
+  },
+  "created_at_utc": "2026-09-08T00:31:19.402139+00:00",
+  "earth_engine_actions": "none",
+  "input_manifest": {
+    "copernicus_windows": [
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0001_copernicus_3x3.tif",
+        "sample_id": "S0001",
+        "sha256": "463ab8c48f38ef4b299d74d39ae064ea055c8d80f68cb49a109c41a820c12c83",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0001_copernicus_3x3.tif.json",
+        "sidecar_sha256": "47e986974d52bbec5c2351143d793304353219b00275da19530c657cf6f509c3"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0002_copernicus_3x3.tif",
+        "sample_id": "S0002",
+        "sha256": "2ab8c0b75c72726cfb936e3017b449d1c8eb081d535a56cd61d6f51b02dc3c56",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0002_copernicus_3x3.tif.json",
+        "sidecar_sha256": "1fe7deabb8543786ec0e0ad9d6adc3f0eda024919bc053c5e8f513e37de1ec50"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0028_copernicus_3x3.tif",
+        "sample_id": "S0028",
+        "sha256": "3c2c241910db383bcdf8dd6e092b7421adef25d6c2e0612481b3a0644b43c16d",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0028_copernicus_3x3.tif.json",
+        "sidecar_sha256": "aeb94a4caed1f67fe170ca94718ccd6addd5ab9c533556dbd4d11874cba0439e"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0031_copernicus_3x3.tif",
+        "sample_id": "S0031",
+        "sha256": "9d0d3def68e28e6f587a588b1e578981a75c87a16b7092013b4a3167a9310367",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0031_copernicus_3x3.tif.json",
+        "sidecar_sha256": "eb14ea670281d02068f2b35c2ea14378a6eb1387783e73a03c4119b951645f0b"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0050_copernicus_3x3.tif",
+        "sample_id": "S0050",
+        "sha256": "0f7654bd5208cec50382b6d6e770dba8ece6098606c841d9638b2d93b99ec860",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0050_copernicus_3x3.tif.json",
+        "sidecar_sha256": "420bd58b9ef7289fad96a34f4b50ca1a4c439dd13c2f430c0c0795ae66943712"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0067_copernicus_3x3.tif",
+        "sample_id": "S0067",
+        "sha256": "a33c579b0eb6363062753275e3b67bcb7d70034aadb0db00f2eba5f188038c22",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0067_copernicus_3x3.tif.json",
+        "sidecar_sha256": "8b293beb845cb94574f5a35d93008e6aefbd29368ed2e4958b403c0ed3635f81"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0084_copernicus_3x3.tif",
+        "sample_id": "S0084",
+        "sha256": "76660f3f9d26f371f2e5d2781ade45a07af4aa25d979c98b3150c234241c029d",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0084_copernicus_3x3.tif.json",
+        "sidecar_sha256": "2b26d44d3b8aea56512d51e0213ed220990fcb7cc81566f2853035cde0d72587"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0091_copernicus_3x3.tif",
+        "sample_id": "S0091",
+        "sha256": "30a4ec51c3377da62f8ad667c2d045e7d53b469b3feea56b48c21f364f8cf741",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0091_copernicus_3x3.tif.json",
+        "sidecar_sha256": "ffcf48aec9efbf77a5e704c15fa3428b92f39091a655b0e893427b9de21308eb"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0093_copernicus_3x3.tif",
+        "sample_id": "S0093",
+        "sha256": "dc669ab31863253b4a9bc51322003adb7be9a815292b65b24a02fd4e4f87438c",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0093_copernicus_3x3.tif.json",
+        "sidecar_sha256": "f4cbd5f5c679d501e380de953197d8e27e59bb5c6ce76a1820cf20894a0a3355"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0097_copernicus_3x3.tif",
+        "sample_id": "S0097",
+        "sha256": "ead2500dd136bd6c05add4745d4a7913182a028d747eb41bce34fe84ef5df25c",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0097_copernicus_3x3.tif.json",
+        "sidecar_sha256": "995917845c865cf37bd109f7fd7113b85083a0b8c871c26667b0edc785aa6fcd"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0142_copernicus_3x3.tif",
+        "sample_id": "S0142",
+        "sha256": "2c5e3e0963a7fa9ffc32c0321582d1e32145ad1338242f8bc0f7c43e80bbdccb",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0142_copernicus_3x3.tif.json",
+        "sidecar_sha256": "f74e28b920871fe3f7df1effdc655d327ee87fa7436433bd44f20f78fc9e0aa0"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0160_copernicus_3x3.tif",
+        "sample_id": "S0160",
+        "sha256": "64a503bbefd37d09052081da7f7490936b4d62db4fa86627a7263fa431a95c79",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0160_copernicus_3x3.tif.json",
+        "sidecar_sha256": "37932149c574298ab433defdd24360d76ff82a33c680955b37fc7b191f1fdabd"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0174_copernicus_3x3.tif",
+        "sample_id": "S0174",
+        "sha256": "501737023a186d1992b942384e5bbbcef5b7ad54afa95506d3eb19bb1fd97c55",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0174_copernicus_3x3.tif.json",
+        "sidecar_sha256": "59002927d692cd8b797b9154dac10977dbf27e66cff28f3ea1374bfdf06a88cb"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0202_copernicus_3x3.tif",
+        "sample_id": "S0202",
+        "sha256": "44708b4aa006a7c7e86bd6a52fe71c432028e96d4c82293484903fde4667121f",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0202_copernicus_3x3.tif.json",
+        "sidecar_sha256": "f709f3ac62c8cb3c3ba64e1c42967b497777d9f6a30f63dc8e3fb8788044ca28"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0205_copernicus_3x3.tif",
+        "sample_id": "S0205",
+        "sha256": "02a5af8161f155aca9ce26c10e318b3f34e4249c8e6d06c1802ad7dfd9e36954",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0205_copernicus_3x3.tif.json",
+        "sidecar_sha256": "b8c0eae2e9023608b704ce8f6d2192caf810932c46633be7cb1db21940cf6d7d"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0212_copernicus_3x3.tif",
+        "sample_id": "S0212",
+        "sha256": "f51f93ab30053f93655284adff3089d242577dbef2ee9f4403e4f527834d6c50",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0212_copernicus_3x3.tif.json",
+        "sidecar_sha256": "6f6cbf22d072633172ae3baa6e15dc0dd248d66386a65bf2a69d67250ef40277"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0233_copernicus_3x3.tif",
+        "sample_id": "S0233",
+        "sha256": "4adcebb7e523a1935c6217e8acc5b9fbd4a063617b8c298f484257fdd3647825",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0233_copernicus_3x3.tif.json",
+        "sidecar_sha256": "fc6abd87e5be8e19268536ef5a7e5038079458cae2428bce07a6f2455c260a23"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0255_copernicus_3x3.tif",
+        "sample_id": "S0255",
+        "sha256": "823d14200b3a94014ecd7408a52113db90bb6f9af8bbae54aff341eb40b32123",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0255_copernicus_3x3.tif.json",
+        "sidecar_sha256": "86e1e2e37a9e6b21f3e685b3297e88cc2772c81b2079c66ca04edc8788fb8be0"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0276_copernicus_3x3.tif",
+        "sample_id": "S0276",
+        "sha256": "ea63de09c4a990ca498c87f29d07ebfe35e9a31a19c460b01c15a33ff02208a1",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0276_copernicus_3x3.tif.json",
+        "sidecar_sha256": "33393bdb8b826cb9c71d7efe3df0899067f3ed7a6b1f39cc25fc2e80ad38e4f7"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0340_copernicus_3x3.tif",
+        "sample_id": "S0340",
+        "sha256": "96afe63001162945941d7bcb81d2bece0a0b937d9c9f59bf85f09094339ba60a",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0340_copernicus_3x3.tif.json",
+        "sidecar_sha256": "bf9becb75cf894f80a1adfa6a8bcfa4a70e1897ed7565685144a91909388a696"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0389_copernicus_3x3.tif",
+        "sample_id": "S0389",
+        "sha256": "8599c121050f702ab5ba783cedbf96cbe12c99843c484d4c86349aa8b42f3088",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0389_copernicus_3x3.tif.json",
+        "sidecar_sha256": "005d8b5b968b720bbf1d12c69e9780ca8fef1e2e157ecd65017e9e5c6a12a45c"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0391_copernicus_3x3.tif",
+        "sample_id": "S0391",
+        "sha256": "ab6883cf2db274b2818dda0538d727d7cdb37ec850034fa92d1a9f460d6362a1",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0391_copernicus_3x3.tif.json",
+        "sidecar_sha256": "b2e7b91ffa0faaa09b1d62e5b0be3073bfcf11680ac70bcbe7cc591be314d471"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0417_copernicus_3x3.tif",
+        "sample_id": "S0417",
+        "sha256": "3d68ec35f4ffdfe64c990d547995d9a9aa757008dd33d04d5d837f8968fd2289",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0417_copernicus_3x3.tif.json",
+        "sidecar_sha256": "2aff841e519ebc1eb5ea9f17043c66225dc00b5d5455da0a35ea458323e07651"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0478_copernicus_3x3.tif",
+        "sample_id": "S0478",
+        "sha256": "2f9ad351a14e45ea0cbb46fcfdc8598c0855fc0ded2faf71b49a6846e3aaf2fb",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0478_copernicus_3x3.tif.json",
+        "sidecar_sha256": "6bd4c52aa243a57e6f8303bd1c46a9a524be03a1d38acc546fc1456794f9aa7f"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0493_copernicus_3x3.tif",
+        "sample_id": "S0493",
+        "sha256": "c8ff4d2c7b569ab274a9680892a6cf1421e5f7612fb944b2d9d36a20de359aee",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0493_copernicus_3x3.tif.json",
+        "sidecar_sha256": "65b82802dbceda3f1251af668ff073a6cf7ee32066dd12cb89e0ef24936134b2"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0498_copernicus_3x3.tif",
+        "sample_id": "S0498",
+        "sha256": "629fd649e921a1067d76f10cfc43dc04e17117a44c689b0def1e12ca06055e88",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0498_copernicus_3x3.tif.json",
+        "sidecar_sha256": "02e1c3ebd600e2cda8b29a5e75c1572a05acb6371834e4610c3a1f7fbc513cce"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0502_copernicus_3x3.tif",
+        "sample_id": "S0502",
+        "sha256": "8c23503366a9b4cca4b4377023031c28f7a526e205e7a00da35ed4cd1da4d1d4",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0502_copernicus_3x3.tif.json",
+        "sidecar_sha256": "28c26823f4d68179a0111c139f318bb6155b2a295831999765562dcd6946dbf7"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0509_copernicus_3x3.tif",
+        "sample_id": "S0509",
+        "sha256": "f11d91fbf962cfacc489931d12d280a33159ce15fddb1fb93218ef4b1d2cef6e",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0509_copernicus_3x3.tif.json",
+        "sidecar_sha256": "a4d6abca7d859ce063c6bced266c665bd0e10a6f09a18cd3bf5f0a8b5863d6af"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0514_copernicus_3x3.tif",
+        "sample_id": "S0514",
+        "sha256": "71d11fc0211eb8e346667f0ce3a24ccbf0e0ddb35343f31a7e1fb0bd289c8d41",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0514_copernicus_3x3.tif.json",
+        "sidecar_sha256": "e09c91b38a2f7e80aab0d5456c2b90d1f0a0197481c6665ec40326d892002907"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0519_copernicus_3x3.tif",
+        "sample_id": "S0519",
+        "sha256": "3d0b525ab8b000c066439a695252dc3f6b0be664fe7e392a105b7c86b7ecad03",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0519_copernicus_3x3.tif.json",
+        "sidecar_sha256": "5ae199a7615acf81a35be2b492640e3995bf0427b71b40f48bb6abdfed7bbb89"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0528_copernicus_3x3.tif",
+        "sample_id": "S0528",
+        "sha256": "a82db3b6f2d0200ea5b3fbd267a8b5137b27dc032f9637fa3d23d20474fd1f81",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0528_copernicus_3x3.tif.json",
+        "sidecar_sha256": "5adc281631e64e5c02fe010338ce1c06dd6532a9e03ece122e31dba49cbe5e1c"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0543_copernicus_3x3.tif",
+        "sample_id": "S0543",
+        "sha256": "c3e5b9832e459f9ab50084973d41838ab3d3c8fed6c1a6778db430fb3d3dc035",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0543_copernicus_3x3.tif.json",
+        "sidecar_sha256": "86d797626c67dadf809a8f013a01be118a8be250231ae639996570efdff31829"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0558_copernicus_3x3.tif",
+        "sample_id": "S0558",
+        "sha256": "d0d95a4ed89b429337e2563e56ef3076f458ae5ec72aff6062d7c67faae39e1d",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0558_copernicus_3x3.tif.json",
+        "sidecar_sha256": "12d1c3139d184378797cbabb0de06c901a0714b59cde727247ee345d1429f9e4"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0565_copernicus_3x3.tif",
+        "sample_id": "S0565",
+        "sha256": "fc445bd0d312ab70d2435bbe7e3e643006af99b5fa1d55dbe1332a00adc9f906",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0565_copernicus_3x3.tif.json",
+        "sidecar_sha256": "9dda2e2d2fbc62fbaac742b0958e7b12753df928f19d2c8174c380e08bfd2047"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0573_copernicus_3x3.tif",
+        "sample_id": "S0573",
+        "sha256": "3cff9eb168da377fa5771d74eef3fac6d2d0aaf4ef488f212e4d956237ff3be2",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0573_copernicus_3x3.tif.json",
+        "sidecar_sha256": "9ad8ddfee6b0127a575c0c6482d341b6307b348d2ec7fee101cebce0a5d16fd6"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0584_copernicus_3x3.tif",
+        "sample_id": "S0584",
+        "sha256": "c2f567e30b7e2f154b105c92c1172a7f62c866fc4972304b6632233f539d2358",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0584_copernicus_3x3.tif.json",
+        "sidecar_sha256": "f09fdb1dabfe8e867853b10ec58a88ab74768b854890db7adc563bdb3c2ccd09"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0585_copernicus_3x3.tif",
+        "sample_id": "S0585",
+        "sha256": "011fe84f448800ba02530452cb041e30ee01452c8764c70408dfe7ac827d0a56",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0585_copernicus_3x3.tif.json",
+        "sidecar_sha256": "c3634fc8873ebfaeb0b323b872efcd97858b40fa86c6ddc29f5458e1d64e6140"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0587_copernicus_3x3.tif",
+        "sample_id": "S0587",
+        "sha256": "1c2a0761a197560c52a9f17b9ebbf7c8c3aad7b5e48e956a37dacdfcff3c1fab",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0587_copernicus_3x3.tif.json",
+        "sidecar_sha256": "887abc7bc1a2a7dc8e7fa4297ba0321f156f5f992d03e6759593da7306eca2c1"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0591_copernicus_3x3.tif",
+        "sample_id": "S0591",
+        "sha256": "4be933895c48cd672f4ac89faf3f7cf6f477e693140db53dcbaee9355ca3dbd5",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0591_copernicus_3x3.tif.json",
+        "sidecar_sha256": "64db562eb59583b535e2ef7c46659da50b3309dda51fad8bb092028b2cf6d9c5"
+      },
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0599_copernicus_3x3.tif",
+        "sample_id": "S0599",
+        "sha256": "c09d5688c7862dd1b02e77c904fc83091a0a6d7e8237ad8d128f5641a5fdb422",
+        "sidecar_path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\S0599_copernicus_3x3.tif.json",
+        "sidecar_sha256": "c0a9b0c6272fedf3a37eee021f7e6175a34cd42ae2ccd7f27ead7bfc8a640740"
+      }
+    ],
+    "osm_matches_csv": {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\osm_pilot\\pilot_osm_matches.csv",
+      "sha256": "3432bfdb31e12bf5624eba158aeeb80aed1c0ada797645acaeb3c7a38fbeef29"
+    },
+    "raw_osm": [
+      {
+        "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\osm_pilot\\raw_responses\\238b308cbd41b40fdacd9049.json",
+        "sha256": "4787431c021fd2e8fd7e7281df92664ae3dee0590b016da691d1b4ab1f7e5480"
+      }
+    ],
+    "schema_version": "ee_app_validation_assets_v2",
+    "stage_json": {
+      "path": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\cache\\staged_pilot\\stage_40_sites.json",
+      "sha256": "12355c4152f4b7d2bca160fa00a9ca7395d4aa85e265edf47cfe029d813f3a96"
+    }
+  },
+  "offline_only": true,
+  "schema_version": "ee_app_validation_assets_v2"
+}

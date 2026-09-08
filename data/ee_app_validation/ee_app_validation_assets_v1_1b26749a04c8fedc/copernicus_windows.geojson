@@ -1,0 +1,1525 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              37.0803,
+              72.57926666666667
+            ],
+            [
+              37.081133333333334,
+              72.57926666666667
+            ],
+            [
+              37.081133333333334,
+              72.5801
+            ],
+            [
+              37.0803,
+              72.5801
+            ],
+            [
+              37.0803,
+              72.57926666666667
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "cache_hit",
+        "raster_sha256": "463ab8c48f38ef4b299d74d39ae064ea055c8d80f68cb49a109c41a820c12c83",
+        "raster_sidecar_sha256": "47e986974d52bbec5c2351143d793304353219b00275da19530c657cf6f509c3",
+        "sample_id": "S0001",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N72_00_E037_00_DEM/Copernicus_DSM_COG_10_N72_00_E037_00_DEM.tif",
+        "topography_status": "no_valid_dem_data"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              27.584722222222222,
+              69.58513888888888
+            ],
+            [
+              27.586388888888887,
+              69.58513888888888
+            ],
+            [
+              27.586388888888887,
+              69.58597222222221
+            ],
+            [
+              27.584722222222222,
+              69.58597222222221
+            ],
+            [
+              27.584722222222222,
+              69.58513888888888
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "cache_hit",
+        "raster_sha256": "2ab8c0b75c72726cfb936e3017b449d1c8eb081d535a56cd61d6f51b02dc3c56",
+        "raster_sidecar_sha256": "1fe7deabb8543786ec0e0ad9d6adc3f0eda024919bc053c5e8f513e37de1ec50",
+        "sample_id": "S0002",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N69_00_E027_00_DEM/Copernicus_DSM_COG_10_N69_00_E027_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -20.095277777777778,
+              66.11041666666667
+            ],
+            [
+              -20.093611111111112,
+              66.11041666666667
+            ],
+            [
+              -20.093611111111112,
+              66.11125
+            ],
+            [
+              -20.095277777777778,
+              66.11125
+            ],
+            [
+              -20.095277777777778,
+              66.11041666666667
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "cache_hit",
+        "raster_sha256": "3c2c241910db383bcdf8dd6e092b7421adef25d6c2e0612481b3a0644b43c16d",
+        "raster_sidecar_sha256": "aeb94a4caed1f67fe170ca94718ccd6addd5ab9c533556dbd4d11874cba0439e",
+        "sample_id": "S0028",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N66_00_W021_00_DEM/Copernicus_DSM_COG_10_N66_00_W021_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -19.140833333333333,
+              66.06875
+            ],
+            [
+              -19.139166666666668,
+              66.06875
+            ],
+            [
+              -19.139166666666668,
+              66.06958333333333
+            ],
+            [
+              -19.140833333333333,
+              66.06958333333333
+            ],
+            [
+              -19.140833333333333,
+              66.06875
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "cache_hit",
+        "raster_sha256": "9d0d3def68e28e6f587a588b1e578981a75c87a16b7092013b4a3167a9310367",
+        "raster_sidecar_sha256": "eb14ea670281d02068f2b35c2ea14378a6eb1387783e73a03c4119b951645f0b",
+        "sample_id": "S0031",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N66_00_W020_00_DEM/Copernicus_DSM_COG_10_N66_00_W020_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              34.70527777777778,
+              65.53041666666667
+            ],
+            [
+              34.706944444444446,
+              65.53041666666667
+            ],
+            [
+              34.706944444444446,
+              65.53125
+            ],
+            [
+              34.70527777777778,
+              65.53125
+            ],
+            [
+              34.70527777777778,
+              65.53041666666667
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "cache_hit",
+        "raster_sha256": "0f7654bd5208cec50382b6d6e770dba8ece6098606c841d9638b2d93b99ec860",
+        "raster_sidecar_sha256": "420bd58b9ef7289fad96a34f4b50ca1a4c439dd13c2f430c0c0795ae66943712",
+        "sample_id": "S0050",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N65_00_E034_00_DEM/Copernicus_DSM_COG_10_N65_00_E034_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              177.50416666666666,
+              64.71652777777777
+            ],
+            [
+              177.50583333333333,
+              64.71652777777777
+            ],
+            [
+              177.50583333333333,
+              64.7173611111111
+            ],
+            [
+              177.50416666666666,
+              64.7173611111111
+            ],
+            [
+              177.50416666666666,
+              64.71652777777777
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "a33c579b0eb6363062753275e3b67bcb7d70034aadb0db00f2eba5f188038c22",
+        "raster_sidecar_sha256": "8b293beb845cb94574f5a35d93008e6aefbd29368ed2e4958b403c0ed3635f81",
+        "sample_id": "S0067",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N64_00_E177_00_DEM/Copernicus_DSM_COG_10_N64_00_E177_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -51.01305555555555,
+              64.0798611111111
+            ],
+            [
+              -51.01138888888889,
+              64.0798611111111
+            ],
+            [
+              -51.01138888888889,
+              64.08069444444443
+            ],
+            [
+              -51.01305555555555,
+              64.08069444444443
+            ],
+            [
+              -51.01305555555555,
+              64.0798611111111
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "76660f3f9d26f371f2e5d2781ade45a07af4aa25d979c98b3150c234241c029d",
+        "raster_sidecar_sha256": "2b26d44d3b8aea56512d51e0213ed220990fcb7cc81566f2853035cde0d72587",
+        "sample_id": "S0084",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N64_00_W052_00_DEM/Copernicus_DSM_COG_10_N64_00_W052_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -21.303611111111113,
+              63.89069444444444
+            ],
+            [
+              -21.301944444444448,
+              63.89069444444444
+            ],
+            [
+              -21.301944444444448,
+              63.891527777777775
+            ],
+            [
+              -21.303611111111113,
+              63.891527777777775
+            ],
+            [
+              -21.303611111111113,
+              63.89069444444444
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "30a4ec51c3377da62f8ad667c2d045e7d53b469b3feea56b48c21f364f8cf741",
+        "raster_sidecar_sha256": "ffcf48aec9efbf77a5e704c15fa3428b92f39091a655b0e893427b9de21308eb",
+        "sample_id": "S0091",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N63_00_W022_00_DEM/Copernicus_DSM_COG_10_N63_00_W022_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -150.06305555555554,
+              62.314305555555556
+            ],
+            [
+              -150.06138888888887,
+              62.314305555555556
+            ],
+            [
+              -150.06138888888887,
+              62.31513888888889
+            ],
+            [
+              -150.06305555555554,
+              62.31513888888889
+            ],
+            [
+              -150.06305555555554,
+              62.314305555555556
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "dc669ab31863253b4a9bc51322003adb7be9a815292b65b24a02fd4e4f87438c",
+        "raster_sidecar_sha256": "f4cbd5f5c679d501e380de953197d8e27e59bb5c6ce76a1820cf20894a0a3355",
+        "sample_id": "S0093",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N62_00_W151_00_DEM/Copernicus_DSM_COG_10_N62_00_W151_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              34.46361111111111,
+              61.75819444444445
+            ],
+            [
+              34.46527777777778,
+              61.75819444444445
+            ],
+            [
+              34.46527777777778,
+              61.75902777777778
+            ],
+            [
+              34.46361111111111,
+              61.75902777777778
+            ],
+            [
+              34.46361111111111,
+              61.75819444444445
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "ead2500dd136bd6c05add4745d4a7913182a028d747eb41bce34fe84ef5df25c",
+        "raster_sidecar_sha256": "995917845c865cf37bd109f7fd7113b85083a0b8c871c26667b0edc785aa6fcd",
+        "sample_id": "S0097",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N61_00_E034_00_DEM/Copernicus_DSM_COG_10_N61_00_E034_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -45.545833333333334,
+              60.759861111111114
+            ],
+            [
+              -45.54416666666667,
+              60.759861111111114
+            ],
+            [
+              -45.54416666666667,
+              60.76069444444445
+            ],
+            [
+              -45.545833333333334,
+              60.76069444444445
+            ],
+            [
+              -45.545833333333334,
+              60.759861111111114
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "2c5e3e0963a7fa9ffc32c0321582d1e32145ad1338242f8bc0f7c43e80bbdccb",
+        "raster_sidecar_sha256": "f74e28b920871fe3f7df1effdc655d327ee87fa7436433bd44f20f78fc9e0aa0",
+        "sample_id": "S0142",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N60_00_W046_00_DEM/Copernicus_DSM_COG_10_N60_00_W046_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -149.42027777777776,
+              60.124861111111116
+            ],
+            [
+              -149.4186111111111,
+              60.124861111111116
+            ],
+            [
+              -149.4186111111111,
+              60.12569444444445
+            ],
+            [
+              -149.42027777777776,
+              60.12569444444445
+            ],
+            [
+              -149.42027777777776,
+              60.124861111111116
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "64a503bbefd37d09052081da7f7490936b4d62db4fa86627a7263fa431a95c79",
+        "raster_sidecar_sha256": "37932149c574298ab433defdd24360d76ff82a33c680955b37fc7b191f1fdabd",
+        "sample_id": "S0160",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N60_00_W150_00_DEM/Copernicus_DSM_COG_10_N60_00_W150_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -7.491458333333333,
+              57.626805555555556
+            ],
+            [
+              -7.490208333333333,
+              57.626805555555556
+            ],
+            [
+              -7.490208333333333,
+              57.62763888888889
+            ],
+            [
+              -7.491458333333333,
+              57.62763888888889
+            ],
+            [
+              -7.491458333333333,
+              57.626805555555556
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "501737023a186d1992b942384e5bbbcef5b7ad54afa95506d3eb19bb1fd97c55",
+        "raster_sidecar_sha256": "59002927d692cd8b797b9154dac10977dbf27e66cff28f3ea1374bfdf06a88cb",
+        "sample_id": "S0174",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N57_00_W008_00_DEM/Copernicus_DSM_COG_10_N57_00_W008_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              162.03812499999998,
+              56.200138888888894
+            ],
+            [
+              162.03937499999998,
+              56.200138888888894
+            ],
+            [
+              162.03937499999998,
+              56.20097222222223
+            ],
+            [
+              162.03812499999998,
+              56.20097222222223
+            ],
+            [
+              162.03812499999998,
+              56.200138888888894
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "44708b4aa006a7c7e86bd6a52fe71c432028e96d4c82293484903fde4667121f",
+        "raster_sidecar_sha256": "f709f3ac62c8cb3c3ba64e1c42967b497777d9f6a30f63dc8e3fb8788044ca28",
+        "sample_id": "S0202",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N56_00_E162_00_DEM/Copernicus_DSM_COG_10_N56_00_E162_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              8.856041666666666,
+              56.03680555555556
+            ],
+            [
+              8.857291666666667,
+              56.03680555555556
+            ],
+            [
+              8.857291666666667,
+              56.03763888888889
+            ],
+            [
+              8.856041666666666,
+              56.03763888888889
+            ],
+            [
+              8.856041666666666,
+              56.03680555555556
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "02a5af8161f155aca9ce26c10e318b3f34e4249c8e6d06c1802ad7dfd9e36954",
+        "raster_sidecar_sha256": "b8c0eae2e9023608b704ce8f6d2192caf810932c46633be7cb1db21940cf6d7d",
+        "sample_id": "S0205",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N56_00_E008_00_DEM/Copernicus_DSM_COG_10_N56_00_E008_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              25.214791666666667,
+              54.38291666666667
+            ],
+            [
+              25.216041666666666,
+              54.38291666666667
+            ],
+            [
+              25.216041666666666,
+              54.38375
+            ],
+            [
+              25.214791666666667,
+              54.38375
+            ],
+            [
+              25.214791666666667,
+              54.38291666666667
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "f51f93ab30053f93655284adff3089d242577dbef2ee9f4403e4f527834d6c50",
+        "raster_sidecar_sha256": "6f6cbf22d072633172ae3baa6e15dc0dd248d66386a65bf2a69d67250ef40277",
+        "sample_id": "S0212",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N54_00_E025_00_DEM/Copernicus_DSM_COG_10_N54_00_E025_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              14.304791666666667,
+              53.92458333333334
+            ],
+            [
+              14.306041666666667,
+              53.92458333333334
+            ],
+            [
+              14.306041666666667,
+              53.92541666666667
+            ],
+            [
+              14.304791666666667,
+              53.92541666666667
+            ],
+            [
+              14.304791666666667,
+              53.92458333333334
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "4adcebb7e523a1935c6217e8acc5b9fbd4a063617b8c298f484257fdd3647825",
+        "raster_sidecar_sha256": "fc6abd87e5be8e19268536ef5a7e5038079458cae2428bce07a6f2455c260a23",
+        "sample_id": "S0233",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N53_00_E014_00_DEM/Copernicus_DSM_COG_10_N53_00_E014_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -132.32020833333334,
+              53.49736111111111
+            ],
+            [
+              -132.31895833333334,
+              53.49736111111111
+            ],
+            [
+              -132.31895833333334,
+              53.498194444444444
+            ],
+            [
+              -132.32020833333334,
+              53.498194444444444
+            ],
+            [
+              -132.32020833333334,
+              53.49736111111111
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "823d14200b3a94014ecd7408a52113db90bb6f9af8bbae54aff341eb40b32123",
+        "raster_sidecar_sha256": "86e1e2e37a9e6b21f3e685b3297e88cc2772c81b2079c66ca04edc8788fb8be0",
+        "sample_id": "S0255",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N53_00_W133_00_DEM/Copernicus_DSM_COG_10_N53_00_W133_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              8.173541666666667,
+              52.23430555555556
+            ],
+            [
+              8.174791666666668,
+              52.23430555555556
+            ],
+            [
+              8.174791666666668,
+              52.23513888888889
+            ],
+            [
+              8.173541666666667,
+              52.23513888888889
+            ],
+            [
+              8.173541666666667,
+              52.23430555555556
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "ea63de09c4a990ca498c87f29d07ebfe35e9a31a19c460b01c15a33ff02208a1",
+        "raster_sidecar_sha256": "33393bdb8b826cb9c71d7efe3df0899067f3ed7a6b1f39cc25fc2e80ad38e4f7",
+        "sample_id": "S0276",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N52_00_E008_00_DEM/Copernicus_DSM_COG_10_N52_00_E008_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              19.245625,
+              50.05319444444445
+            ],
+            [
+              19.246875,
+              50.05319444444445
+            ],
+            [
+              19.246875,
+              50.05402777777778
+            ],
+            [
+              19.245625,
+              50.05402777777778
+            ],
+            [
+              19.245625,
+              50.05319444444445
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "96afe63001162945941d7bcb81d2bece0a0b937d9c9f59bf85f09094339ba60a",
+        "raster_sidecar_sha256": "bf9becb75cf894f80a1adfa6a8bcfa4a70e1897ed7565685144a91909388a696",
+        "sample_id": "S0340",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N50_00_E019_00_DEM/Copernicus_DSM_COG_10_N50_00_E019_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -125.60125,
+              49.09319444444445
+            ],
+            [
+              -125.60041666666666,
+              49.09319444444445
+            ],
+            [
+              -125.60041666666666,
+              49.09402777777778
+            ],
+            [
+              -125.60125,
+              49.09402777777778
+            ],
+            [
+              -125.60125,
+              49.09319444444445
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "8599c121050f702ab5ba783cedbf96cbe12c99843c484d4c86349aa8b42f3088",
+        "raster_sidecar_sha256": "005d8b5b968b720bbf1d12c69e9780ca8fef1e2e157ecd65017e9e5c6a12a45c",
+        "sample_id": "S0389",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N49_00_W126_00_DEM/Copernicus_DSM_COG_10_N49_00_W126_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -57.69236111111111,
+              48.99819444444445
+            ],
+            [
+              -57.69152777777778,
+              48.99819444444445
+            ],
+            [
+              -57.69152777777778,
+              48.99902777777778
+            ],
+            [
+              -57.69236111111111,
+              48.99902777777778
+            ],
+            [
+              -57.69236111111111,
+              48.99819444444445
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "ab6883cf2db274b2818dda0538d727d7cdb37ec850034fa92d1a9f460d6362a1",
+        "raster_sidecar_sha256": "b2e7b91ffa0faaa09b1d62e5b0be3073bfcf11680ac70bcbe7cc591be314d471",
+        "sample_id": "S0391",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N48_00_W058_00_DEM/Copernicus_DSM_COG_10_N48_00_W058_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              9.724583333333333,
+              48.23402777777778
+            ],
+            [
+              9.725416666666666,
+              48.23402777777778
+            ],
+            [
+              9.725416666666666,
+              48.234861111111115
+            ],
+            [
+              9.724583333333333,
+              48.234861111111115
+            ],
+            [
+              9.724583333333333,
+              48.23402777777778
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "3d68ec35f4ffdfe64c990d547995d9a9aa757008dd33d04d5d837f8968fd2289",
+        "raster_sidecar_sha256": "2aff841e519ebc1eb5ea9f17043c66225dc00b5d5455da0a35ea458323e07651",
+        "sample_id": "S0417",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N48_00_E009_00_DEM/Copernicus_DSM_COG_10_N48_00_E009_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              6.19125,
+              46.196250000000006
+            ],
+            [
+              6.192083333333334,
+              46.196250000000006
+            ],
+            [
+              6.192083333333334,
+              46.19708333333334
+            ],
+            [
+              6.19125,
+              46.19708333333334
+            ],
+            [
+              6.19125,
+              46.196250000000006
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "2f9ad351a14e45ea0cbb46fcfdc8598c0855fc0ded2faf71b49a6846e3aaf2fb",
+        "raster_sidecar_sha256": "6bd4c52aa243a57e6f8303bd1c46a9a524be03a1d38acc546fc1456794f9aa7f",
+        "sample_id": "S0478",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N46_00_E006_00_DEM/Copernicus_DSM_COG_10_N46_00_E006_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -61.97847222222222,
+              45.37847222222223
+            ],
+            [
+              -61.97763888888889,
+              45.37847222222223
+            ],
+            [
+              -61.97763888888889,
+              45.37930555555556
+            ],
+            [
+              -61.97847222222222,
+              45.37930555555556
+            ],
+            [
+              -61.97847222222222,
+              45.37847222222223
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "c8ff4d2c7b569ab274a9680892a6cf1421e5f7612fb944b2d9d36a20de359aee",
+        "raster_sidecar_sha256": "65b82802dbceda3f1251af668ff073a6cf7ee32066dd12cb89e0ef24936134b2",
+        "sample_id": "S0493",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N45_00_W062_00_DEM/Copernicus_DSM_COG_10_N45_00_W062_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              37.44347222222222,
+              44.80041666666667
+            ],
+            [
+              37.44430555555555,
+              44.80041666666667
+            ],
+            [
+              37.44430555555555,
+              44.80125
+            ],
+            [
+              37.44347222222222,
+              44.80125
+            ],
+            [
+              37.44347222222222,
+              44.80041666666667
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "629fd649e921a1067d76f10cfc43dc04e17117a44c689b0def1e12ca06055e88",
+        "raster_sidecar_sha256": "02e1c3ebd600e2cda8b29a5e75c1572a05acb6371834e4610c3a1f7fbc513cce",
+        "sample_id": "S0498",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N44_00_E037_00_DEM/Copernicus_DSM_COG_10_N44_00_E037_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -124.07069444444444,
+              44.52041666666667
+            ],
+            [
+              -124.06986111111111,
+              44.52041666666667
+            ],
+            [
+              -124.06986111111111,
+              44.52125
+            ],
+            [
+              -124.07069444444444,
+              44.52125
+            ],
+            [
+              -124.07069444444444,
+              44.52041666666667
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "8c23503366a9b4cca4b4377023031c28f7a526e205e7a00da35ed4cd1da4d1d4",
+        "raster_sidecar_sha256": "28c26823f4d68179a0111c139f318bb6155b2a295831999765562dcd6946dbf7",
+        "sample_id": "S0502",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N44_00_W125_00_DEM/Copernicus_DSM_COG_10_N44_00_W125_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              5.085416666666667,
+              43.90902777777778
+            ],
+            [
+              5.086250000000001,
+              43.90902777777778
+            ],
+            [
+              5.086250000000001,
+              43.90986111111111
+            ],
+            [
+              5.085416666666667,
+              43.90986111111111
+            ],
+            [
+              5.085416666666667,
+              43.90902777777778
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "f11d91fbf962cfacc489931d12d280a33159ce15fddb1fb93218ef4b1d2cef6e",
+        "raster_sidecar_sha256": "a4d6abca7d859ce063c6bced266c665bd0e10a6f09a18cd3bf5f0a8b5863d6af",
+        "sample_id": "S0509",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N43_00_E005_00_DEM/Copernicus_DSM_COG_10_N43_00_E005_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              143.87291666666667,
+              43.64541666666667
+            ],
+            [
+              143.87375,
+              43.64541666666667
+            ],
+            [
+              143.87375,
+              43.64625
+            ],
+            [
+              143.87291666666667,
+              43.64625
+            ],
+            [
+              143.87291666666667,
+              43.64541666666667
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "71d11fc0211eb8e346667f0ce3a24ccbf0e0ddb35343f31a7e1fb0bd289c8d41",
+        "raster_sidecar_sha256": "e09c91b38a2f7e80aab0d5456c2b90d1f0a0197481c6665ec40326d892002907",
+        "sample_id": "S0514",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N43_00_E143_00_DEM/Copernicus_DSM_COG_10_N43_00_E143_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              145.5559722222222,
+              43.25763888888889
+            ],
+            [
+              145.55680555555554,
+              43.25763888888889
+            ],
+            [
+              145.55680555555554,
+              43.258472222222224
+            ],
+            [
+              145.5559722222222,
+              43.258472222222224
+            ],
+            [
+              145.5559722222222,
+              43.25763888888889
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "3d0b525ab8b000c066439a695252dc3f6b0be664fe7e392a105b7c86b7ecad03",
+        "raster_sidecar_sha256": "5ae199a7615acf81a35be2b492640e3995bf0427b71b40f48bb6abdfed7bbb89",
+        "sample_id": "S0519",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N43_00_E145_00_DEM/Copernicus_DSM_COG_10_N43_00_E145_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              27.88125,
+              42.83791666666667
+            ],
+            [
+              27.882083333333334,
+              42.83791666666667
+            ],
+            [
+              27.882083333333334,
+              42.838750000000005
+            ],
+            [
+              27.88125,
+              42.838750000000005
+            ],
+            [
+              27.88125,
+              42.83791666666667
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "a82db3b6f2d0200ea5b3fbd267a8b5137b27dc032f9637fa3d23d20474fd1f81",
+        "raster_sidecar_sha256": "5adc281631e64e5c02fe010338ce1c06dd6532a9e03ece122e31dba49cbe5e1c",
+        "sample_id": "S0528",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N42_00_E027_00_DEM/Copernicus_DSM_COG_10_N42_00_E027_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -7.725694444444445,
+              42.10125
+            ],
+            [
+              -7.724861111111111,
+              42.10125
+            ],
+            [
+              -7.724861111111111,
+              42.10208333333333
+            ],
+            [
+              -7.725694444444445,
+              42.10208333333333
+            ],
+            [
+              -7.725694444444445,
+              42.10125
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "c3e5b9832e459f9ab50084973d41838ab3d3c8fed6c1a6778db430fb3d3dc035",
+        "raster_sidecar_sha256": "86d797626c67dadf809a8f013a01be118a8be250231ae639996570efdff31829",
+        "sample_id": "S0543",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N42_00_W008_00_DEM/Copernicus_DSM_COG_10_N42_00_W008_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -124.07708333333333,
+              40.840694444444445
+            ],
+            [
+              -124.07625,
+              40.840694444444445
+            ],
+            [
+              -124.07625,
+              40.84152777777778
+            ],
+            [
+              -124.07708333333333,
+              40.84152777777778
+            ],
+            [
+              -124.07708333333333,
+              40.840694444444445
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "d0d95a4ed89b429337e2563e56ef3076f458ae5ec72aff6062d7c67faae39e1d",
+        "raster_sidecar_sha256": "12d1c3139d184378797cbabb0de06c901a0714b59cde727247ee345d1429f9e4",
+        "sample_id": "S0558",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N40_00_W125_00_DEM/Copernicus_DSM_COG_10_N40_00_W125_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              19.509305555555557,
+              40.323750000000004
+            ],
+            [
+              19.51013888888889,
+              40.323750000000004
+            ],
+            [
+              19.51013888888889,
+              40.32458333333334
+            ],
+            [
+              19.509305555555557,
+              40.32458333333334
+            ],
+            [
+              19.509305555555557,
+              40.323750000000004
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "fc445bd0d312ab70d2435bbe7e3e643006af99b5fa1d55dbe1332a00adc9f906",
+        "raster_sidecar_sha256": "9dda2e2d2fbc62fbaac742b0958e7b12753df928f19d2c8174c380e08bfd2047",
+        "sample_id": "S0565",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N40_00_E019_00_DEM/Copernicus_DSM_COG_10_N40_00_E019_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              141.89680555555555,
+              39.364583333333336
+            ],
+            [
+              141.89763888888888,
+              39.364583333333336
+            ],
+            [
+              141.89763888888888,
+              39.36541666666667
+            ],
+            [
+              141.89680555555555,
+              39.36541666666667
+            ],
+            [
+              141.89680555555555,
+              39.364583333333336
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "3cff9eb168da377fa5771d74eef3fac6d2d0aaf4ef488f212e4d956237ff3be2",
+        "raster_sidecar_sha256": "9ad8ddfee6b0127a575c0c6482d341b6307b348d2ec7fee101cebce0a5d16fd6",
+        "sample_id": "S0573",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N39_00_E141_00_DEM/Copernicus_DSM_COG_10_N39_00_E141_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -122.45402777777777,
+              37.80319444444445
+            ],
+            [
+              -122.45319444444443,
+              37.80319444444445
+            ],
+            [
+              -122.45319444444443,
+              37.80402777777778
+            ],
+            [
+              -122.45402777777777,
+              37.80402777777778
+            ],
+            [
+              -122.45402777777777,
+              37.80319444444445
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "c2f567e30b7e2f154b105c92c1172a7f62c866fc4972304b6632233f539d2358",
+        "raster_sidecar_sha256": "f09fdb1dabfe8e867853b10ec58a88ab74768b854890db7adc563bdb3c2ccd09",
+        "sample_id": "S0584",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N37_00_W123_00_DEM/Copernicus_DSM_COG_10_N37_00_W123_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -122.48430555555555,
+              37.78763888888889
+            ],
+            [
+              -122.48347222222222,
+              37.78763888888889
+            ],
+            [
+              -122.48347222222222,
+              37.788472222222225
+            ],
+            [
+              -122.48430555555555,
+              37.788472222222225
+            ],
+            [
+              -122.48430555555555,
+              37.78763888888889
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "011fe84f448800ba02530452cb041e30ee01452c8764c70408dfe7ac827d0a56",
+        "raster_sidecar_sha256": "c3634fc8873ebfaeb0b323b872efcd97858b40fa86c6ddc29f5458e1d64e6140",
+        "sample_id": "S0585",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N37_00_W123_00_DEM/Copernicus_DSM_COG_10_N37_00_W123_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -8.619861111111112,
+              37.63736111111111
+            ],
+            [
+              -8.619027777777779,
+              37.63736111111111
+            ],
+            [
+              -8.619027777777779,
+              37.638194444444444
+            ],
+            [
+              -8.619861111111112,
+              37.638194444444444
+            ],
+            [
+              -8.619861111111112,
+              37.63736111111111
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "1c2a0761a197560c52a9f17b9ebbf7c8c3aad7b5e48e956a37dacdfcff3c1fab",
+        "raster_sidecar_sha256": "887abc7bc1a2a7dc8e7fa4297ba0321f156f5f992d03e6759593da7306eca2c1",
+        "sample_id": "S0587",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N37_00_W009_00_DEM/Copernicus_DSM_COG_10_N37_00_W009_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              29.575972222222223,
+              37.16375
+            ],
+            [
+              29.576805555555556,
+              37.16375
+            ],
+            [
+              29.576805555555556,
+              37.16458333333333
+            ],
+            [
+              29.575972222222223,
+              37.16458333333333
+            ],
+            [
+              29.575972222222223,
+              37.16375
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "4be933895c48cd672f4ac89faf3f7cf6f477e693140db53dcbaee9355ca3dbd5",
+        "raster_sidecar_sha256": "64db562eb59583b535e2ef7c46659da50b3309dda51fad8bb092028b2cf6d9c5",
+        "sample_id": "S0591",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N37_00_E029_00_DEM/Copernicus_DSM_COG_10_N37_00_E029_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              136.56625,
+              35.25486111111111
+            ],
+            [
+              136.56708333333333,
+              35.25486111111111
+            ],
+            [
+              136.56708333333333,
+              35.255694444444444
+            ],
+            [
+              136.56625,
+              35.255694444444444
+            ],
+            [
+              136.56625,
+              35.25486111111111
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "cache_status": "acquired",
+        "raster_sha256": "c09d5688c7862dd1b02e77c904fc83091a0a6d7e8237ad8d128f5641a5fdb422",
+        "raster_sidecar_sha256": "c0a9b0c6272fedf3a37eee021f7e6175a34cd42ae2ccd7f27ead7bfc8a640740",
+        "sample_id": "S0599",
+        "source_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N35_00_E136_00_DEM/Copernicus_DSM_COG_10_N35_00_E136_00_DEM.tif",
+        "topography_status": "ok"
+      },
+      "type": "Feature"
+    }
+  ],
+  "type": "FeatureCollection"
+}

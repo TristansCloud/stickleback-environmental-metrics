@@ -1,0 +1,9 @@
+{
+  "run_date": "2026-09-07T22:10:38.393393+00:00",
+  "input": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\pilot_sites_v1.csv",
+  "record_count": 40,
+  "live_network_enabled": true,
+  "radius_m": 1000.0,
+  "endpoint": "https://overpass-api.de/api/interpreter",
+  "output": "C:\\Users\\trist\\OneDrive\\Desktop\\Python Enviro Data - Marius\\code\\_v1\\data\\osm_pilot\\pilot_osm_matches.csv"
+}

@@ -1,0 +1,41 @@
+sample_id,Population.name,population.abbreviation,Latitude,Longitude,Ecotype
+S0001,Barents Sea pelagic,BAR,72.5801,37.0803,marine
+S0002,Pulmankijaervi (Kevo),PUL2,69.5856,27.5854,freshwater
+S0028,Unnamed5_northwest_of_Skagafjörður,ISI,66.11091,-20.09427,marine-freshwater
+S0031,Hópsvatn,ISU_ISUB,66.0693,-19.14021,freshwater
+S0050,Lake Verkhneye Morzhovoe,VEMO,65.53083,34.70589,freshwater
+S0067,Kazachka,KAZ,64.71699,177.50497,marine
+S0084,Qasigiannguit,QAS,64.08018,-51.01237,freshwater
+S0091,Ölfusá,ISAY,63.89123,-21.30293,freshwater
+S0093,Christiansen Lake,CHRIS,62.3147,-150.0625,freshwater
+S0097,Lake Onega,ONEG,61.75867,34.46461,freshwater
+S0142,Eqakuit Farm River,EQA,60.76034,-45.54507,freshwater
+S0160,Resurrection Bay,REBA,60.12519,-149.41967,marine
+S0174,Hosta,HOST,57.62713,-7.490911,freshwater
+S0202,Lake Kursinka,KURS,56.2006,162.03882,freshwater
+S0205,Kibaek Molledam,KIB,56.03729,8.85673,freshwater
+S0212,Nevezis River,NEV,54.38339,25.21525,freshwater
+S0233,Karsibor,KBOR,53.92511,14.30553,marine
+S0255,Marie Lake,MARIL,53.49779,-132.31938,freshwater
+S0276,Bissendorf_Germany,DES1,52.23464,8.174167,freshwater
+S0340,Weichsel_Poland,PLS,50.05363,19.24622,freshwater
+S0389,Kennedy Lake,KEN,49.09369,-125.60095,freshwater
+S0391,Rapid Pond,RAP,48.9985,-57.692,freshwater
+S0417,Kirchbierlingen,KIRCHB,48.2344,9.725,freshwater
+S0478,Thonex_La_Seymaz_GE,GES2,46.19677,6.19172,freshwater
+S0493,Goshen Lake,GOL,45.37881,-61.97801,freshwater
+S0498,Sukko River mid,SUF,44.8009,37.4438,freshwater
+S0502,Beaver Creek,BEAV,44.52074,-124.07035,freshwater
+S0509,La_Sorgue_France,FRB,43.90934,5.08576,freshwater
+S0514,Chimikeppu,CHI,43.64592,143.87321,freshwater
+S0519,Lake Choboshi,CHO,43.25792,145.55628,marine
+S0528,Perperidere River mouth,PER,42.83847,27.88162,freshwater
+S0543,Antela,ANT,42.10155,-7.72533,freshwater
+S0558,Jacoby Creek,JACO,40.84116,-124.07663,freshwater
+S0565,Izvorit Stream in Tragjas,IZO,40.32427,19.50981,freshwater
+S0573,Gensui,GEN,39.36487,141.8973,freshwater
+S0584,Crissy Fields Marsh,CRFM,37.80372,-122.45375,marine
+S0585,Lobos Downstream,LOBO,37.78816,-122.48398,freshwater
+S0587,Ribeira do Torgal River,TOR,37.63778,-8.61944,freshwater
+S0591,Sorkun Stream,SOR,37.16406,29.5764,freshwater
+S0599,Gifu,GIF,35.25527,136.56669,freshwater
