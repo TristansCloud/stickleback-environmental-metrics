@@ -21,11 +21,6 @@ from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-import ee
-import rasterio
-from rasterio.errors import RasterioIOError
-from rasterio.windows import Window
-
 from enviro_data.dem_acquisition import RasterMetadata, retrieval_timestamp
 from enviro_data.hydrology import delineate_catchment
 from enviro_data.topography import extract_window
@@ -89,6 +84,12 @@ def copernicus_url(latitude: float, longitude: float) -> str:
 
 
 def cache_dem(row: dict[str, str], metrics: Metrics) -> tuple[RasterMetadata, object, dict[str, object]]:
+    try:
+        import rasterio
+        from rasterio.errors import RasterioIOError
+        from rasterio.windows import Window
+    except ImportError as exc:
+        raise RuntimeError("staged DEM acquisition requires the 'terrain' extra") from exc
     site = row["sample_id"]
     url = copernicus_url(float(row["Latitude"]), float(row["Longitude"]))
     out = ROOT / "data" / "cache" / "staged_pilot" / f"{site}_copernicus_3x3.tif"
@@ -145,6 +146,10 @@ def cache_dem(row: dict[str, str], metrics: Metrics) -> tuple[RasterMetadata, ob
 
 
 def merit(row: dict[str, str], metrics: Metrics) -> dict[str, object]:
+    try:
+        import ee
+    except ImportError as exc:
+        raise RuntimeError("MERIT sampling requires the 'earth-engine' extra") from exc
     import tomllib
     config = tomllib.loads((ROOT / "config" / "earth_engine.toml").read_text(encoding="utf-8"))
     started = time.perf_counter()
