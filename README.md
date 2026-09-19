@@ -1,4 +1,4 @@
-# Environmental data pipeline (v1)
+# Stickleback environmental data pipeline
 
 This repository contains the first implementation layer for enriching global water-sample coordinates. The checked-in `site_overview_v1_clean.csv` is an immutable source artifact. It contains 599 validated WGS84 (`EPSG:4326`) records with stable `sample_id` values.
 
@@ -25,6 +25,37 @@ Current modules:
 - `enviro_data.dem_acquisition`: bounded, cache-first DEM/hydrology source handling and provenance for the pilot.
 - `enviro_data.topography`: local topographic extraction from cached raster windows.
 - `enviro_data.hydrology`: hydrologic/catchment status and MERIT Hydro integration boundary.
+- `enviro_data.habitats`: canonical freshwater, transition, and marine routing.
+- `enviro_data.metrics`: one status/provenance contract for analysis-ready variables.
+- `enviro_data.cached_enrichment`: converts the frozen pilot cache into ecological metrics without network access.
+- `enviro_data.source_catalog`: versioned active and candidate global data sources.
+- `enviro_data.extraction_plan`: serializable, habitat-aware requests for future bounded acquisition.
+- `enviro_data.transforms`: checked unit/scale transforms declared by the source catalog.
+- `enviro_data.temporal`: mean, extremes, range, variability, and missingness summaries.
+
+### Reuse the completed pilot
+
+The checked-in validation bundle already contains Copernicus terrain and
+MERIT Hydro point values. Convert the latest frozen bundle to a wide,
+analysis-ready table with:
+
+```text
+python scripts/enrich_cached_pilot.py
+```
+
+The default output is
+`data/derived/pilot_ecological_metrics_v1.csv`. Every environmental value has
+companion status, unit, ecological-axis, source, version, method, and spatial-
+scale columns. Marine-inapplicable values and source no-data remain null; they
+are never written as zero.
+
+The source catalog currently routes JRC Global Surface Water and ERA5-Land to
+freshwater/transition sites; OISST, HYCOM, and MODIS ocean colour to
+marine/transition sites; and ESA WorldCover to terrestrial buffers or
+catchments for all known habitats. These entries are verified source
+specifications, not permission for an unbounded run. See
+`docs/environmental_variable_roadmap.md` for the ecological interpretation and
+remaining implementation gates.
 
 For the first pass, the 40-site pilot uses Copernicus DEM GLO-30 (accepted as
 DSM topography) and MERIT Hydro (accepted for hydrologic context). The source
@@ -55,8 +86,15 @@ Engine Python/CLI credential store. Do not place OAuth tokens, service-account
 keys, passwords, or other secrets in either TOML file. The configuration does
 not authorize a full MERIT download; it is for bounded pilot requests only.
 
-Run checks with:
+Install and run offline checks with:
 
 ```text
+python -m pip install -e ".[test]"
 python -m pytest
+```
+
+Install optional integrations only when required:
+
+```text
+python -m pip install -e ".[terrain,earth-engine,osm]"
 ```

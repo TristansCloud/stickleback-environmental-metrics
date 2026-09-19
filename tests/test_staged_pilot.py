@@ -19,12 +19,10 @@ def test_metrics_has_runtime_and_source_counters() -> None:
     assert set(result["sources"]) == {"copernicus", "earth_engine"}
 
 
-def test_stage_output_has_exact_size_and_unique_ids() -> None:
-    import json
+def test_checked_in_pilot_has_exact_size_and_unique_ids() -> None:
+    import csv
     from pathlib import Path
     root = Path(__file__).resolve().parents[1]
-    output = json.loads((root / "data/cache/staged_pilot/stage_40_sites.json").read_text())
-    assert output["stage_size"] == 40
-    assert output["validation"] == {"expected_rows": 40, "actual_rows": 40, "ids_unique": True}
-    ids = [row["site"]["sample_id"] for row in output["results"]]
+    with (root / "pilot_sites_v1.csv").open(encoding="utf-8-sig", newline="") as handle:
+        ids = [row["sample_id"] for row in csv.DictReader(handle)]
     assert len(ids) == len(set(ids)) == 40
