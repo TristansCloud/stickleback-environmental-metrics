@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from enviro_data.osm_matching import OSMMatcher, OverpassClient
+from enviro_data.osm_matching import OSMCandidate, OSMMatcher, OverpassClient, build_habitat_overpass_query, build_overpass_query, overpass_element_to_feature
 
 
 def feature(osm_id, geometry, tags):
@@ -38,6 +38,53 @@ class OSMMatchingTests(unittest.TestCase):
             self.assertEqual(len(client.fetch(0, 0, 100)), 1)
             self.assertEqual(len(client.fetch(0, 0, 100)), 1)
         self.assertEqual(len(calls), 1)
+
+    def test_query_includes_enclosing_areas_relations_and_coastline(self):
+        query = build_overpass_query(50, -120, 3000, 10000)
+        self.assertIn("is_in(50,-120)", query)
+        self.assertIn("rel(pivot.areas)[natural=water]", query)
+        self.assertIn("rel(around:3000,50,-120)[natural=water]", query)
+        self.assertIn("way(around:10000,50,-120)[natural=coastline]", query)
+
+    def test_habitat_queries_avoid_irrelevant_feature_families(self):
+        lake = build_habitat_overpass_query(50, -120, 1000, "lake")
+        marine = build_habitat_overpass_query(50, -120, 3000, "marine")
+        self.assertIn("is_in(50,-120)", lake)
+        self.assertNotIn("natural=coastline", lake)
+        self.assertNotIn("is_in", marine)
+        self.assertIn("natural=coastline", marine)
+        self.assertNotIn("[waterway]", marine)
+        self.assertNotIn("is_in", build_habitat_overpass_query(50, -120, 250, "stream"))
+        self.assertNotIn("is_in", build_habitat_overpass_query(50, -120, 500, "unknown"))
+
+    def test_relation_member_geometries_are_stitched(self):
+        relation = {
+            "type": "relation",
+            "id": 99,
+            "tags": {"type": "multipolygon", "natural": "water", "water": "lake"},
+            "members": [
+                {"role": "outer", "geometry": [{"lon": -1, "lat": -1}, {"lon": 1, "lat": -1}, {"lon": 1, "lat": 1}]},
+                {"role": "outer", "geometry": [{"lon": 1, "lat": 1}, {"lon": -1, "lat": 1}, {"lon": -1, "lat": -1}]},
+            ],
+        }
+        candidate = OSMCandidate.from_feature(overpass_element_to_feature(relation))
+        result = OSMMatcher([candidate]).match("site", 0, 0, "lake")
+        self.assertEqual(result.match_method, "contains_water_polygon")
+        self.assertEqual(candidate.osm_type, "relation")
+
+    def test_multipolygon_holes_are_not_treated_as_water(self):
+        geometry = {"type": "MultiPolygon", "coordinates": [
+            [[(-2, -2), (2, -2), (2, 2), (-2, 2), (-2, -2)], [(-.5, -.5), (.5, -.5), (.5, .5), (-.5, .5), (-.5, -.5)]],
+            [[(3, 3), (4, 3), (4, 4), (3, 4), (3, 3)]],
+        ]}
+        candidate = OSMCandidate.from_feature(feature(50, geometry, {"natural": "water", "water": "lake"}))
+        self.assertNotEqual(OSMMatcher([candidate], search_radius_m=10).match("hole", 0, 0).match_method, "contains_water_polygon")
+
+    def test_expected_type_guides_nearest_candidate(self):
+        stream = feature(1, {"type": "LineString", "coordinates": [(0, .0001), (.01, .0001)]}, {"waterway": "stream"})
+        lake = feature(2, {"type": "Polygon", "coordinates": [[(-.01, .001), (.01, .001), (.01, .01), (-.01, .01), (-.01, .001)]]}, {"natural": "water", "water": "lake"})
+        result = OSMMatcher([stream, lake], search_radius_m=2000).match("lake-site", 0, 0, "lake")
+        self.assertEqual(result.osm_id, "2")
 
 
 if __name__ == "__main__":

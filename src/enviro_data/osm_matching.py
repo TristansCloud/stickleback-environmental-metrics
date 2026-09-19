@@ -15,7 +15,13 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable, Iterable, Mapping, Sequence
 
-WATER_CLASSES = frozenset({"lake", "reservoir", "pond", "river", "stream", "canal", "drain", "ditch", "coastline", "wetland", "swimming_pool", "other_water"})
+WATER_CLASSES = frozenset({"lake", "reservoir", "pond", "basin", "lagoon", "bay", "river", "stream", "canal", "drain", "ditch", "coastline", "wetland", "swimming_pool", "other_water"})
+PREFERRED_CLASSES = {
+    "lake": frozenset({"lake", "reservoir", "pond", "basin", "other_water"}),
+    "stream": frozenset({"river", "stream", "canal", "drain", "ditch"}),
+    "transition": frozenset({"river", "stream", "lagoon", "bay", "coastline", "wetland", "other_water"}),
+    "marine": frozenset({"bay", "coastline"}),
+}
 
 
 @dataclass(frozen=True)
@@ -27,14 +33,16 @@ class OSMCandidate:
     tags: Mapping[str, Any] = field(default_factory=dict)
     feature_class: str = "other_water"
     source: str = "osm"
+    osm_type: str = "way"
 
     @classmethod
     def from_feature(cls, feature: Mapping[str, Any]) -> "OSMCandidate":
         props = dict(feature.get("properties") or feature.get("tags") or {})
         osm_id = feature.get("osm_id", feature.get("id", props.get("osm_id", "")))
+        osm_type = str(feature.get("osm_type", feature.get("type", "way")))
         if str(osm_id).startswith(("node/", "way/", "relation/")):
-            osm_id = str(osm_id).split("/", 1)[1]
-        return cls(str(osm_id), feature.get("geometry") or {}, props, classify_water_feature(props), feature.get("source", "osm"))
+            osm_type, osm_id = str(osm_id).split("/", 1)
+        return cls(str(osm_id), feature.get("geometry") or {}, props, classify_water_feature(props), feature.get("source", "osm"), osm_type)
 
 
 @dataclass(frozen=True)
@@ -59,17 +67,19 @@ def classify_water_feature(tags: Mapping[str, Any]) -> str:
     waterway = str(tags.get("waterway", "")).lower()
     leisure = str(tags.get("leisure", "")).lower()
     if leisure == "swimming_pool": return "swimming_pool"
-    if natural == "water": return {"lake": "lake", "reservoir": "reservoir", "pond": "pond", "river": "river"}.get(water, "other_water")
+    if natural == "water": return {"lake": "lake", "reservoir": "reservoir", "pond": "pond", "basin": "basin", "lagoon": "lagoon", "river": "river"}.get(water, "other_water")
+    if natural == "bay": return "bay"
     if natural in {"wetland", "coastline"}: return natural
+    if waterway == "riverbank": return "river"
     if waterway in {"river", "stream", "canal", "drain", "ditch"}: return waterway
     if str(tags.get("landuse", "")).lower() == "reservoir": return "reservoir"
     return "other_water"
 
 
-def _rings(geom: Mapping[str, Any]) -> list[list[tuple[float, float]]]:
+def _polygons(geom: Mapping[str, Any]) -> list[list[list[tuple[float, float]]]]:
     c, typ = geom.get("coordinates", []), geom.get("type", "")
-    if typ == "Polygon": return [[(float(x), float(y)) for x, y, *_ in ring] for ring in c]
-    if typ == "MultiPolygon": return [[(float(x), float(y)) for x, y, *_ in ring] for poly in c for ring in poly]
+    if typ == "Polygon": return [[[tuple(map(float, xy[:2])) for xy in ring] for ring in c]]
+    if typ == "MultiPolygon": return [[[tuple(map(float, xy[:2])) for xy in ring] for ring in poly] for poly in c]
     return []
 
 
@@ -91,6 +101,13 @@ def _point_in_ring(point: tuple[float, float], ring: Sequence[tuple[float, float
     return inside
 
 
+def _segments(points: Sequence[tuple[float, float]], close: bool = False):
+    pairs = list(zip(points, points[1:]))
+    if close and len(points) > 2 and points[0] != points[-1]:
+        pairs.append((points[-1], points[0]))
+    return pairs
+
+
 def _segment_distance_m(point: tuple[float, float], a: tuple[float, float], b: tuple[float, float], ref_lat: float) -> float:
     px, py = _xy(point, ref_lat); ax, ay = _xy(a, ref_lat); bx, by = _xy(b, ref_lat)
     dx, dy = bx - ax, by - ay; t = max(0.0, min(1.0, ((px-ax)*dx + (py-ay)*dy) / (dx*dx + dy*dy))) if dx or dy else 0.0
@@ -98,16 +115,85 @@ def _segment_distance_m(point: tuple[float, float], a: tuple[float, float], b: t
 
 
 def _feature_distance(point: tuple[float, float], candidate: OSMCandidate) -> tuple[bool, float | None]:
-    typ = candidate.geometry.get("type", ""); lat = point[1]
-    rings = _rings(candidate.geometry)
-    if rings:
-        inside = _point_in_ring(point, rings[0]) and not any(_point_in_ring(point, r) for r in rings[1:])
-        dist = min((_segment_distance_m(point, a, b, lat) for r in rings for a, b in zip(r, r[1:])), default=0.0)
+    lat = point[1]
+    polygons = _polygons(candidate.geometry)
+    if polygons:
+        inside = any(
+            polygon
+            and _point_in_ring(point, polygon[0])
+            and not any(_point_in_ring(point, hole) for hole in polygon[1:])
+            for polygon in polygons
+        )
+        dist = min(
+            (_segment_distance_m(point, a, b, lat) for polygon in polygons for ring in polygon for a, b in _segments(ring, close=True)),
+            default=0.0,
+        )
         return inside, 0.0 if inside else dist
     lines = _lines(candidate.geometry)
     if lines:
-        return False, min((_segment_distance_m(point, a, b, lat) for line in lines for a, b in zip(line, line[1:])), default=None)
+        return False, min((_segment_distance_m(point, a, b, lat) for line in lines for a, b in _segments(line)), default=None)
     return False, None
+
+
+def build_overpass_query(lat: float, lon: float, radius_m: float, coast_radius_m: float | None = None) -> str:
+    """Build a bounded query for nearby and enclosing water geometries.
+
+    ``is_in`` plus ``pivot`` recovers a large enclosing lake even when its
+    shoreline nodes are farther away than ``radius_m``.
+    """
+    coast_radius = max(radius_m, coast_radius_m or radius_m)
+    return (
+        "[out:json][timeout:25];"
+        f"is_in({lat},{lon})->.areas;"
+        "(way(pivot.areas)[natural=water];rel(pivot.areas)[natural=water];"
+        "way(pivot.areas)[landuse=reservoir];rel(pivot.areas)[landuse=reservoir];"
+        f"way(around:{radius_m},{lat},{lon})[natural=water];"
+        f"rel(around:{radius_m},{lat},{lon})[natural=water];"
+        f"way(around:{radius_m},{lat},{lon})[waterway];"
+        f"rel(around:{radius_m},{lat},{lon})[waterway];"
+        f"way(around:{radius_m},{lat},{lon})[landuse=reservoir];"
+        f"rel(around:{radius_m},{lat},{lon})[landuse=reservoir];"
+        f"way(around:{coast_radius},{lat},{lon})[natural=bay];"
+        f"rel(around:{coast_radius},{lat},{lon})[natural=bay];"
+        f"way(around:{coast_radius},{lat},{lon})[natural=coastline];"
+        ");out geom tags;"
+    )
+
+
+def build_habitat_overpass_query(lat: float, lon: float, radius_m: float, waterbody_type: str) -> str:
+    """Build a smaller query tailored to a name/ecotype-derived habitat type."""
+    kind = str(waterbody_type or "unknown").lower()
+    nearby: list[str] = []
+    containing: list[str] = []
+
+    if kind == "lake":
+        containing = [
+            "way(pivot.areas)[natural=water]",
+            "rel(pivot.areas)[natural=water]",
+            "way(pivot.areas)[landuse=reservoir]",
+            "rel(pivot.areas)[landuse=reservoir]",
+        ]
+        nearby = ["way[NATURAL]", "rel[NATURAL]", "way[RESERVOIR]", "rel[RESERVOIR]"]
+    elif kind == "stream":
+        nearby = ["way[WATERWAY]", "rel[WATERWAY]", "way[NATURAL]", "rel[NATURAL]"]
+    elif kind == "marine":
+        nearby = ["way[COAST]", "way[BAY]", "rel[BAY]"]
+    elif kind == "transition":
+        nearby = ["way[WATERWAY]", "rel[WATERWAY]", "way[NATURAL]", "rel[NATURAL]", "way[WETLAND]", "rel[WETLAND]", "way[COAST]", "way[BAY]", "rel[BAY]"]
+    else:
+        nearby = ["way[WATERWAY]", "rel[WATERWAY]", "way[NATURAL]", "rel[NATURAL]", "way[COAST]", "way[BAY]", "rel[BAY]"]
+
+    replacements = {
+        "[NATURAL]": f"(around:{radius_m},{lat},{lon})[natural=water]",
+        "[RESERVOIR]": f"(around:{radius_m},{lat},{lon})[landuse=reservoir]",
+        "[WATERWAY]": f"(around:{radius_m},{lat},{lon})[waterway]",
+        "[WETLAND]": f"(around:{radius_m},{lat},{lon})[natural=wetland]",
+        "[COAST]": f"(around:{radius_m},{lat},{lon})[natural=coastline]",
+        "[BAY]": f"(around:{radius_m},{lat},{lon})[natural=bay]",
+    }
+    nearby = [next((clause.replace(token, value) for token, value in replacements.items() if token in clause), clause) for clause in nearby]
+    prefix = f"is_in({lat},{lon})->.areas;" if containing else ""
+    return "[out:json][timeout:25];" + prefix + "(" + ";".join(containing + nearby) + ";);out geom tags;"
 
 
 class OverpassClient:
@@ -116,30 +202,92 @@ class OverpassClient:
         self.cache_dir = Path(cache_dir) if cache_dir else None; self.endpoint = endpoint; self.ttl_seconds = ttl_seconds; self.http_get = http_get
 
     def fetch(self, lat: float, lon: float, radius_m: float) -> list[OSMCandidate]:
-        key = hashlib.sha256(f"{lat:.6f},{lon:.6f},{radius_m:.1f}".encode()).hexdigest(); path = self.cache_dir / f"overpass_{key}.json" if self.cache_dir else None
+        query = build_overpass_query(lat, lon, radius_m)
+        key = hashlib.sha256(query.encode()).hexdigest(); path = self.cache_dir / f"overpass_{key}.json" if self.cache_dir else None
         payload = None
         if path and path.exists() and time.time() - path.stat().st_mtime <= self.ttl_seconds: payload = json.loads(path.read_text(encoding="utf-8"))
         if payload is None:
             if self.http_get is None:
                 import requests
                 self.http_get = requests.get
-            q = f"[out:json];(way(around:{radius_m},{lat},{lon})[natural=water];way(around:{radius_m},{lat},{lon})[waterway];way(around:{radius_m},{lat},{lon})[landuse=reservoir];);out geom tags;"
-            response = self.http_get(self.endpoint, params={"data": q}, timeout=30); response.raise_for_status(); payload = response.json()
+            response = self.http_get(
+                self.endpoint,
+                data={"data": query},
+                headers={"User-Agent": "stickleback-environmental-metrics/0.1"},
+                timeout=45,
+            ); response.raise_for_status(); payload = response.json()
             if path: path.parent.mkdir(parents=True, exist_ok=True); path.write_text(json.dumps(payload), encoding="utf-8")
-        return [OSMCandidate.from_feature(_overpass_to_feature(x)) for x in payload.get("elements", [])]
+        return [OSMCandidate.from_feature(overpass_element_to_feature(x)) for x in payload.get("elements", [])]
 
 
-def _overpass_to_feature(element: Mapping[str, Any]) -> dict[str, Any]:
-    geom = element.get("geometry", []); coords = [(p["lon"], p["lat"]) for p in geom]
-    typ = "Polygon" if len(coords) >= 3 and coords[0] == coords[-1] else "LineString"
-    return {"id": f"way/{element.get('id', '')}", "geometry": {"type": typ, "coordinates": [coords] if typ == "Polygon" else coords}, "tags": element.get("tags", {})}
+def _stitch_rings(parts: Sequence[Sequence[tuple[float, float]]]) -> list[list[tuple[float, float]]]:
+    """Join relation-member way geometries into closed rings."""
+    remaining = [list(part) for part in parts if len(part) >= 2]
+    rings: list[list[tuple[float, float]]] = []
+    while remaining:
+        ring = remaining.pop(0)
+        changed = True
+        while ring[0] != ring[-1] and changed:
+            changed = False
+            for index, part in enumerate(remaining):
+                if ring[-1] == part[0]:
+                    ring.extend(part[1:])
+                elif ring[-1] == part[-1]:
+                    ring.extend(reversed(part[:-1]))
+                elif ring[0] == part[-1]:
+                    ring = part[:-1] + ring
+                elif ring[0] == part[0]:
+                    ring = list(reversed(part[1:])) + ring
+                else:
+                    continue
+                remaining.pop(index)
+                changed = True
+                break
+        if len(ring) >= 4 and ring[0] == ring[-1]:
+            rings.append(ring)
+    return rings
+
+
+def overpass_element_to_feature(element: Mapping[str, Any]) -> dict[str, Any]:
+    """Convert Overpass ``out geom`` ways or multipolygon relations to GeoJSON."""
+    osm_type = str(element.get("type", "way"))
+    if osm_type == "relation":
+        members = element.get("members") or []
+        groups: dict[str, list[list[tuple[float, float]]]] = {"outer": [], "inner": []}
+        for member in members:
+            role = str(member.get("role") or "outer")
+            if role not in groups or not member.get("geometry"):
+                continue
+            groups[role].append([(float(p["lon"]), float(p["lat"])) for p in member["geometry"]])
+        outers, inners = _stitch_rings(groups["outer"]), _stitch_rings(groups["inner"])
+        polygons: list[list[list[tuple[float, float]]]] = [[outer] for outer in outers]
+        for inner in inners:
+            target = next((polygon for polygon in polygons if _point_in_ring(inner[0], polygon[0])), None)
+            if target is not None:
+                target.append(inner)
+        geometry: Mapping[str, Any]
+        if len(polygons) == 1:
+            geometry = {"type": "Polygon", "coordinates": polygons[0]}
+        else:
+            geometry = {"type": "MultiPolygon", "coordinates": polygons}
+    else:
+        raw = element.get("geometry") or []
+        coords = [(float(p["lon"]), float(p["lat"])) for p in raw]
+        typ = "Polygon" if len(coords) >= 4 and coords[0] == coords[-1] else "LineString"
+        geometry = {"type": typ, "coordinates": [coords] if typ == "Polygon" else coords}
+    return {
+        "id": f"{osm_type}/{element.get('id', '')}",
+        "osm_type": osm_type,
+        "geometry": geometry,
+        "tags": element.get("tags", {}),
+    }
 
 
 class OSMMatcher:
     def __init__(self, candidates: Iterable[OSMCandidate | Mapping[str, Any]] | None = None, retriever: OverpassClient | Callable[..., Iterable[Any]] | None = None, search_radius_m: float = 1000.0, intersect_tolerance_m: float = 1.0, ambiguity_tolerance_m: float = 5.0):
         self.candidates = [c if isinstance(c, OSMCandidate) else OSMCandidate.from_feature(c) for c in (candidates or [])]; self.retriever = retriever; self.search_radius_m = search_radius_m; self.intersect_tolerance_m = intersect_tolerance_m; self.ambiguity_tolerance_m = ambiguity_tolerance_m
 
-    def match(self, sample_id: str, lat: float, lon: float) -> OSMMatch:
+    def match(self, sample_id: str, lat: float, lon: float, expected_waterbody_type: str | None = None) -> OSMMatch:
         if not (-90 <= lat <= 90 and -180 <= lon <= 180): raise ValueError("latitude/longitude must be WGS84 degrees")
         candidates = list(self.candidates)
         if not candidates and self.retriever:
@@ -156,8 +304,16 @@ class OSMMatcher:
                 method, eligible = "intersects_waterway", intersections
             else:
                 method = "nearest_feature"
-        eligible.sort(key=lambda x: (x[2] if x[2] is not None else float("inf"), x[0].osm_id)); best = eligible[0]; tied = [x for x in eligible if x[2] is not None and abs(x[2] - best[2]) <= self.ambiguity_tolerance_m]
-        return OSMMatch(sample_id, best[0].osm_id, best[0].tags, best[0].feature_class, method, round(best[2], 3) if best[2] is not None else None, len(tied) > 1, {"candidate_count": len(scored), "tied_osm_ids": [x[0].osm_id for x in tied] if len(tied) > 1 else []})
+        preferred = PREFERRED_CLASSES.get(str(expected_waterbody_type or "").lower(), frozenset())
+        eligible.sort(key=lambda x: (0 if not preferred or x[0].feature_class in preferred else 1, x[2] if x[2] is not None else float("inf"), x[0].osm_type, x[0].osm_id))
+        best = eligible[0]
+        tied = [x for x in eligible if x[2] is not None and abs(x[2] - best[2]) <= self.ambiguity_tolerance_m]
+        alternatives = [
+            {"osm_type": x[0].osm_type, "osm_id": x[0].osm_id, "feature_class": x[0].feature_class, "distance_m": round(x[2], 3)}
+            for x in eligible[:5] if x[2] is not None
+        ]
+        conflict = bool(preferred and best[0].feature_class not in preferred)
+        return OSMMatch(sample_id, best[0].osm_id, best[0].tags, best[0].feature_class, method, round(best[2], 3) if best[2] is not None else None, len(tied) > 1 or conflict, {"candidate_count": len(scored), "expected_waterbody_type": expected_waterbody_type, "expected_class_conflict": conflict, "tied_osm_ids": [x[0].osm_id for x in tied] if len(tied) > 1 else [], "top_candidates": alternatives})
 
     def match_point(self, point: Mapping[str, Any]) -> OSMMatch:
         """Match a record containing ``sample_id`` and WGS84 coordinates.
@@ -172,7 +328,7 @@ class OSMMatcher:
         else:
             lat = point.get("latitude", point.get("lat")); lon = point.get("longitude", point.get("lon"))
         if lat is None or lon is None: raise ValueError("point requires latitude/longitude or a GeoJSON Point geometry")
-        return self.match(sample_id, float(lat), float(lon))
+        return self.match(sample_id, float(lat), float(lon), point.get("working_waterbody_type"))
 
 
 def match_water_feature(sample_id: str, lat: float, lon: float, candidates: Iterable[OSMCandidate | Mapping[str, Any]] | None = None, **kwargs: Any) -> OSMMatch:
