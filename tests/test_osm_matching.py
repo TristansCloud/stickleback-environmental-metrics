@@ -3,7 +3,17 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from enviro_data.osm_matching import OSMCandidate, OSMMatcher, OverpassClient, build_habitat_overpass_query, build_overpass_query, overpass_element_to_feature
+from enviro_data.osm_matching import (
+    OSMCandidate,
+    OSMMatcher,
+    OverpassClient,
+    build_habitat_overpass_query,
+    build_overpass_query,
+    build_ranked_geometry_query,
+    match_ranked_tags,
+    overpass_element_to_feature,
+    rank_tag_candidates,
+)
 
 
 def feature(osm_id, geometry, tags):
@@ -53,9 +63,33 @@ class OSMMatchingTests(unittest.TestCase):
         self.assertNotIn("natural=coastline", lake)
         self.assertNotIn("is_in", marine)
         self.assertIn("natural=coastline", marine)
-        self.assertNotIn("[waterway]", marine)
+        self.assertIn("[waterway]", marine)
+        self.assertIn("natural=wetland", marine)
+        self.assertTrue(marine.endswith("out tags;"))
+        self.assertNotIn("out geom", marine)
         self.assertNotIn("is_in", build_habitat_overpass_query(50, -120, 250, "stream"))
         self.assertNotIn("is_in", build_habitat_overpass_query(50, -120, 500, "unknown"))
+
+    def test_tag_candidates_are_ranked_for_habitat_without_geometry(self):
+        elements = [
+            {"type": "way", "id": 30, "tags": {"natural": "wetland"}},
+            {"type": "way", "id": 20, "tags": {"waterway": "stream"}},
+            {"type": "relation", "id": 10, "tags": {"natural": "bay", "name": "Estuary"}},
+        ]
+        ranked = rank_tag_candidates(elements, "marine")
+        self.assertEqual([(x.osm_type, x.osm_id, x.feature_class) for x in ranked], [
+            ("relation", "10", "bay"),
+            ("way", "20", "stream"),
+            ("way", "30", "wetland"),
+        ])
+        match = match_ranked_tags("site", ranked, "marine", 500)
+        self.assertEqual((match.osm_id, match.match_method, match.distance_m), ("10", "ranked_tags_within_radius", None))
+
+    def test_ranked_geometry_query_targets_one_feature_and_clips_output(self):
+        query = build_ranked_geometry_query("way", "123", 64.71699, 177.50497, 500)
+        self.assertIn("way(id:123)", query)
+        self.assertIn("out geom(", query)
+        self.assertIn(") tags;", query)
 
     def test_relation_member_geometries_are_stitched(self):
         relation = {

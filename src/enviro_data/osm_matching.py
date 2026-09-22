@@ -22,6 +22,13 @@ PREFERRED_CLASSES = {
     "transition": frozenset({"river", "stream", "lagoon", "bay", "coastline", "wetland", "other_water"}),
     "marine": frozenset({"bay", "coastline"}),
 }
+TAG_RANKING = {
+    "lake": ("lake", "reservoir", "pond", "basin", "lagoon", "other_water", "river", "stream", "wetland", "bay", "coastline"),
+    "stream": ("stream", "river", "canal", "drain", "ditch", "other_water", "wetland", "lake", "reservoir", "lagoon", "bay", "coastline"),
+    "marine": ("bay", "lagoon", "coastline", "river", "stream", "wetland", "other_water", "lake", "reservoir", "canal", "drain", "ditch"),
+    "transition": ("lagoon", "bay", "river", "stream", "wetland", "coastline", "other_water", "lake", "reservoir", "canal", "drain", "ditch"),
+    "unknown": ("other_water", "river", "stream", "lake", "reservoir", "pond", "basin", "lagoon", "bay", "wetland", "coastline", "canal", "drain", "ditch"),
+}
 
 
 @dataclass(frozen=True)
@@ -161,7 +168,7 @@ def build_overpass_query(lat: float, lon: float, radius_m: float, coast_radius_m
 
 
 def build_habitat_overpass_query(lat: float, lon: float, radius_m: float, waterbody_type: str) -> str:
-    """Build a smaller query tailored to a name/ecotype-derived habitat type."""
+    """Build a lightweight ID/tag discovery query for nearby water features."""
     kind = str(waterbody_type or "unknown").lower()
     nearby: list[str] = []
     containing: list[str] = []
@@ -177,11 +184,13 @@ def build_habitat_overpass_query(lat: float, lon: float, radius_m: float, waterb
     elif kind == "stream":
         nearby = ["way[WATERWAY]", "rel[WATERWAY]", "way[NATURAL]", "rel[NATURAL]"]
     elif kind == "marine":
-        nearby = ["way[COAST]", "way[BAY]", "rel[BAY]"]
+        # Marine sample coordinates can sit in estuaries or lagoons inland of
+        # the mapped open coast, so retain transitional feature families.
+        nearby = ["way[WATERWAY]", "rel[WATERWAY]", "way[NATURAL]", "rel[NATURAL]", "way[WETLAND]", "rel[WETLAND]", "way[COAST]", "way[BAY]", "rel[BAY]"]
     elif kind == "transition":
         nearby = ["way[WATERWAY]", "rel[WATERWAY]", "way[NATURAL]", "rel[NATURAL]", "way[WETLAND]", "rel[WETLAND]", "way[COAST]", "way[BAY]", "rel[BAY]"]
     else:
-        nearby = ["way[WATERWAY]", "rel[WATERWAY]", "way[NATURAL]", "rel[NATURAL]", "way[COAST]", "way[BAY]", "rel[BAY]"]
+        nearby = ["way[WATERWAY]", "rel[WATERWAY]", "way[NATURAL]", "rel[NATURAL]", "way[WETLAND]", "rel[WETLAND]", "way[COAST]", "way[BAY]", "rel[BAY]"]
 
     replacements = {
         "[NATURAL]": f"(around:{radius_m},{lat},{lon})[natural=water]",
@@ -193,7 +202,77 @@ def build_habitat_overpass_query(lat: float, lon: float, radius_m: float, waterb
     }
     nearby = [next((clause.replace(token, value) for token, value in replacements.items() if token in clause), clause) for clause in nearby]
     prefix = f"is_in({lat},{lon})->.areas;" if containing else ""
-    return "[out:json][timeout:25];" + prefix + "(" + ";".join(containing + nearby) + ";);out geom tags;"
+    return "[out:json][timeout:25];" + prefix + "(" + ";".join(containing + nearby) + ";);out tags;"
+
+
+def rank_tag_candidates(elements: Iterable[Mapping[str, Any]], expected_waterbody_type: str | None = None) -> list[OSMCandidate]:
+    """Rank ID/tag-only Overpass results deterministically for a habitat."""
+    kind = str(expected_waterbody_type or "unknown").lower()
+    order = TAG_RANKING.get(kind, TAG_RANKING["unknown"])
+    priority = {feature_class: index for index, feature_class in enumerate(order)}
+    candidates: dict[tuple[str, str], OSMCandidate] = {}
+    for element in elements:
+        osm_type = str(element.get("type", "way"))
+        osm_id = str(element.get("id", ""))
+        if osm_type not in {"way", "relation"} or not osm_id:
+            continue
+        tags = dict(element.get("tags") or {})
+        candidate = OSMCandidate(osm_id, {}, tags, classify_water_feature(tags), "osm", osm_type)
+        candidates[(osm_type, osm_id)] = candidate
+    type_priority = {"relation": 0, "way": 1}
+    return sorted(
+        candidates.values(),
+        key=lambda candidate: (
+            priority.get(candidate.feature_class, len(priority)),
+            0 if candidate.tags.get("name") else 1,
+            type_priority.get(candidate.osm_type, 2),
+            (0, int(candidate.osm_id)) if candidate.osm_id.isdigit() else (1, candidate.osm_id),
+        ),
+    )
+
+
+def match_ranked_tags(sample_id: str, candidates: Sequence[OSMCandidate], expected_waterbody_type: str | None = None, search_radius_m: float | None = None) -> OSMMatch:
+    """Select the best tag-ranked feature without claiming geometric distance."""
+    if not candidates:
+        return OSMMatch(sample_id, None, match_method="unmatched", diagnostics={"candidate_count": 0, "search_radius_m": search_radius_m})
+    best = candidates[0]
+    same_class = [candidate for candidate in candidates if candidate.feature_class == best.feature_class]
+    alternatives = [
+        {"osm_type": candidate.osm_type, "osm_id": candidate.osm_id, "feature_class": candidate.feature_class}
+        for candidate in candidates[:5]
+    ]
+    preferred = PREFERRED_CLASSES.get(str(expected_waterbody_type or "").lower(), frozenset())
+    conflict = bool(preferred and best.feature_class not in preferred)
+    return OSMMatch(
+        sample_id,
+        best.osm_id,
+        best.tags,
+        best.feature_class,
+        "ranked_tags_within_radius",
+        None,
+        len(same_class) > 1 or conflict,
+        {
+            "candidate_count": len(candidates),
+            "expected_waterbody_type": expected_waterbody_type,
+            "expected_class_conflict": conflict,
+            "same_class_candidate_count": len(same_class),
+            "search_radius_m": search_radius_m,
+            "top_candidates": alternatives,
+        },
+    )
+
+
+def build_ranked_geometry_query(osm_type: str, osm_id: str, lat: float, lon: float, radius_m: float) -> str:
+    """Fetch one ranked feature with geometry clipped to the local window."""
+    if osm_type not in {"way", "relation"}:
+        raise ValueError(f"unsupported OSM type for geometry retrieval: {osm_type}")
+    radius = max(float(radius_m), 1.0)
+    lat_delta = radius / 111_320.0
+    lon_scale = max(math.cos(math.radians(lat)), 0.01)
+    lon_delta = radius / (111_320.0 * lon_scale)
+    south, west = lat - lat_delta, lon - lon_delta
+    north, east = lat + lat_delta, lon + lon_delta
+    return f"[out:json][timeout:25];{osm_type}(id:{osm_id});out geom({south:.7f},{west:.7f},{north:.7f},{east:.7f}) tags;"
 
 
 class OverpassClient:
