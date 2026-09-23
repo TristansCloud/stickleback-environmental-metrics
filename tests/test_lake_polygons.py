@@ -4,7 +4,7 @@ import math
 import pytest
 
 from enviro_data.lake_polygons import complete_polygon, contains, full_geometry_query, polygon_metrics
-from scripts.run_lake_polygon_pilot import evaluate_lake, nearby_lake_query, select_lakes
+from scripts.run_lake_polygon_pilot import containing_lake_query, evaluate_lake, nearby_lake_query, select_lakes
 
 
 def ring(points):
@@ -42,6 +42,13 @@ def test_fast_discovery_does_not_run_expensive_area_pivot():
     query = nearby_lake_query(66.0, -19.0, 100)
     assert "around:100" in query and "out tags" in query
     assert "is_in" not in query and "pivot" not in query and "out geom" not in query
+
+
+def test_containment_discovery_does_not_depend_on_shore_distance():
+    query = containing_lake_query(64.18656, -21.08836)
+    assert "is_in(64.18656,-21.08836)" in query
+    assert "pivot.areas" in query and "out tags" in query
+    assert "around:" not in query and "out geom" not in query
 
 
 def test_identify_containing_polygon_before_top_tag_candidate():
