@@ -23,6 +23,34 @@ python scripts/run_lake_polygon_pilot.py
 python scripts/run_lake_polygon_pilot.py --live-osm
 ```
 
+To try a **single known member of the 40-site selection** on your laptop,
+from the repository root (PowerShell or a terminal):
+
+```text
+python -m pip install -e .
+python scripts/run_lake_polygon_pilot.py --live-osm --sample-id S0074 --timeout-seconds 30 --output-dir data/lake_try_S0074
+python scripts/report_lake_resolution.py --input data/lake_try_S0074/lake_polygon_pilot.geojson --output data/lake_try_S0074/resolution_sensitivity.json
+```
+
+`S0074` is Þingvallavatn in the reproducible 40-site selection. The second
+command needs a `candidate_polygon` result from the first; otherwise it reports
+zero polygons. Inspect `data/lake_try_S0074/lake_polygon_pilot.csv` for status,
+OSM ID, name evidence, point containment, and diagnostics. A successful
+polygon remains a candidate for visual identity review.
+
+Live logs show `discovery_start`, `request_start`, `request_ok` or
+`request_failed`, `discovery_done` with raw and ranked candidate counts,
+`geometry_start`, each candidate's containment/rejection, and `selected` or
+`no_containing_polygon`. Every request includes a stage and cache key.
+`request_failed` before `discovery_done` identifies a network/HTTP failure;
+`discovery_done ... raw=0` means Overpass responded but found no tagged OSM
+object; `rejected=point_outside_polygon` means geometry arrived but did not
+contain the sample. Cache hits are logged separately. The default 10-second
+client timeout is deliberately short for bounded runs; the example uses 30
+seconds to help distinguish a slow server from a blocked connection. To test
+the whole set after the one-site trial, omit `--sample-id` and choose another
+`--output-dir` so results are not overwritten.
+
 The first command inspects only local cached OSM responses. The live option
 sends site coordinates to public Overpass. It waits at least 2 seconds between
 calls, caps each call at 10 seconds/8 MB, makes no automatic retry, and stops
