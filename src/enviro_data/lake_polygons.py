@@ -100,6 +100,89 @@ def polygon_metrics(polygons):
     }
 
 
+def _simplify_ring(ring, tolerance_m):
+    """Douglas–Peucker on a local metric plane; preserve the closed ring."""
+    if tolerance_m == 0:
+        return list(ring)
+    latitude = math.radians(sum(y for _, y in ring[:-1]) / (len(ring) - 1))
+    scale_x = EARTH_RADIUS_M * math.pi / 180 * math.cos(latitude)
+    scale_y = EARTH_RADIUS_M * math.pi / 180
+    points = [(x * scale_x, y * scale_y) for x, y in ring]
+
+    def segment(start, end):
+        ax, ay = points[start]; bx, by = points[end]
+        dx, dy = bx - ax, by - ay
+        farthest, distance = None, -1.0
+        for i in range(start + 1, end):
+            px, py = points[i]
+            fraction = max(0., min(1., ((px-ax)*dx + (py-ay)*dy) / (dx*dx + dy*dy))) if dx*dx + dy*dy else 0.
+            gap = math.hypot(px-ax-fraction*dx, py-ay-fraction*dy)
+            if gap > distance:
+                farthest, distance = i, gap
+        if distance <= tolerance_m:
+            return [start, end]
+        return segment(start, farthest)[:-1] + segment(farthest, end)
+
+    # Anchor the ring at its most distant vertex to avoid a degenerate
+    # identical-endpoints segment and arbitrary input starting-node effects.
+    anchor = max(range(1, len(ring)-1), key=lambda i: math.hypot(points[i][0]-points[0][0], points[i][1]-points[0][1]))
+    indices = segment(0, anchor)[:-1] + segment(anchor, len(ring)-1)
+    result = [ring[i] for i in indices]
+    if len(set(result[:-1])) < 3:
+        raise ValueError("simplification_collapsed_ring")
+    return result
+
+
+def _segments_intersect(a, b, c, d):
+    def orientation(p, q, r):
+        return (q[0]-p[0])*(r[1]-p[1])-(q[1]-p[1])*(r[0]-p[0])
+    o = [orientation(a, b, c), orientation(a, b, d), orientation(c, d, a), orientation(c, d, b)]
+    return (o[0]*o[1] < 0 and o[2]*o[3] < 0) or any(
+        v == 0 and min(p[0], q[0]) <= r[0] <= max(p[0], q[0]) and min(p[1], q[1]) <= r[1] <= max(p[1], q[1])
+        for v, p, q, r in zip(o, (a, a, c, c), (b, b, d, d), (c, d, a, b)))
+
+
+def _ring_intersects(first, second=None):
+    if second is None:
+        n = len(first)-1
+        return any(_segments_intersect(first[i], first[i+1], first[j], first[j+1])
+                   for i in range(n) for j in range(i+1, n) if j != i+1 and not (i == 0 and j == n-1))
+    return any(_segments_intersect(a, b, c, d) for a, b in zip(first, first[1:]) for c, d in zip(second, second[1:]))
+
+
+def resolution_sensitivity(polygons, lon, lat, tolerances_m=(0, 5, 10, 25, 50), max_area_change=0.01):
+    """Explore metric resolutions; reject topology or area-changing variants.
+
+    The raw polygon is authoritative. No tolerance is silently selected for a
+    depth calculation. Holes must remain inside their original outer ring.
+    """
+    baseline = polygon_metrics(polygons)
+    rows = []
+    for tolerance in tolerances_m:
+        if tolerance < 0:
+            raise ValueError("negative_tolerance")
+        try:
+            reduced = [[_simplify_ring(ring, tolerance) for ring in poly] for poly in polygons]
+            if any(_ring_intersects(ring) for poly in reduced for ring in poly) or any(
+                _ring_intersects(a, b) for poly in reduced for i, a in enumerate(poly) for b in poly[i+1:]):
+                raise ValueError("simplification_crosses_shoreline")
+            if not contains(reduced, lon, lat):
+                raise ValueError("sample_outside_simplified_polygon")
+            if any(not _point_in_ring(hole[0], poly[0]) for poly in reduced for hole in poly[1:]):
+                raise ValueError("island_outside_simplified_polygon")
+            metrics = polygon_metrics(reduced)
+            area_change = (metrics["lake_area_m2"] / baseline["lake_area_m2"] - 1) * 100
+            if abs(area_change) > max_area_change * 100:
+                raise ValueError("area_change_exceeds_limit")
+            rows.append({"tolerance_m": tolerance, "status": "accepted", "vertices": sum(len(r)-1 for p in reduced for r in p),
+                         **metrics, "area_change_pct": round(area_change, 4),
+                         "perimeter_change_pct": round((metrics["lake_perimeter_m"] / baseline["lake_perimeter_m"] - 1)*100, 4),
+                         "area_perimeter_change_pct": round((metrics["lake_area_perimeter_m"] / baseline["lake_area_perimeter_m"] - 1)*100, 4)})
+        except ValueError as error:
+            rows.append({"tolerance_m": tolerance, "status": str(error)})
+    return rows
+
+
 def name_agreement(site_name: str, tags: Mapping) -> str:
     """Return evidence, never certify translations or unnamed lakes as matches."""
     names = [tags.get(k, "") for k in ("name", "name:en", "alt_name", "official_name")]
