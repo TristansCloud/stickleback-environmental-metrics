@@ -18,7 +18,7 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 from enviro_data.lake_polygons import complete_polygon, contains, full_geometry_query, name_agreement, polygon_metrics
-from enviro_data.osm_matching import build_habitat_overpass_query, rank_tag_candidates
+from enviro_data.osm_matching import rank_tag_candidates
 from enviro_data.site_habitat import infer_site_habitat, normalize_site_name
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,10 +29,21 @@ LOGGER = logging.getLogger(__name__)
 
 
 def nearby_lake_query(lat: float, lon: float, radius: int) -> str:
-    """Fast first pass; enclosing lakes with distant shore nodes use fallback."""
+    """Fallback for samples near shore or missing derived Overpass areas."""
     clauses = ";".join(f'{kind}(around:{radius},{lat},{lon})[{tag}]'
                        for kind in ("way", "rel") for tag in ("natural=water", "landuse=reservoir"))
     return f"[out:json][timeout:25];({clauses};);out tags;"
+
+
+def containing_lake_query(lat: float, lon: float) -> str:
+    """Find OSM water areas enclosing the point, independent of shore distance.
+
+    Overpass is_in yields closed ways and derived relation areas; pivot returns
+    the source ways/relations. Complete geometry is fetched only after ranking.
+    """
+    return (f"[out:json][timeout:25];is_in({lat},{lon})->.areas;"
+            "(way(pivot.areas)[natural=water];rel(pivot.areas)[natural=water];"
+            "way(pivot.areas)[landuse=reservoir];rel(pivot.areas)[landuse=reservoir];);out tags;")
 
 
 def select_lakes(source: Path, count: int = 40):
@@ -102,9 +113,9 @@ def evaluate_lake(row, client):
               "query_date_utc": datetime.now(timezone.utc).isoformat(), "geometry_cache": ""}
     candidates = {}
     failed_shapes = []
-    searches = [(100, "nearby_100m", nearby_lake_query(lat, lon, 100)),
-                (500, "nearby_500m", nearby_lake_query(lat, lon, 500)),
-                (500, "enclosing_area_fallback", build_habitat_overpass_query(lat, lon, 500, "lake"))]
+    searches = [(0, "containing_area", containing_lake_query(lat, lon)),
+                (100, "nearby_100m", nearby_lake_query(lat, lon, 100)),
+                (500, "nearby_500m", nearby_lake_query(lat, lon, 500))]
     for radius, stage, query in searches:
         payload, source, _ = client.fetch(query)
         result["retrieval_source"] = source
