@@ -1,0 +1,192 @@
+"""Conservative whole-lake OSM polygon validation and spherical geometry metrics.
+
+These are candidate lake metrics. A human still needs to verify waterbody identity.
+"""
+from __future__ import annotations
+
+import math
+from typing import Mapping
+
+from .osm_matching import _point_in_ring, _stitch_rings
+from .site_habitat import normalize_site_name
+
+EARTH_RADIUS_M = 6_371_008.8
+
+
+def full_geometry_query(osm_type: str, osm_id: str) -> str:
+    """Fetch one whole object; clipped geometry must never produce lake area."""
+    if osm_type not in {"way", "relation"} or not str(osm_id).isdigit():
+        raise ValueError("OSM lake requires a way or relation with a numeric ID")
+    return f"[out:json][timeout:25];{osm_type}(id:{osm_id});out geom tags;"
+
+
+def _ring(points):
+    result = [(float(p["lon"]), float(p["lat"])) for p in points]
+    if len(result) < 4 or result[0] != result[-1] or len(set(result[:-1])) < 3:
+        raise ValueError("open_or_degenerate_ring")
+    if any(not math.isfinite(x) or not math.isfinite(y) or abs(y) > 90 or abs(x) > 180 for x, y in result):
+        raise ValueError("invalid_coordinate")
+    return result
+
+
+def complete_polygon(element: Mapping, max_vertices: int = 150_000):
+    """Reject missing relation members, unclosed rings, and orphan island holes."""
+    if element.get("type") == "way":
+        polygons = [[_ring(element.get("geometry") or [])]]
+    elif element.get("type") == "relation":
+        members = element.get("members") or []
+        parts = {"outer": [], "inner": []}
+        for member in members:
+            role = member.get("role") or "outer"
+            if role not in parts:
+                raise ValueError("unknown_relation_role")
+            if not member.get("geometry"):
+                raise ValueError("missing_relation_member_geometry")
+            parts[role].append([(float(p["lon"]), float(p["lat"])) for p in member["geometry"]])
+        if not parts["outer"]:
+            raise ValueError("missing_outer_ring")
+        outer = _stitch_rings(parts["outer"])
+        inner = _stitch_rings(parts["inner"])
+        if sum(len(r) - 1 for r in outer) != sum(len(p) - 1 for p in parts["outer"]) or sum(len(r) - 1 for r in inner) != sum(len(p) - 1 for p in parts["inner"]):
+            raise ValueError("unclosed_relation_members")
+        polygons = [[_ring([{"lon": x, "lat": y} for x, y in ring])] for ring in outer]
+        for ring in inner:
+            hole = _ring([{"lon": x, "lat": y} for x, y in ring])
+            parents = [poly for poly in polygons if _point_in_ring(hole[0], poly[0])]
+            if len(parents) != 1:
+                raise ValueError("orphan_or_ambiguous_inner_ring")
+            parents[0].append(hole)
+    else:
+        raise ValueError("unsupported_osm_object")
+    if sum(len(r) for p in polygons for r in p) > max_vertices:
+        raise ValueError("too_many_vertices")
+    return polygons
+
+
+def contains(polygons, lon: float, lat: float) -> bool:
+    point = (lon, lat)
+    return any(_point_in_ring(point, poly[0]) and not any(_point_in_ring(point, hole) for hole in poly[1:]) for poly in polygons)
+
+
+def _lon_delta(lon1, lon2):
+    return (lon2 - lon1 + 180) % 360 - 180
+
+
+def _area(ring):
+    return abs(sum(math.radians(_lon_delta(x1, x2)) * (math.sin(math.radians(y1)) + math.sin(math.radians(y2)))
+                   for (x1, y1), (x2, y2) in zip(ring, ring[1:])) * EARTH_RADIUS_M ** 2 / 2)
+
+
+def _length(ring):
+    total = 0.0
+    for (x1, y1), (x2, y2) in zip(ring, ring[1:]):
+        dlat, dlon = math.radians(y2 - y1), math.radians(_lon_delta(x1, x2))
+        a = math.sin(dlat / 2) ** 2 + math.cos(math.radians(y1)) * math.cos(math.radians(y2)) * math.sin(dlon / 2) ** 2
+        total += 2 * EARTH_RADIUS_M * math.asin(min(1, math.sqrt(a)))
+    return total
+
+
+def polygon_metrics(polygons):
+    area = sum(_area(poly[0]) - sum(_area(hole) for hole in poly[1:]) for poly in polygons)
+    # Include island boundaries in shoreline length; report this definition.
+    perimeter = sum(_length(ring) for poly in polygons for ring in poly)
+    if area <= 0 or perimeter <= 0:
+        raise ValueError("invalid_polygon_area_or_perimeter")
+    return {
+        "lake_area_m2": round(area, 2),
+        "lake_perimeter_m": round(perimeter, 2),
+        "lake_area_perimeter_m": round(area / perimeter, 3),
+        "lake_shoreline_development": round(perimeter / (2 * math.sqrt(math.pi * area)), 5),
+    }
+
+
+def _simplify_ring(ring, tolerance_m):
+    """Douglas–Peucker on a local metric plane; preserve the closed ring."""
+    if tolerance_m == 0:
+        return list(ring)
+    latitude = math.radians(sum(y for _, y in ring[:-1]) / (len(ring) - 1))
+    scale_x = EARTH_RADIUS_M * math.pi / 180 * math.cos(latitude)
+    scale_y = EARTH_RADIUS_M * math.pi / 180
+    points = [(x * scale_x, y * scale_y) for x, y in ring]
+
+    def segment(start, end):
+        ax, ay = points[start]; bx, by = points[end]
+        dx, dy = bx - ax, by - ay
+        farthest, distance = None, -1.0
+        for i in range(start + 1, end):
+            px, py = points[i]
+            fraction = max(0., min(1., ((px-ax)*dx + (py-ay)*dy) / (dx*dx + dy*dy))) if dx*dx + dy*dy else 0.
+            gap = math.hypot(px-ax-fraction*dx, py-ay-fraction*dy)
+            if gap > distance:
+                farthest, distance = i, gap
+        if distance <= tolerance_m:
+            return [start, end]
+        return segment(start, farthest)[:-1] + segment(farthest, end)
+
+    # Anchor the ring at its most distant vertex to avoid a degenerate
+    # identical-endpoints segment and arbitrary input starting-node effects.
+    anchor = max(range(1, len(ring)-1), key=lambda i: math.hypot(points[i][0]-points[0][0], points[i][1]-points[0][1]))
+    indices = segment(0, anchor)[:-1] + segment(anchor, len(ring)-1)
+    result = [ring[i] for i in indices]
+    if len(set(result[:-1])) < 3:
+        raise ValueError("simplification_collapsed_ring")
+    return result
+
+
+def _segments_intersect(a, b, c, d):
+    def orientation(p, q, r):
+        return (q[0]-p[0])*(r[1]-p[1])-(q[1]-p[1])*(r[0]-p[0])
+    o = [orientation(a, b, c), orientation(a, b, d), orientation(c, d, a), orientation(c, d, b)]
+    return (o[0]*o[1] < 0 and o[2]*o[3] < 0) or any(
+        v == 0 and min(p[0], q[0]) <= r[0] <= max(p[0], q[0]) and min(p[1], q[1]) <= r[1] <= max(p[1], q[1])
+        for v, p, q, r in zip(o, (a, a, c, c), (b, b, d, d), (c, d, a, b)))
+
+
+def _ring_intersects(first, second=None):
+    if second is None:
+        n = len(first)-1
+        return any(_segments_intersect(first[i], first[i+1], first[j], first[j+1])
+                   for i in range(n) for j in range(i+1, n) if j != i+1 and not (i == 0 and j == n-1))
+    return any(_segments_intersect(a, b, c, d) for a, b in zip(first, first[1:]) for c, d in zip(second, second[1:]))
+
+
+def resolution_sensitivity(polygons, lon, lat, tolerances_m=(0, 5, 10, 25, 50), max_area_change=0.01):
+    """Explore metric resolutions; reject topology or area-changing variants.
+
+    The raw polygon is authoritative. No tolerance is silently selected for a
+    depth calculation. Holes must remain inside their original outer ring.
+    """
+    baseline = polygon_metrics(polygons)
+    rows = []
+    for tolerance in tolerances_m:
+        if tolerance < 0:
+            raise ValueError("negative_tolerance")
+        try:
+            reduced = [[_simplify_ring(ring, tolerance) for ring in poly] for poly in polygons]
+            if any(_ring_intersects(ring) for poly in reduced for ring in poly) or any(
+                _ring_intersects(a, b) for poly in reduced for i, a in enumerate(poly) for b in poly[i+1:]):
+                raise ValueError("simplification_crosses_shoreline")
+            if not contains(reduced, lon, lat):
+                raise ValueError("sample_outside_simplified_polygon")
+            if any(not _point_in_ring(hole[0], poly[0]) for poly in reduced for hole in poly[1:]):
+                raise ValueError("island_outside_simplified_polygon")
+            metrics = polygon_metrics(reduced)
+            area_change = (metrics["lake_area_m2"] / baseline["lake_area_m2"] - 1) * 100
+            if abs(area_change) > max_area_change * 100:
+                raise ValueError("area_change_exceeds_limit")
+            rows.append({"tolerance_m": tolerance, "status": "accepted", "vertices": sum(len(r)-1 for p in reduced for r in p),
+                         **metrics, "area_change_pct": round(area_change, 4),
+                         "perimeter_change_pct": round((metrics["lake_perimeter_m"] / baseline["lake_perimeter_m"] - 1)*100, 4),
+                         "area_perimeter_change_pct": round((metrics["lake_area_perimeter_m"] / baseline["lake_area_perimeter_m"] - 1)*100, 4)})
+        except ValueError as error:
+            rows.append({"tolerance_m": tolerance, "status": str(error)})
+    return rows
+
+
+def name_agreement(site_name: str, tags: Mapping) -> str:
+    """Return evidence, never certify translations or unnamed lakes as matches."""
+    names = [tags.get(k, "") for k in ("name", "name:en", "alt_name", "official_name")]
+    site = set(normalize_site_name(site_name).split()) - {"lake", "pond", "reservoir", "loch", "lough"}
+    if any(site and site <= set(normalize_site_name(name).split()) for name in names if name):
+        return "name_agrees"
+    return "name_differs" if any(names) else "osm_unnamed"

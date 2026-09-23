@@ -4,6 +4,74 @@ This repository contains the first implementation layer for enriching global wat
 
 ## Quick start
 
+### Lake polygon pilot
+
+The pilot deterministically selects a geographically spread subset of 40
+distinct, name-inferred freshwater lake sites from the checked-in 599-site
+input. The selection is a working classification, not field confirmation.
+`data/lake_pilot/run_metadata.json` records the selected IDs for each local run.
+The lake pipeline first asks Overpass for OSM water areas containing the sample
+point. If this yields no validated candidate, it searches nearby shorelines
+within 100 m, then 500 m. It requests complete geometry for at most three ranked
+lake candidates at each distance. It accepts lake geometry only if it is
+closed, complete, and contains the sample coordinate. Holes (islands) reduce
+area and contribute to the reported shoreline length. It also records OSM
+name evidence. All candidate geometries require human identity review.
+
+```text
+python scripts/run_lake_polygon_pilot.py
+python scripts/run_lake_polygon_pilot.py --live-osm
+```
+
+To try a **single known member of the 40-site selection** on your laptop,
+from the repository root (PowerShell or a terminal):
+
+```text
+python -m pip install -e .
+python scripts/run_lake_polygon_pilot.py --live-osm --sample-id S0074 --timeout-seconds 30 --output-dir data/lake_try_S0074
+python scripts/report_lake_resolution.py --input data/lake_try_S0074/lake_polygon_pilot.geojson --output data/lake_try_S0074/resolution_sensitivity.json
+```
+
+`S0074` is Þingvallavatn in the reproducible 40-site selection. The second
+command needs a `candidate_polygon` result from the first; otherwise it reports
+zero polygons. Inspect `data/lake_try_S0074/lake_polygon_pilot.csv` for status,
+OSM ID, name evidence, point containment, and diagnostics. A successful
+polygon remains a candidate for visual identity review.
+
+Live logs show `discovery_start`, `request_start`, `request_ok` or
+`request_failed`, `discovery_done` with raw and ranked candidate counts,
+`geometry_start`, each candidate's containment/rejection, and `selected` or
+`no_containing_polygon`. Every request includes a stage and cache key.
+`request_failed` before `discovery_done` identifies a network/HTTP failure;
+`discovery_done ... raw=0` means Overpass responded but found no tagged OSM
+object; `rejected=point_outside_polygon` means geometry arrived but did not
+contain the sample. Cache hits are logged separately. The default 10-second
+client timeout is deliberately short for bounded runs; the example uses 30
+seconds to help distinguish a slow server from a blocked connection. To test
+the whole set after the one-site trial, omit `--sample-id` and choose another
+`--output-dir` so results are not overwritten.
+
+The first command inspects only local cached OSM responses. The live option
+sends site coordinates to public Overpass. It waits at least 2 seconds between
+calls, caps each call at 10 seconds/8 MB, makes no automatic retry, and stops
+after two consecutive failed sites. Results and caches remain local under
+`data/lake_pilot/`. The CSV tracks area (m²), total shoreline including
+islands (m), area/perimeter (m), and dimensionless shoreline development.
+GeoJSON stores the corresponding whole candidate polygons. A candidate is
+not a confirmed waterbody. Nothing computes lake depth yet; that requires
+the precise equation from the user's thesis and a defined shoreline terrain
+sampling policy. Climate sources are catalogued but not collected by this run.
+
+For each cached polygon, run `python scripts/report_lake_resolution.py` to
+compare raw geometry with 5, 10, 25, and 50 m Douglas–Peucker shoreline
+resolutions. The local metric approximation simplifies each outer and island
+ring separately. It rejects collapsed or crossing rings, sample exclusion,
+displaced island anchors, and variants whose area differs from raw geometry
+by more than 1%. The JSON report records area, total shoreline, area/perimeter,
+and percent changes. This is a sensitivity analysis: no resolution is yet
+approved for the thesis depth equation. Inspect the polygon identity and the
+resolution curve before choosing a common scale across lakes.
+
 ```python
 from enviro_data.input import load_sites
 
