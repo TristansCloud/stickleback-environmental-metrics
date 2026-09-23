@@ -4,6 +4,35 @@ This repository contains the first implementation layer for enriching global wat
 
 ## Quick start
 
+### Lake polygon pilot
+
+The pilot deterministically selects a geographically spread subset of 40
+distinct, name-inferred freshwater lake sites from the checked-in 599-site
+input. The selection is a working classification, not field confirmation.
+`data/lake_pilot/run_metadata.json` records the selected IDs for each local run.
+The lake pipeline uses OSM ID/tag discovery within
+100 m, then 500 m, and requests complete geometry for at most three ranked
+lake candidates at each distance. It accepts lake geometry only if it is
+closed, complete, and contains the sample coordinate. Holes (islands) reduce
+area and contribute to the reported shoreline length. It also records OSM
+name evidence. All candidate geometries require human identity review.
+
+```text
+python scripts/run_lake_polygon_pilot.py
+python scripts/run_lake_polygon_pilot.py --live-osm
+```
+
+The first command inspects only local cached OSM responses. The live option
+sends site coordinates to public Overpass. It waits at least 2 seconds between
+calls, caps each call at 10 seconds/8 MB, makes no automatic retry, and stops
+after two consecutive failed sites. Results and caches remain local under
+`data/lake_pilot/`. The CSV tracks area (m²), total shoreline including
+islands (m), area/perimeter (m), and dimensionless shoreline development.
+GeoJSON stores the corresponding whole candidate polygons. A candidate is
+not a confirmed waterbody. Nothing computes lake depth yet; that requires
+the precise equation from the user's thesis and a defined shoreline terrain
+sampling policy. Climate sources are catalogued but not collected by this run.
+
 ```python
 from enviro_data.input import load_sites
 
