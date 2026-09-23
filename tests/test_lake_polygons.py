@@ -53,7 +53,7 @@ def test_containment_discovery_does_not_depend_on_shore_distance():
 
 def test_identify_containing_polygon_before_top_tag_candidate():
     class Client:
-        def fetch(self, query):
+        def fetch(self, query, *, stage="unspecified"):
             if "out geom tags" in query:
                 obj_id = 1 if "id:1" in query else 2
                 origin = 3 if obj_id == 1 else 0
