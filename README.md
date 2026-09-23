@@ -10,8 +10,9 @@ The pilot deterministically selects a geographically spread subset of 40
 distinct, name-inferred freshwater lake sites from the checked-in 599-site
 input. The selection is a working classification, not field confirmation.
 `data/lake_pilot/run_metadata.json` records the selected IDs for each local run.
-The lake pipeline uses OSM ID/tag discovery within
-100 m, then 500 m, and requests complete geometry for at most three ranked
+The lake pipeline uses nearby OSM ID/tag discovery within
+100 m, then 500 m, with an enclosing-lake area query only if neither search
+finds a containing polygon. It requests complete geometry for at most three ranked
 lake candidates at each distance. It accepts lake geometry only if it is
 closed, complete, and contains the sample coordinate. Holes (islands) reduce
 area and contribute to the reported shoreline length. It also records OSM

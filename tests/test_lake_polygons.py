@@ -4,7 +4,7 @@ import math
 import pytest
 
 from enviro_data.lake_polygons import complete_polygon, contains, full_geometry_query, polygon_metrics
-from scripts.run_lake_polygon_pilot import evaluate_lake, select_lakes
+from scripts.run_lake_polygon_pilot import evaluate_lake, nearby_lake_query, select_lakes
 
 
 def ring(points):
@@ -36,6 +36,12 @@ def test_open_or_incomplete_polygon_is_rejected():
         complete_polygon({"type": "relation", "members": [{"role": "outer", "geometry": OUTER[:-1]}]})
     assert "out geom tags" in full_geometry_query("way", "123")
     assert "geom(" not in full_geometry_query("way", "123")
+
+
+def test_fast_discovery_does_not_run_expensive_area_pivot():
+    query = nearby_lake_query(66.0, -19.0, 100)
+    assert "around:100" in query and "out tags" in query
+    assert "is_in" not in query and "pivot" not in query and "out geom" not in query
 
 
 def test_identify_containing_polygon_before_top_tag_candidate():

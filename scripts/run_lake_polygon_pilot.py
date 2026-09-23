@@ -28,6 +28,13 @@ USER_AGENT = "stickleback-environmental-metrics/0.1 (lake polygon pilot)"
 LOGGER = logging.getLogger(__name__)
 
 
+def nearby_lake_query(lat: float, lon: float, radius: int) -> str:
+    """Fast first pass; enclosing lakes with distant shore nodes use fallback."""
+    clauses = ";".join(f'{kind}(around:{radius},{lat},{lon})[{tag}]'
+                       for kind in ("way", "rel") for tag in ("natural=water", "landuse=reservoir"))
+    return f"[out:json][timeout:25];({clauses};);out tags;"
+
+
 def select_lakes(source: Path, count: int = 40):
     with source.open(encoding="utf-8-sig", newline="") as file:
         records = list(csv.DictReader(file))
@@ -88,17 +95,21 @@ def evaluate_lake(row, client):
     lat, lon = float(row["Latitude"]), float(row["Longitude"])
     result = {"sample_id": row["sample_id"], "population_name": row["Population.name"],
               "latitude": lat, "longitude": lon, "osm_type": "", "osm_id": "", "osm_name": "",
-              "search_radius_m": "", "candidate_count": 0, "point_inside_polygon": "",
+              "search_radius_m": "", "discovery_stage": "", "candidate_count": 0, "point_inside_polygon": "",
               "name_evidence": "", "lake_area_m2": "", "lake_perimeter_m": "",
               "lake_area_perimeter_m": "", "lake_shoreline_development": "",
               "status": "no_polygon", "review_required": True, "diagnostics": "", "retrieval_source": "",
               "query_date_utc": datetime.now(timezone.utc).isoformat(), "geometry_cache": ""}
     candidates = {}
     failed_shapes = []
-    for radius in (100, 500):
-        payload, source, _ = client.fetch(build_habitat_overpass_query(lat, lon, radius, "lake"))
+    searches = [(100, "nearby_100m", nearby_lake_query(lat, lon, 100)),
+                (500, "nearby_500m", nearby_lake_query(lat, lon, 500)),
+                (500, "enclosing_area_fallback", build_habitat_overpass_query(lat, lon, 500, "lake"))]
+    for radius, stage, query in searches:
+        payload, source, _ = client.fetch(query)
         result["retrieval_source"] = source
         result["search_radius_m"] = radius
+        result["discovery_stage"] = stage
         for element in payload.get("elements", []):
             candidates[(str(element.get("type")), str(element.get("id")))] = element
         ranked = [c for c in rank_tag_candidates(candidates.values(), "lake") if c.feature_class in {"lake", "reservoir", "pond", "basin", "other_water"}]
@@ -133,8 +144,6 @@ def evaluate_lake(row, client):
             result["diagnostics"] = json.dumps({"other_containing_candidates": len(matches) - 1, "rejected": failed_shapes})
             geometry = {"type": "Polygon", "coordinates": polygons[0]} if len(polygons) == 1 else {"type": "MultiPolygon", "coordinates": polygons}
             return result, {"type": "Feature", "id": f"{candidate.osm_type}/{candidate.osm_id}", "properties": {"sample_id": row["sample_id"], "name_evidence": evidence, **metrics}, "geometry": geometry}
-        if radius == 500:
-            break
     result["diagnostics"] = json.dumps({"rejected": failed_shapes})
     return result, None
 
@@ -165,7 +174,7 @@ def run(source=DEFAULT_INPUT, output_dir=ROOT / "data/lake_pilot", *, live=False
             LOGGER.error("stopped after %d consecutive failed sites", failures)
             break
     output_dir.mkdir(parents=True, exist_ok=True)
-    fields = ["sample_id", "population_name", "latitude", "longitude", "osm_type", "osm_id", "osm_name", "search_radius_m", "candidate_count", "point_inside_polygon", "name_evidence", "lake_area_m2", "lake_perimeter_m", "lake_area_perimeter_m", "lake_shoreline_development", "status", "review_required", "diagnostics", "retrieval_source", "query_date_utc", "geometry_cache"]
+    fields = ["sample_id", "population_name", "latitude", "longitude", "osm_type", "osm_id", "osm_name", "search_radius_m", "discovery_stage", "candidate_count", "point_inside_polygon", "name_evidence", "lake_area_m2", "lake_perimeter_m", "lake_area_perimeter_m", "lake_shoreline_development", "status", "review_required", "diagnostics", "retrieval_source", "query_date_utc", "geometry_cache"]
     dest = output_dir / "lake_polygon_pilot.csv"
     with dest.open("w", encoding="utf-8", newline="") as file:
         writer = csv.DictWriter(file, fieldnames=fields, extrasaction="ignore"); writer.writeheader(); writer.writerows(results)
