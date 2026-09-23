@@ -34,6 +34,16 @@ not a confirmed waterbody. Nothing computes lake depth yet; that requires
 the precise equation from the user's thesis and a defined shoreline terrain
 sampling policy. Climate sources are catalogued but not collected by this run.
 
+For each cached polygon, run `python scripts/report_lake_resolution.py` to
+compare raw geometry with 5, 10, 25, and 50 m Douglas–Peucker shoreline
+resolutions. The local metric approximation simplifies each outer and island
+ring separately. It rejects collapsed or crossing rings, sample exclusion,
+displaced island anchors, and variants whose area differs from raw geometry
+by more than 1%. The JSON report records area, total shoreline, area/perimeter,
+and percent changes. This is a sensitivity analysis: no resolution is yet
+approved for the thesis depth equation. Inspect the polygon identity and the
+resolution curve before choosing a common scale across lakes.
+
 ```python
 from enviro_data.input import load_sites
 
