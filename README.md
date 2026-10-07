@@ -10,6 +10,22 @@ The pilot deterministically selects a geographically spread subset of 40
 distinct, name-inferred freshwater lake sites from the checked-in 599-site
 input. The selection is a working classification, not field confirmation.
 `data/lake_pilot/run_metadata.json` records the selected IDs for each local run.
+The reviewable snapshot of this existing selection is
+`data/lake_pilot_sites_v1.csv`, including coordinates and name-inference
+evidence. It contains 37 lake-name cases and three pond-name cases (S0391,
+S0234, S0225). The selection uses the broader lake family: its inference rules
+also recognize reservoirs. High confidence describes the name cue, not a
+verified waterbody identity. The runner still derives its selection from the
+immutable source CSV; this snapshot records the current 40-site baseline.
+
+The current OSM candidate filter accepts lake, reservoir, pond, basin, and
+unspecified-water classes. A complete polygon containing the sample is therefore
+only a candidate, not proof that it represents the intended lake. Before using
+its metrics, review the OSM waterbody class, name evidence, whole-waterbody
+boundary, and islands. A drainage catchment polygon describes a different
+spatial unit and must not substitute for a lake surface polygon in lake area
+or shoreline calculations.
+
 The lake pipeline first asks Overpass for OSM water areas containing the sample
 point. If this yields no validated candidate, it searches nearby shorelines
 within 100 m, then 500 m. It requests complete geometry for at most three ranked
@@ -102,6 +118,9 @@ Current modules:
 - `enviro_data.temporal`: mean, extremes, range, variability, and missingness summaries.
 
 ### Reuse the completed pilot
+
+For a worked live and offline lake polygon lookup, see
+[the Þingvallavatn lookup guide](docs/osm_lake_lookup.md).
 
 The checked-in validation bundle already contains Copernicus terrain and
 MERIT Hydro point values. Convert the latest frozen bundle to a wide,

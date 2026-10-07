@@ -17,7 +17,41 @@ def full_geometry_query(osm_type: str, osm_id: str) -> str:
     """Fetch one whole object; clipped geometry must never produce lake area."""
     if osm_type not in {"way", "relation"} or not str(osm_id).isdigit():
         raise ValueError("OSM lake requires a way or relation with a numeric ID")
-    return f"[out:json][timeout:25];{osm_type}(id:{osm_id});out geom tags;"
+    # `tags` verbosity suppresses relation members and way node geometry.
+    return f"[out:json][timeout:25];{osm_type}(id:{osm_id});out body geom;"
+
+
+def osm_api_geometry(payload: Mapping, osm_type: str, osm_id: str):
+    """Resolve core OSM `/full.json` references into complete_polygon input.
+
+    Missing nodes, ways or nested relation geometry fail explicitly. This is
+    geometry retrieval for a known identity, not coordinate-based discovery.
+    """
+    full_geometry_query(osm_type, osm_id)  # Validate identity.
+    objects = {(e["type"], str(e["id"])): e for e in payload.get("elements", [])}
+
+    def way_geometry(way):
+        try:
+            return [{"lon": objects[("node", str(n))]["lon"],
+                     "lat": objects[("node", str(n))]["lat"]} for n in way["nodes"]]
+        except KeyError as error:
+            raise ValueError("missing_osm_api_node") from error
+
+    try:
+        obj = dict(objects[(osm_type, str(osm_id))])
+        if osm_type == "way":
+            obj["geometry"] = way_geometry(obj)
+        else:
+            members = []
+            for member in obj.get("members", []):
+                if member["type"] != "way":
+                    raise ValueError("unsupported_osm_api_relation_member")
+                way = objects[("way", str(member["ref"]))]
+                members.append({**member, "geometry": way_geometry(way)})
+            obj["members"] = members
+    except KeyError as error:
+        raise ValueError("missing_osm_api_object_or_member") from error
+    return obj
 
 
 def _ring(points):

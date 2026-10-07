@@ -1,0 +1,41 @@
+sample_id,Population.name,population.abbreviation,Latitude,Longitude,Ecotype,name_inferred_waterbody_type,matched_terms,name_inference_confidence,working_type_basis,identity_review_required
+S0512,South Twin Lake,STL,43.71231,-121.77028,freshwater,lake,lake,high,population_name,True
+S0485,Blair Lake,BLL,45.80386,-64.20407,freshwater,lake,lake,high,population_name,True
+S0408,Black Lake,BLKL,48.7732,-125.0966,freshwater,lake,lake,high,population_name,True
+S0402,Maxwell Lake,MAXL,48.8227,-123.5387,freshwater,lake,lake,high,population_name,True
+S0391,Rapid Pond,RAP,48.9985,-57.692,freshwater,lake,pond,high,population_name,True
+S0375,Trout Lake,TROL,49.5084,-123.8761,freshwater,lake,lake,high,population_name,True
+S0364,Paxton Lake,PAXT,49.70817,-124.52564,freshwater,lake,lake,high,population_name,True
+S0358,North Lake,NORL,49.7483,-123.968,freshwater,lake,lake,high,population_name,True
+S0351,Mirror Lake,MIRR,49.986,-125.399,freshwater,lake,lake,high,population_name,True
+S0342,Gray Lake,GRAY,50.04826,-125.594,freshwater,lake,lake,high,population_name,True
+S0337,Merrill Lake,MERL,50.0612,-125.5614,freshwater,lake,lake,high,population_name,True
+S0332,Brewster Lake,BRW,50.09242,-125.57791,freshwater,lake,lake,high,population_name,True
+S0320,Blackwater Lake,BLWL,50.1713,-125.5908,freshwater,lake,lake,high,population_name,True
+S0311,Muskeg Lake,MUS,50.20176,-125.57425,freshwater,lake,lake,high,population_name,True
+S0305,Stella Lake,STE,50.25314,-125.51789,freshwater,lake,lake,high,population_name,True
+S0299,Snow Lake,SNO,50.31272,-125.59369,freshwater,lake,lake,high,population_name,True
+S0286,Joes Lake,JOE,50.65494,-127.46909,freshwater,lake,lake,high,population_name,True
+S0271,Wegner Lake,WEGNER,52.64472,-131.63065,freshwater,lake,lake,high,population_name,True
+S0260,Stiu Lake,STIUL,53.24451,-132.58807,freshwater,lake,lake,high,population_name,True
+S0251,Awun Lake,AWUN,53.60011,-132.56688,freshwater,lake,lake,high,population_name,True
+S0240,Watt Lake,WATTL,53.76463,-132.07086,freshwater,lake,lake,high,population_name,True
+S0234,Big Fish Pond,BIGFP,53.91925,-132.02693,freshwater,lake,pond,high,population_name,True
+S0225,Serendipity Pond,SEREN,54.0277,-131.7599,freshwater,lake,pond,high,population_name,True
+S0216,Silver Lake,SILVL,54.10312,-131.68537,freshwater,lake,lake,high,population_name,True
+S0202,Lake Kursinka,KURS,56.2006,162.03882,freshwater,lake,lake,high,population_name,True
+S0154,Engineer Lake,ENG,60.47878,-150.32483,freshwater,lake,lake,high,population_name,True
+S0145,Wik Lake,WIK,60.71744,-151.24175,freshwater,lake,lake,high,population_name,True
+S0111,Corcoran Lake,CORC,61.573,-149.693,freshwater,lake,lake,high,population_name,True
+S0103,Walby Lake,WAL,61.6194,-149.2111,freshwater,lake,lake,high,population_name,True
+S0090,Kleifarvatn ,KLEI ,63.92432,-21.99901,freshwater,lake,kleifarvatn,high,population_name,True
+S0081,Úlfljótsvatn,ISAX,64.09385,-21.03665,freshwater,lake,ulfljotsvatn,high,population_name,True
+S0074,Þingvallavatn,THIN,64.18656,-21.08836,freshwater,lake,ingvallavatn,high,population_name,True
+S0066,Hreðavatn,HRED ,64.76574,-21.5727,freshwater,lake,avatn,high,population_name,True
+S0056,Eidarvatn ,EIDA ,65.38813,-14.35998,freshwater,lake,eidarvatn,high,population_name,True
+S0044,Mývatn-mud,MYV (mud),65.62159,-16.95039,freshwater,lake,myvatn,high,population_name,True
+S0031,Hópsvatn,ISU_ISUB,66.0693,-19.14021,freshwater,lake,hopsvatn,high,population_name,True
+S0022,Goreloye Lake,WSGO,66.2979,33.6271,freshwater,lake,lake,high,population_name,True
+S0015,Lake Lobanevskoe,LOBA,66.56172,33.22108,freshwater,lake,lake,high,population_name,True
+S0010,Saint-Hilaire Lake,SHL,66.7183,32.8553,freshwater,lake,lake,high,population_name,True
+S0005,Lake Belaya Guba,BEGU,66.91149,32.45812,freshwater,lake,lake,high,population_name,True

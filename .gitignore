@@ -23,4 +23,5 @@ Thumbs.db
 /data/cache/
 /data/ee_app_validation/
 /data/lake_pilot/
+/data/lake_lookup_*/
 /docs/online_smoke_test_*.json
