@@ -154,6 +154,12 @@ The repository does not yet ship DEM/climate rasters or execute a production-sca
 
 ### Earth Engine validation viewer
 
+The new 40-lake lookup has a dedicated frozen review bundle and
+[lake candidate viewer](apps/earth_engine_validation/README.md#new-lake-polygon-review)
+for original coordinates, selected candidates, rejected neighbours and manual
+habitat/identity/connectivity QC. Preparation is complete locally; cloud upload
+and restricted App deployment are separate steps documented there.
+
 The reusable, read-only validation-App source and its deployment guidance are
 in [apps/earth_engine_validation](apps/earth_engine_validation/README.md).
 It prepares frozen, versioned pilot evidence locally and uses a stable registry
