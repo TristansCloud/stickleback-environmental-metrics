@@ -1,5 +1,59 @@
 # Earth Engine pilot validation viewer
 
+## New lake polygon review
+
+`ee_lake_review_app.js` provides a dedicated, read-only view of the new lake-only
+lookup run. Its site selection differs from the original environmental pilot.
+It shows original coordinates, selected candidates and all evaluated polygons,
+including rejected reservoirs and neighbours. Discovered objects whose geometry
+was not retrieved remain visible as stored `discovery_evidence` on the site.
+Manual controls record habitat, identity and neighbour relationships; copy each
+review JSON before changing sites. These controls do not save anything.
+
+Prepare the frozen collections offline:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/prepare_ee_lake_assets.py --run-dir data/lake_lookup_40_20261006
+```
+
+The prepared release is
+`data/ee_app_validation/ee_lake_review_v1_3c2c0cdae927cca6/`:
+40 `lake_sites`, 24 `selected_candidates`, and 83 `evaluated_polygons`.
+Its manifest records input and output checksums. Coordinates and polygon
+geometry remain unchanged. Nested properties are JSON strings for portable EE
+table properties; null remains null. Generated geometry bundles stay local and
+ignored by Git. Identical reruns reuse the bundle; changed inputs create a new
+release and altered existing bundles are rejected.
+
+The cloud assets and published App have **not** been updated by this preparation.
+To deploy, install the existing `earth-engine` optional dependency and authenticate
+with the authorized Earth Engine account. Use an existing private asset parent:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -e '.[earth-engine]'
+.\.venv\Scripts\earthengine.exe authenticate
+.\.venv\Scripts\python.exe scripts/upload_ee_lake_assets.py --project stickleback-507923 --asset-parent projects/stickleback-507923/assets/stickleback_validation --bundle data/ee_app_validation/ee_lake_review_v1_3c2c0cdae927cca6
+```
+
+The upload command verifies checksums, creates a new release folder and starts
+three table export tasks. It refuses existing release folders, leaves access
+permissions unchanged, and prints task IDs. If a task fails, inspect its error;
+do not rerun against or overwrite a partial immutable release. After all tasks
+complete, set `ROOT` in `ee_lake_review_app.js` to the printed release folder and
+run it in the Code Editor. Verify 40 sites, 24 selected candidates and 83 evaluated
+polygons; inspect S0512 South Twin Lake and its Wickiup Reservoir neighbour,
+S0074 Þingvallavatn, and an unresolved site. Check that manual review JSON carries
+the selected site, release ID and OSM object ID. Satellite imagery dates may
+differ from the OSM snapshot. Shared borders and connectivity need visual QC;
+the viewer does not calculate or certify them.
+
+Publish with the restricted access and asset-sharing procedure below. This
+dedicated viewer uses no Copernicus/MERIT joins and does not replace the older
+environmental pilot's registry. Earth Engine's documented
+[table asset export](https://developers.google.com/earth-engine/guides/exporting_tables)
+and [UI widgets](https://developers.google.com/earth-engine/guides/ui_widgets)
+are the interfaces used here.
+
 `ee_pilot_validation_app.js` is a Code Editor template for a restricted human
 inspection of the deterministic 40-site pilot. It is not a pipeline runner,
 analysis tool, or data-acquisition tool.

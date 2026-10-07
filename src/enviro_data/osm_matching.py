@@ -163,7 +163,7 @@ def build_overpass_query(lat: float, lon: float, radius_m: float, coast_radius_m
         f"way(around:{coast_radius},{lat},{lon})[natural=bay];"
         f"rel(around:{coast_radius},{lat},{lon})[natural=bay];"
         f"way(around:{coast_radius},{lat},{lon})[natural=coastline];"
-        ");out geom tags;"
+        ");out body geom;"
     )
 
 
@@ -272,7 +272,7 @@ def build_ranked_geometry_query(osm_type: str, osm_id: str, lat: float, lon: flo
     lon_delta = radius / (111_320.0 * lon_scale)
     south, west = lat - lat_delta, lon - lon_delta
     north, east = lat + lat_delta, lon + lon_delta
-    return f"[out:json][timeout:25];{osm_type}(id:{osm_id});out geom({south:.7f},{west:.7f},{north:.7f},{east:.7f}) tags;"
+    return f"[out:json][timeout:25];{osm_type}(id:{osm_id});out body geom({south:.7f},{west:.7f},{north:.7f},{east:.7f});"
 
 
 class OverpassClient:
