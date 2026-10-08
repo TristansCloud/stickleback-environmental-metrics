@@ -2,7 +2,7 @@
  * Upload the three collections from ONE immutable lake-review bundle first.
  * Set ROOT to that private release's Earth Engine asset folder.
  */
-var ROOT = 'REPLACE_WITH_IMMUTABLE_LAKE_REVIEW_ASSET_FOLDER';
+var ROOT = 'projects/stickleback-507923/assets/stickleback_validation/ee_lake_review_v1_3c2c0cdae927cca6';
 if (ROOT.indexOf('REPLACE_WITH_') !== -1) {
   throw new Error('Configure ROOT with the uploaded immutable lake-review release.');
 }

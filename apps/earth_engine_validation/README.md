@@ -25,9 +25,14 @@ table properties; null remains null. Generated geometry bundles stay local and
 ignored by Git. Identical reruns reuse the bundle; changed inputs create a new
 release and altered existing bundles are rejected.
 
-The cloud assets and published App have **not** been updated by this preparation.
-To deploy, install the existing `earth-engine` optional dependency and authenticate
-with the authorized Earth Engine account. Use an existing private asset parent:
+The three private cloud assets were uploaded and verified on 2026-10-07 at
+`projects/stickleback-507923/assets/stickleback_validation/ee_lake_review_v1_3c2c0cdae927cca6`.
+The viewer `ROOT` is configured for this release. The App has not been published
+or visually checked in the Code Editor. See the [upload record](../../docs/ee_lake_review_upload_2026-10-07.md).
+
+For a future release, install the existing `earth-engine` optional dependency and
+authenticate with the authorized Earth Engine account. Use an existing private
+asset parent; the already uploaded release below must not be rerun:
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -e '.[earth-engine]'
