@@ -9,11 +9,96 @@ workflows, older public helpers, historical evidence, and retirement decisions.
 The original commit includes both working pilot code and future interfaces;
 file age alone does not indicate which is used.
 
-The lake-polygon workflow is currently on the separate
-[draft PR #2](https://github.com/TristansCloud/stickleback-environmental-metrics/pull/2).
-It is not included in this branch's point-pilot commands.
+The lake-polygon workflow was introduced in
+[PR #2](https://github.com/TristansCloud/stickleback-environmental-metrics/pull/2).
+Use its dedicated commands below for whole-lake retrieval; the original
+point-pilot commands remain separate workflows.
 
 ## Quick start
+
+### Lake polygon pilot
+
+The pilot deterministically selects a geographically spread subset of 40
+distinct, name-inferred freshwater lake sites from the checked-in 599-site
+input. The selection is a working classification, not field confirmation.
+`data/lake_pilot/run_metadata.json` records the selected IDs for each local run.
+The reviewable snapshot of this existing selection is
+`data/lake_pilot_sites_v1.csv`, including coordinates and name-inference
+evidence. It contains 37 lake-name cases and three pond-name cases (S0391,
+S0234, S0225). The selection uses the broader lake family: its inference rules
+also recognize reservoirs. High confidence describes the name cue, not a
+verified waterbody identity. The runner still derives its selection from the
+immutable source CSV; this snapshot records the current 40-site baseline.
+
+The current OSM candidate filter accepts lake, reservoir, pond, basin, and
+unspecified-water classes. A complete polygon containing the sample is therefore
+only a candidate, not proof that it represents the intended lake. Before using
+its metrics, review the OSM waterbody class, name evidence, whole-waterbody
+boundary, and islands. A drainage catchment polygon describes a different
+spatial unit and must not substitute for a lake surface polygon in lake area
+or shoreline calculations.
+
+The lake pipeline first asks Overpass for OSM water areas containing the sample
+point. If this yields no validated candidate, it searches nearby shorelines
+within 100 m, then 500 m. It requests complete geometry for at most three ranked
+lake candidates at each distance. It accepts lake geometry only if it is
+closed, complete, and contains the sample coordinate. Holes (islands) reduce
+area and contribute to the reported shoreline length. It also records OSM
+name evidence. All candidate geometries require human identity review.
+
+```text
+python scripts/run_lake_polygon_pilot.py
+python scripts/run_lake_polygon_pilot.py --live-osm
+```
+
+To try a **single known member of the 40-site selection** on your laptop,
+from the repository root (PowerShell or a terminal):
+
+```text
+python -m pip install -e .
+python scripts/run_lake_polygon_pilot.py --live-osm --sample-id S0074 --timeout-seconds 30 --output-dir data/lake_try_S0074
+python scripts/report_lake_resolution.py --input data/lake_try_S0074/lake_polygon_pilot.geojson --output data/lake_try_S0074/resolution_sensitivity.json
+```
+
+`S0074` is Þingvallavatn in the reproducible 40-site selection. The second
+command needs a `candidate_polygon` result from the first; otherwise it reports
+zero polygons. Inspect `data/lake_try_S0074/lake_polygon_pilot.csv` for status,
+OSM ID, name evidence, point containment, and diagnostics. A successful
+polygon remains a candidate for visual identity review.
+
+Live logs show `discovery_start`, `request_start`, `request_ok` or
+`request_failed`, `discovery_done` with raw and ranked candidate counts,
+`geometry_start`, each candidate's containment/rejection, and `selected` or
+`no_containing_polygon`. Every request includes a stage and cache key.
+`request_failed` before `discovery_done` identifies a network/HTTP failure;
+`discovery_done ... raw=0` means Overpass responded but found no tagged OSM
+object; `rejected=point_outside_polygon` means geometry arrived but did not
+contain the sample. Cache hits are logged separately. The default 10-second
+client timeout is deliberately short for bounded runs; the example uses 30
+seconds to help distinguish a slow server from a blocked connection. To test
+the whole set after the one-site trial, omit `--sample-id` and choose another
+`--output-dir` so results are not overwritten.
+
+The first command inspects only local cached OSM responses. The live option
+sends site coordinates to public Overpass. It waits at least 2 seconds between
+calls, caps each call at 10 seconds/8 MB, makes no automatic retry, and stops
+after two consecutive failed sites. Results and caches remain local under
+`data/lake_pilot/`. The CSV tracks area (m²), total shoreline including
+islands (m), area/perimeter (m), and dimensionless shoreline development.
+GeoJSON stores the corresponding whole candidate polygons. A candidate is
+not a confirmed waterbody. Nothing computes lake depth yet; that requires
+the precise equation from the user's thesis and a defined shoreline terrain
+sampling policy. Climate sources are catalogued but not collected by this run.
+
+For each cached polygon, run `python scripts/report_lake_resolution.py` to
+compare raw geometry with 5, 10, 25, and 50 m Douglas–Peucker shoreline
+resolutions. The local metric approximation simplifies each outer and island
+ring separately. It rejects collapsed or crossing rings, sample exclusion,
+displaced island anchors, and variants whose area differs from raw geometry
+by more than 1%. The JSON report records area, total shoreline, area/perimeter,
+and percent changes. This is a sensitivity analysis: no resolution is yet
+approved for the thesis depth equation. Inspect the polygon identity and the
+resolution curve before choosing a common scale across lakes.
 
 ```python
 from enviro_data.input import load_sites
@@ -46,6 +131,9 @@ Current modules:
 
 ### Reuse the completed pilot
 
+For a worked live and offline lake polygon lookup, see
+[the Þingvallavatn lookup guide](docs/osm_lake_lookup.md).
+
 The checked-in validation bundle already contains Copernicus terrain and
 MERIT Hydro point values. Convert the latest frozen bundle to a wide,
 analysis-ready table with:
@@ -77,6 +165,12 @@ keeps network access disabled by default and caps the scope at 40 sites.
 The repository does not yet ship DEM/climate rasters or execute a production-scale OSM/catchment run. Those inputs and source/version configuration remain the next integration step.
 
 ### Earth Engine validation viewer
+
+The new 40-lake lookup has a dedicated frozen review bundle and
+[lake candidate viewer](apps/earth_engine_validation/README.md#new-lake-polygon-review)
+for original coordinates, selected candidates, rejected neighbours and manual
+habitat/identity/connectivity QC. Preparation is complete locally; cloud upload
+and restricted App deployment are separate steps documented there.
 
 The reusable, read-only validation-App source and its deployment guidance are
 in [apps/earth_engine_validation](apps/earth_engine_validation/README.md).
