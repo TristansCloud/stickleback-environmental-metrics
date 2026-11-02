@@ -2,6 +2,17 @@
 
 This repository contains the first implementation layer for enriching global water-sample coordinates. The checked-in `site_overview_v1_clean.csv` is an immutable source artifact. It contains 599 validated WGS84 (`EPSG:4326`) records with stable `sample_id` values.
 
+## Repository guide
+
+Start with [the maintenance map](docs/repository_maintenance.md) for active
+workflows, older public helpers, historical evidence, and retirement decisions.
+The original commit includes both working pilot code and future interfaces;
+file age alone does not indicate which is used.
+
+The lake-polygon workflow is currently on the separate
+[draft PR #2](https://github.com/TristansCloud/stickleback-environmental-metrics/pull/2).
+It is not included in this branch's point-pilot commands.
+
 ## Quick start
 
 ```python

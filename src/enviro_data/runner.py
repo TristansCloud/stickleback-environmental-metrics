@@ -1,8 +1,10 @@
-"""Offline-by-default pilot pipeline entrypoint.
+"""Offline-by-default selection and plugin scaffold.
 
 The runner wires records to optional variable modules, but performs no network
 requests unless a caller explicitly supplies a retriever/client. It is a
 skeleton: enrichment adapters can be added without changing pilot selection.
+The acquisition workflows live in scripts/run_staged_pilot.py and the separate
+lake-polygon pilot; this function is not their orchestrator.
 """
 
 from __future__ import annotations
@@ -22,8 +24,13 @@ class PilotRunResult:
     network_enabled: bool = False
 
 
-def run_pilot(source: str | Path, *, config: PilotConfig | None = None,
-              variable_modules: Iterable[Any] = (), network_enabled: bool = False) -> PilotRunResult:
+def run_pilot(
+    source: str | Path,
+    *,
+    config: PilotConfig | None = None,
+    variable_modules: Iterable[Any] = (),
+    network_enabled: bool = False,
+) -> PilotRunResult:
     """Load, select, and invoke explicitly supplied variable modules.
 
     Modules may expose ``process(record, network_enabled=...)`` or be callable.
