@@ -22,6 +22,16 @@ cases per workflow. They retain the source ecotype and inference evidence;
 all require review and none is a confirmed habitat label. Generate them offline
 with `python scripts/prepare_habitat_pilots.py` after installing the package.
 
+### Full review dataset
+
+The [full review workflow](docs/full_review_workflow.md) starts with the test
+cohorts, then combines point elevation/climate, local lake polygons, river-reach
+attributes, and exploratory shoreline elevation. Raw geofiles and generated
+review bundles stay under ignored `data/cache/`; they are not committed.
+Run `python -m scripts.generate_full_review` to reproduce from caches, or add
+`--live` to opt into missing downloads. Use
+`python scripts/package_full_review.py` to validate and package the review table.
+
 ## Quick start
 
 ### Lake polygon pilot
