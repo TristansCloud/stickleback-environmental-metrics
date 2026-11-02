@@ -88,8 +88,8 @@ class OSMMatchingTests(unittest.TestCase):
     def test_ranked_geometry_query_targets_one_feature_and_clips_output(self):
         query = build_ranked_geometry_query("way", "123", 64.71699, 177.50497, 500)
         self.assertIn("way(id:123)", query)
-        self.assertIn("out geom(", query)
-        self.assertIn(") tags;", query)
+        self.assertIn("out body geom(", query)
+        self.assertNotIn(" tags;", query)
 
     def test_relation_member_geometries_are_stitched(self):
         relation = {
