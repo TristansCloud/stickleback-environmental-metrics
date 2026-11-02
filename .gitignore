@@ -26,3 +26,6 @@ Thumbs.db
 /data/lake_pilot/
 /data/lake_lookup_*/
 /docs/online_smoke_test_*.json
+
+# Generated public Earth Engine releases and local publication records.
+/data/ee_full_review/

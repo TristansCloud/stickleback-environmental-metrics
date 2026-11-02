@@ -1,0 +1,32 @@
+"""Write a configured App copy from a prepared, checksum-verified release."""
+import argparse
+import json
+import re
+from pathlib import Path
+from enviro_data.ee_app_assets import _sha256
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--bundle', type=Path, required=True)
+    parser.add_argument('--asset-parent', required=True)
+    parser.add_argument('--output', type=Path, required=True)
+    args = parser.parse_args()
+    manifest = json.loads((args.bundle / 'manifest.json').read_text())
+    for name, checksum in manifest['collection_checksums'].items():
+        if Path(name).name != name or _sha256(args.bundle / name) != checksum:
+            raise ValueError('Collection checksum mismatch')
+    parent = args.asset_parent.rstrip('/')
+    if not re.fullmatch(r'projects/[A-Za-z0-9_-]+/assets/[A-Za-z0-9_/-]+', parent):
+        raise ValueError('Expected a projects/PROJECT/assets/FOLDER asset parent')
+    root = parent + '/' + manifest['app_release_id']
+    template = Path(__file__).resolve().parents[1] / 'apps/earth_engine_validation/ee_full_review_app.js'
+    app = template.read_text().replace("'REPLACE_WITH_FULL_REVIEW_ASSET_ROOT'", json.dumps(root))
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(app)
+    print(args.output)
+    print('Asset root:', root)
+
+
+if __name__ == '__main__':
+    main()

@@ -184,6 +184,12 @@ The repository does not yet ship DEM/climate rasters or execute a production-sca
 
 ### Earth Engine validation viewer
 
+For the new full 599-site public reviewer map, see
+[the full-dataset viewer guide](docs/public_review_viewer.md). The code and
+offline release preparation are available; cloud upload, visual acceptance and
+publication require the authorized Earth Engine account.
+
+
 The new 40-lake lookup has a dedicated frozen review bundle and
 [lake candidate viewer](apps/earth_engine_validation/README.md#new-lake-polygon-review)
 for original coordinates, selected candidates, rejected neighbours and manual
