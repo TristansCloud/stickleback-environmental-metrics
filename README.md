@@ -14,6 +14,14 @@ The lake-polygon workflow was introduced in
 Use its dedicated commands below for whole-lake retrieval; the original
 point-pilot commands remain separate workflows.
 
+### Other habitat development sets
+
+[Provisional stream, marine, and estuary/brackish cohorts](docs/provisional_habitat_pilots.md)
+are available in `data/habitat_pilots/`: five core examples and two ambiguity
+cases per workflow. They retain the source ecotype and inference evidence;
+all require review and none is a confirmed habitat label. Generate them offline
+with `python scripts/prepare_habitat_pilots.py` after installing the package.
+
 ## Quick start
 
 ### Lake polygon pilot
