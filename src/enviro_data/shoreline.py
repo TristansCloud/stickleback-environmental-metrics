@@ -8,11 +8,13 @@ from .river_snapping import number
 BUFFERS = (50, 100, 250)
 
 
-def sample_plan(geometry, surface_count=12, ring_count=20):
+def sample_plan(geometry, surface_count=12, ring_count=200):
     from shapely.geometry import shape, mapping
     from shapely import transform
     from shapely import contains_xy
 
+    if surface_count < 1 or ring_count < 1:
+        raise ValueError("shoreline sample counts must be positive")
     water = shape(geometry)
     if (
         not water.is_valid
@@ -40,8 +42,9 @@ def sample_plan(geometry, surface_count=12, ring_count=20):
         if region.is_empty:
             return []
         x0, y0, x1, y1 = region.bounds
+        grid_count = max(65, math.ceil(math.sqrt(count * 80)) + 2)
         xs, ys = np.meshgrid(
-            np.linspace(x0, x1, 65)[1:-1], np.linspace(y0, y1, 65)[1:-1]
+            np.linspace(x0, x1, grid_count)[1:-1], np.linspace(y0, y1, grid_count)[1:-1]
         )
         mask = contains_xy(region, xs.ravel(), ys.ravel())
         candidates = list(zip(xs.ravel()[mask], ys.ravel()[mask]))
@@ -66,6 +69,9 @@ def sample_plan(geometry, surface_count=12, ring_count=20):
         previous = outer
     return {
         "groups": result,
+        "requested_surface_count": surface_count,
+        "requested_band_count": ring_count,
+        "sampling_version": 2,
         "surface_inset_fallback": fallback,
         "buffer_definition": "disjoint land-side distance bands 0-50,50-100,100-250 m; includes island shores",
         "source_resolution_m": 90,
