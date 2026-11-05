@@ -10,9 +10,11 @@ from shapely.affinity import scale
 from shapely.geometry import Point, LineString, Polygon, shape, box, mapping
 from shapely.ops import nearest_points
 from shapely.strtree import STRtree
+from enviro_data.lake_polygons import name_agreement
 
 repo = Path(sys.argv[1])
 retry_radius = int(sys.argv[3]) if len(sys.argv) > 3 else 500
+lake_nearshore_m = 500
 work = Path.cwd()
 output = work / "outputs"
 output.mkdir(exist_ok=True)
@@ -159,8 +161,6 @@ for row in rows:
         for kind, source, key, name, geom in by_site[sid]:
             if kind not in eligible[habitat]:
                 continue
-            if kind == "inland_water" and not geom.covers(point):
-                continue
             xscale = 111195 * math.cos(math.radians(lat))
             metric = scale(geom.boundary if geom.geom_type.endswith("Polygon") else geom,
                            xfact=xscale, yfact=111195, origin=(lon, lat))
@@ -168,8 +168,16 @@ for row in rows:
             distance = point.distance(nearest)
             if kind != "inland_water" and distance > retry_radius:
                 continue
+            inside = kind == "inland_water" and geom.covers(point)
+            if kind == "inland_water" and not inside and (habitat != "lake" or distance > lake_nearshore_m):
+                continue
             item = {"category": kind, "source": source, "feature_id": key, "feature_name": name,
                     "distance_m": round(distance, 2)}
+            if kind == "inland_water":
+                item["match_method"] = "contains_point" if inside else "nearshore_fallback"
+                item["name_evidence"] = name_agreement(row["population_name"], {"name": name})
+                item["review_required"] = not inside
+
             if habitat == "stream" and kind == "channel" and distance <= 500:
                 item["proposed_snap_lon"] = lon + (nearest.x-lon)/xscale
                 item["proposed_snap_lat"] = lat + (nearest.y-lat)/111195
@@ -178,6 +186,9 @@ for row in rows:
                      for kind, options in scored.items() for distance, *_ in options)
     selected = {}
     for kind, options in sorted(scored.items()):
+        if kind == "inland_water":
+            containing = [option for option in options if option[-1]["match_method"] == "contains_point"]
+            options = containing or options
         if first_pass and kind != "inland_water":
             options = [option for option in options if option[0] <= 500]
         if options:
@@ -205,7 +216,10 @@ for row in rows:
                         if kind == "inland_water" and source == chosen["source"] and key == chosen["feature_id"])
         merit_regions.append({"type": "Feature", "geometry": mapping(geometry),
                               "properties": {"sample_id": sid, "method": "lake_polygon_max",
-                                             "polygon_source": chosen["source"], "polygon_id": chosen["feature_id"]}})
+                                             "polygon_source": chosen["source"], "polygon_id": chosen["feature_id"],
+                                             "lake_match_method": chosen["match_method"],
+                                             "lake_shore_distance_m": chosen["distance_m"],
+                                             "lake_name_evidence": chosen["name_evidence"]}})
     if not replica:
         continue
     extent = search_box(row)
@@ -241,6 +255,7 @@ for row in rows:
     lookup_features.append({"type": "Feature", "geometry": mapping(point), "properties": {
         "sample_id": sid, "role": "status", "lookup_status": status, "lookup_radius_m": results[-1]["lookup_radius_m"],
         "lookup_summary": "\n".join(f"{kind}: {c['feature_name'] or c['feature_id']} ({c['distance_m']} m)"
+                                   + (f" · {c['match_method']} · {c['name_evidence']}" if kind == "inland_water" else "")
                                    for kind, c in selected.items())}})
     atlas[sid] = {"name": row["population_name"], "habitat": habitat, "status": status,
                   "point": [lon, lat], "extent": extent.bounds, "query": query_bounds, "paths": paths}
@@ -250,19 +265,23 @@ sources = ["Frozen Earth Engine review geometry", "Local OSM map boxes", "Local 
 if replica:
     sources.extend(sorted({q["layer"] for queries in replica.values() for q in queries}))
 report = {"sites": results, "summary": summary, "coverage": "Closest within evaluated candidates only. Replica does not supply global coastlines or Asian water polygons.",
-          "sources": sources, "first_pass_radius_m": 500, "retry_radius_m": retry_radius, "license": "OpenStreetMap contributors, ODbL; HydroRIVERS, HydroLAKES"}
+          "sources": sources, "first_pass_radius_m": 500, "retry_radius_m": retry_radius, "lake_nearshore_m": lake_nearshore_m, "license": "OpenStreetMap contributors, ODbL; HydroRIVERS, HydroLAKES"}
 fields = ["sample_id", "population_name", "original_lon", "original_lat", "habitat", "status",
           "lookup_radius_m", "regional_extract_used", "replica_layers_completed", "replica_errors"]
 categories = sorted(set.union(*eligible.values()))
-prefix = f"stickleback_closest_water_599_{'arcgis' if replica else 'local'}_{retry_radius}m"
+prefix = f"stickleback_nearshore_599_{'arcgis' if replica else 'local'}_{retry_radius}m"
 with (output / f"{prefix}.csv").open("w", encoding="utf-8-sig", newline="") as f:
-    writer = csv.DictWriter(f, fields + categories + ["proposed_snap_lon", "proposed_snap_lat"])
+    writer = csv.DictWriter(f, fields + categories + ["lake_match_method", "lake_name_evidence", "lake_review_required", "proposed_snap_lon", "proposed_snap_lat"])
     writer.writeheader()
     for r in results:
         details = {kind: f"{c['source']} {c['feature_id']} {c['feature_name']} ({c['distance_m']} m)"
                    for kind, c in r["candidates"].items()}
         snap = {k: v for k, v in r["candidates"].get("channel", {}).items() if k.startswith("proposed_")}
-        writer.writerow({**{k: r[k] for k in fields}, **details, **snap})
+        lake = r["candidates"].get("inland_water", {})
+        lake_evidence = {"lake_match_method": lake.get("match_method"),
+                         "lake_name_evidence": lake.get("name_evidence"),
+                         "lake_review_required": lake.get("review_required")}
+        writer.writerow({**{k: r[k] for k in fields}, **details, **snap, **lake_evidence})
 (output / f"{prefix}.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
 print(summary, flush=True)
 if replica:

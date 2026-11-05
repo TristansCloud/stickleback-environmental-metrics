@@ -20,3 +20,7 @@ The November 5 run computed 61 stream buffers and 147 lake polygons. Lake Onega 
 [Earth Engine MERIT Hydro catalog](https://developers.google.com/earth-engine/datasets/catalog/MERIT_Hydro_v1_0_1)
 
 [Earth Engine reduceRegions](https://developers.google.com/earth-engine/apidocs/ee-image-reduceregions)
+
+Near-shore lake proposals use the same full-polygon maximum, with lake_match_method, lake_shore_distance_m and lake_name_evidence attached to the result. The original coordinates are retained.
+
+The near-shore release computed 258 upstream-area values (61 streams and 197 lakes). Fifteen lake sites still lack selected polygons and Lake Onega still exceeds the cell budget. Misty Lake (S0290) uses the named polygon 153.61 m from the original point and has a maximum upstream area of 10.536004066467285 km².

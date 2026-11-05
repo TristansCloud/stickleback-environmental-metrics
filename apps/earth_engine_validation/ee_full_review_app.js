@@ -207,6 +207,11 @@ function showSite(id, recenter) {
     text('Status', 'merit_status');
     metric('Maximum upstream drainage area', 'merit_max_upstream_area_km2', 2, 'km²');
     text('Extraction method', 'merit_method');
+    if (current.working_waterbody_type === 'lake') {
+      text('Lake match method', 'lake_match_method');
+      metric('Original point to shoreline', 'lake_shore_distance_m', 1, 'm');
+      text('Lake name evidence', 'lake_name_evidence');
+    }
     metric('Native cells evaluated', 'merit_valid_cell_count', 0, '');
     note('Streams use the maximum native MERIT area within 150 m of the original point. Lakes use the maximum inside the selected polygon. Nearby tributaries or downstream channels can influence the maximum.');
     section('Exploratory shoreline terrain');

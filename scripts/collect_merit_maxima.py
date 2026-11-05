@@ -52,6 +52,8 @@ def main():
                     "merit_method": props["method"], "merit_status": "lake_pixel_budget_exceeded",
                     "merit_estimated_bbox_cells": rows*columns, "merit_polygon_id": props["polygon_id"],
                     "merit_polygon_source": props["polygon_source"],
+                    "lake_match_method": props.get("lake_match_method"), "lake_shore_distance_m": props.get("lake_shore_distance_m"),
+                    "lake_name_evidence": props.get("lake_name_evidence"),
                     "merit_dataset": identity["dataset"], "merit_release": digest}
                 continue
         bounded.append(feature)
@@ -85,6 +87,8 @@ def main():
                 "merit_max_upstream_area_km2": value, "merit_valid_cell_count": count,
                 "merit_method": p["method"], "merit_status": "ok" if value is not None and count else "no_native_cells",
                 "merit_polygon_id": p.get("polygon_id"), "merit_polygon_source": p.get("polygon_source"),
+                "lake_match_method": p.get("lake_match_method"), "lake_shore_distance_m": p.get("lake_shore_distance_m"),
+                "lake_name_evidence": p.get("lake_name_evidence"),
                 "merit_dataset": identity["dataset"], "merit_release": digest}
         print(f"MERIT regions {min(offset+20,len(regions))}/{len(regions)}", flush=True)
     with args.sites.open(encoding="utf-8-sig", newline="") as file:
