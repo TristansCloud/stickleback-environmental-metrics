@@ -12,7 +12,9 @@ function attachMerit(feature) {
   feature = ee.Feature(feature);
   var id = feature.get('sample_id');
   var result = meritMaxima.filter(ee.Filter.eq('sample_id', id)).first();
-  var earlierLakeFields = feature.propertyNames().filter(ee.Filter.stringStartsWith('item','lake_'));
+  var earlierLakeFields = feature.propertyNames().filter(ee.Filter.or(
+    ee.Filter.stringStartsWith('item','lake_'), ee.Filter.stringStartsWith('item','shore_'),
+    ee.Filter.stringStartsWith('item','shoreline_')));
   var base = feature.select(feature.propertyNames().removeAll(earlierLakeFields));
   var combined = ee.Feature(base.set(ee.Feature(result).toDictionary()));
   var earlier = combined.propertyNames().filter(ee.Filter.stringStartsWith('item','river_'));
@@ -24,7 +26,6 @@ var lookup = LOOKUP_ROOT.indexOf('REPLACE_WITH_') === 0 ? null : ee.FeatureColle
 var lakes = ee.FeatureCollection(ROOT + '/lake_candidates');
 var osmLakes = lakes.filter(ee.Filter.eq('source','OpenStreetMap'));
 var rivers = ee.FeatureCollection(ROOT + '/river_candidates');
-var shorelineSamples = ee.FeatureCollection(ROOT + '/shoreline_samples');
 var map = ui.Map();
 map.setOptions('HYBRID');
 map.setControlVisibility({all: true});
@@ -62,12 +63,11 @@ var satelliteLayer = ui.Map.Layer(ee.Image(0).selfMask(), {}, 'Sentinel-2 cloud-
 var allLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Study sites by provisional habitat');
 var lakeLayer = ui.Map.Layer(osmLakes.style({color: '22d3ee', fillColor: '22d3ee18', width: 1}), {}, 'Earlier OSM lake candidates', false);
 var selectedLakeLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Earlier OSM lake candidate', !lookup);
-var sampleLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Shoreline DEM sampling locations — not independent cells', false);
 var lookupVectors = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Closest eligible lookup vectors');
 var lookupStatus = label('Select a site to inspect lookup evidence.', {fontSize:'12px', whiteSpace:'pre-wrap'});
 var lookupColors = {channel:'19b9e9', coast:'a78bfa', wetland:'84cc16', river_polygon:'2dd4bf', inland_water:'f59e0b', coastal_water:'60a5fa'};
 var selectedPointLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Original sample coordinate');
-[satelliteLayer, allLayer, lakeLayer, selectedLakeLayer, sampleLayer, lookupVectors, selectedPointLayer].forEach(function(layer) { map.layers().add(layer); });
+[satelliteLayer, allLayer, lakeLayer, selectedLakeLayer, lookupVectors, selectedPointLayer].forEach(function(layer) { map.layers().add(layer); });
 var filter = ee.Filter;
 var filtered = sites;
 function applyFilters() {
@@ -172,9 +172,6 @@ function showSite(id, recenter) {
   }
   selectedPointLayer.setEeObject(point.style({color: 'fb7185', pointSize: 9, width: 2}));
   selectedLakeLayer.setEeObject(osmLakes.filter(filter.eq('sample_id', id)).style({color: 'fde047', fillColor: 'fde04722', width: 4}));
-  sampleLayer.setEeObject(shorelineSamples.filter(filter.eq('sample_id', id)).map(function(f) {
-    return f.set('point_style', {color: ee.Dictionary({lake_surface: 'ffffff', shore_50m: 'fde047', shore_100m: 'fb923c', shore_250m: 'ef4444'}).get(f.get('group'), 'ffffff'), pointSize: 4});
-  }).style({styleProperty: 'point_style'}));
   satelliteLayer.setShown(false);
   if (recenter !== false) map.centerObject(point, 13);
   ui.url.set('site', id);
@@ -202,7 +199,7 @@ function showSite(id, recenter) {
     metric('Total shoreline (including islands)', 'lake_perimeter_m', 3, 'km', 1000);
     metric('Area / shoreline', 'lake_area_perimeter_m', 0, 'm');
     metric('Shoreline development', 'lake_shoreline_development', 2, '');
-    note('Candidate identity needs review. Shorelines retain source resolution; normalization is pending. HydroLAKES generally excludes lakes smaller than 10 ha.');
+    note('Candidate identity needs review. Shorelines retain source resolution; normalization is pending.');
     if (current.lake_osm_id && current.lake_osm_type) details.add(label('View source OSM object', {color: '#0284c7'},
       'https://www.openstreetmap.org/' + current.lake_osm_type + '/' + current.lake_osm_id));
     section('Upstream drainage area · MERIT Hydro');
@@ -216,14 +213,18 @@ function showSite(id, recenter) {
     }
     metric('Native cells evaluated', 'merit_valid_cell_count', 0, '');
     note('Streams use the maximum native MERIT area within 150 m of the original point. Lakes use the maximum inside the selected polygon. Nearby tributaries or downstream channels can influence the maximum.');
-    section('Earlier shoreline terrain');
-    note('These stored profiles predate the current OSM polygon selection.');
+    section('Shoreline terrain · whole DEM bands');
     text('Profile status', 'shoreline_elevation_status');
     metric('Lake-interior DSM proxy', 'lake_surface_dem_proxy_m', 0, 'm');
     ['50','100','250'].forEach(function(band, i) {
-      metric(['0–50 m','50–100 m','100–250 m'][i] + ' mean relative elevation', 'shore_' + band + 'm_mean_relative_elevation_m', 0, 'm');
+      var bandLabel = ['0–50 m','50–100 m','100–250 m'][i];
+      metric(bandLabel + ' mean relative elevation', 'shore_' + band + 'm_mean_relative_elevation_m', 1, 'm');
+      details.add(label(bandLabel + ' native cells: ' + number(current['shore_' + band + 'm_cell_count'], 0, '') +
+        ' valid / ' + number(current['shore_' + band + 'm_total_cell_count'], 0, '') + ' in band', {fontSize: '12px', margin: '3px 0'}));
+      if (missing(current['shore_' + band + 'm_mean_relative_elevation_m']))
+        metric(bandLabel + ' mean DSM elevation', 'shore_' + band + 'm_mean_terrain_elevation_m', 1, 'm');
     });
-    note('Copernicus GLO-90 DSM, including vegetation/buildings. The first band is narrower than a DEM cell; samples are not independent cells. These are elevation differences, not shoreline slope or depth. Toggle shoreline sampling locations in Layers: white = lake interior; yellow = 0–50 m; orange = 50–100 m; red = 100–250 m.');
+    note('All valid native Copernicus GLO-90 cell centres inside each disjoint exterior band, including island shores; no resampling. Relative to the median DEM value at cells at least 90 m inside the lake. Differences are withheld when that reference is insufficient or varies by more than 5 m. The 0–50 m band is narrower than the nominal DEM resolution. DSM includes vegetation/buildings; these are elevation differences, not slope or depth.');
     details.add(label('Depth estimate: ' + (missing(current.lake_depth_estimate_m) ? 'Not yet estimated' : number(current.lake_depth_estimate_m, 0, 'm')), {fontSize: '12px'}));
     text('Depth status', 'lake_depth_status');
     section('Stored evidence & provenance');
