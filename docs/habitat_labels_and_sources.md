@@ -1,10 +1,12 @@
 # Habitat labels and current lake sources
 
-The viewer uses provisional habitat labels from broad ecotypes, recognizable name terms, and three documented Japanese place names. The name parser recognizes Lakeside, Lac, Lago, Etang, Weiher, Bach, Kanal, Canal, Ruisseau, Riviere, Fiume, Torrente and the Japanese river suffix gawa. Camel-case words are split before matching, so AgaRiver is recognized.
+The viewer uses provisional habitat labels from broad ecotypes, recognizable name terms, and documented Japanese place names and site-specific cached OSM watercourse evidence. The name parser recognizes Lakeside, Lac, Lago, Etang, Weiher, Bach, Kanal, Canal, Ruisseau, Riviere, Fiume, Torrente and the Japanese river suffix gawa. Camel-case words are split before matching, so AgaRiver is recognized.
 
-Run refresh_site_labels.py with the repository path and an optional --output path to create a derived copy of the original review table. Only unknown working labels are changed. The original coordinates, ecotypes and input table are preserved. The three reference records in data/habitat_name_evidence.csv include source URLs. These support place-name interpretation and remain provisional sampling-habitat labels.
+Run refresh_site_labels.py with the repository path and an optional --output path to create a derived copy of the original review table. Only unknown working labels are changed. The original coordinates, ecotypes and input table are preserved. The reference records in data/habitat_name_evidence.csv include source URLs, evidence bases and review notes. These support place-name interpretation and remain provisional sampling-habitat labels.
 
-The update changes 37 unknown labels, including 26 Swiss sites and five Japanese sites. The current totals are 229 lakes, 82 streams, 91 marine sites, 18 transition sites and 179 unknown sites.
+The updates change 56 unknown labels, including 26 Swiss sites, five Japanese sites and 19 French, Spanish and Portuguese sites. The current totals are 229 lakes, 101 streams, 91 marine sites, 18 transition sites and 160 unknown sites.
+
+The 19 additional watercourse labels use existing OSM geometry within 25 m of the original freshwater sample point: three French, eleven Spanish and five Portuguese sites. Stream includes canals. Their evidence supports a broad watercourse class and does not verify the named river, the sampling position or perennial flow. All retain required-review flags. Cases with competing lake, reservoir or wetland evidence remain unresolved; the Rio Minho point, for example, falls in a mapped reservoir. No general rule classifies every point by its closest vector.
 
 Current lake selection accepts OSM geometry only, from the public replica, local Geofabrik OSM layers, or verified full OSM object retrieval. A containing polygon takes priority. Where no polygon contains the point, the nearest eligible polygon within 500 m is retained with a review flag.
 

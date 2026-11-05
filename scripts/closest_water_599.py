@@ -44,7 +44,7 @@ def classify(p, geom):
     polygon = geom.geom_type in {"Polygon", "MultiPolygon"}
     water = p.get("water")
     natural = p.get("natural") or p.get("natural_") or p.get("nat")
-    if linear and (p.get("waterway") in {"river", "stream", "tidal_channel"} or p.get("reach_id")):
+    if linear and (p.get("waterway") in {"river", "stream", "canal", "tidal_channel"} or p.get("reach_id")):
         return "channel"
     if linear and natural == "coastline":
         return "coast"

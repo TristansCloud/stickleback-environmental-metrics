@@ -28,10 +28,11 @@ def main():
             if reference["population_name"]!=row["population_name"] or row["source_ecotype"]!="freshwater":
                 raise ValueError(f"Habitat reference differs from input: {row['sample_id']}")
             row["working_waterbody_type"]=reference["working_waterbody_type"]
-            row["working_type_basis"]="documented_place_name"
+            row["working_type_basis"]=reference.get("evidence_basis") or "documented_place_name"
             row["name_inferred_waterbody_type"]=reference["working_waterbody_type"]
             row["habitat_evidence_url"]=reference["evidence_url"]
             row["name_inference_confidence"]="reference"
+            row["matched_terms"]=""
         elif inferred.working_waterbody_type!="unknown":
             row["working_waterbody_type"]=inferred.working_waterbody_type
             row["working_type_basis"]="provisional_multilingual_name_evidence"
