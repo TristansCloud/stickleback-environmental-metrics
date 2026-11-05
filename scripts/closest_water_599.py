@@ -259,7 +259,13 @@ for row in rows:
             continue
         paths.append([kind, picked, coords])
         if picked:
-            lookup_features.append({"type": "Feature", "geometry": {"type": "MultiLineString", "coordinates": coords},
+            # Keep the diagnostic atlas local, but display the entire selected lake in EE.
+            display_coords = coords
+            if kind == "inland_water":
+                outline = geom.simplify(0.000035, preserve_topology=True).boundary
+                rings = [outline] if outline.geom_type == "LineString" else list(outline.geoms)
+                display_coords = [[[round(x, 6), round(y, 6)] for x, y, *_ in ring.coords] for ring in rings]
+            lookup_features.append({"type": "Feature", "geometry": {"type": "MultiLineString", "coordinates": display_coords},
                                     "properties": {"sample_id": sid, "role": kind, "feature_id": key, "source": source}})
     if sid in replica:
         x, y = location(row)

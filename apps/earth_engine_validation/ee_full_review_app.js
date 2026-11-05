@@ -63,12 +63,11 @@ var allLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Study sites by provis
 var lakeLayer = ui.Map.Layer(osmLakes.style({color: '22d3ee', fillColor: '22d3ee18', width: 1}), {}, 'Earlier OSM lake candidates', false);
 var selectedLakeLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Earlier OSM lake candidate', !lookup);
 var sampleLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Shoreline DEM sampling locations — not independent cells', false);
-var lookupBox = ui.Map.Layer(ee.FeatureCollection([]), {}, 'ArcGIS query bounds', false);
 var lookupVectors = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Closest eligible lookup vectors');
 var lookupStatus = label('Select a site to inspect lookup evidence.', {fontSize:'12px', whiteSpace:'pre-wrap'});
 var lookupColors = {channel:'19b9e9', coast:'a78bfa', wetland:'84cc16', river_polygon:'2dd4bf', inland_water:'f59e0b', coastal_water:'60a5fa'};
 var selectedPointLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Original sample coordinate');
-[satelliteLayer, allLayer, lakeLayer, selectedLakeLayer, sampleLayer, lookupBox, lookupVectors, selectedPointLayer].forEach(function(layer) { map.layers().add(layer); });
+[satelliteLayer, allLayer, lakeLayer, selectedLakeLayer, sampleLayer, lookupVectors, selectedPointLayer].forEach(function(layer) { map.layers().add(layer); });
 var filter = ee.Filter;
 var filtered = sites;
 function applyFilters() {
@@ -104,10 +103,9 @@ function updateImagery() {
   satelliteLayer.setShown(clear);
   var vectorsOnly = choice === 'Vector only';
   selectedLakeLayer.setShown(!vectorsOnly && !lookup);
-  lookupBox.setShown(Boolean(lookup) && vectorsOnly);
   if (vectorsOnly) {
     map.setOptions('Vectors', {Vectors: [{stylers: [{visibility: 'off'}]}]});
-    imageryStatus.setValue(lookup ? 'Gray outline: ArcGIS query box. Colored lines: selected candidates.' : 'Vector view of the stored evidence.');
+    imageryStatus.setValue(lookup ? 'Colored lines: selected water features; lake outlines show the full selected polygon.' : 'Vector view of the stored evidence.');
     return;
   }
   if (!clear) {
@@ -162,7 +160,6 @@ function showSite(id, recenter) {
   if (lookup) {
     var siteLookup = lookup.filter(filter.eq('sample_id', id));
     lookupStatus.setValue('Loading rule-based lookup…');
-    lookupBox.setEeObject(siteLookup.filter(filter.eq('role','query_box')).style({color:'cbd5e1',width:2}));
     lookupVectors.setEeObject(siteLookup.filter(filter.inList('role',Object.keys(lookupColors))).filter(filter.inList('source',['OSM via Esri','OpenStreetMap','Geofabrik Iceland (2025)'])).map(function(feature) {
       return feature.set('lookup_style', {color:ee.Dictionary(lookupColors).get(feature.get('role'))});
     }).style({styleProperty:'lookup_style', width:4}));
