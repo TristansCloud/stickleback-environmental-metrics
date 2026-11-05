@@ -298,7 +298,7 @@ if (lookup) {
 }
 panel.add(label('Select a site to see its available OSM water geometry. Use map Layers to toggle evidence.', {fontSize: '11px', color: '#64748b', whiteSpace: 'pre-wrap'}));
 var legend = ui.Panel({layout: ui.Panel.Layout.flow('horizontal')});
-Object.keys(colors).forEach(function(key) { legend.add(label('● ' + key, {color: '#' + colors[key], fontSize: '10px', margin: '3px'})); });
+Object.keys(colors).forEach(function(key) { legend.add(label('● ' + key, {color: '#' + colors[key], fontSize: '14px', fontWeight: 'bold', margin: '4px 3px'})); });
 panel.add(legend); panel.add(details);
 panel.add(label('Reviewer notes', {fontWeight: 'bold', margin: '18px 0 6px'}));
 panel.add(reviewClass); panel.add(reviewNotes); panel.add(copyReview); panel.add(reviewOutput);
