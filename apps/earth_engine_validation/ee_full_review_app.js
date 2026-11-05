@@ -307,25 +307,45 @@ panel.add(label('© OpenStreetMap contributors · ODbL', {fontSize: '10px'}, 'ht
 panel.add(label('HydroLAKES v1.0 · CC BY 4.0 · Messager et al. (2016)', {fontSize: '10px'}, 'https://www.hydrosheds.org/products/hydrolakes'));
 panel.add(label('HydroRIVERS v1.0 · Lehner & Grill (2013)', {fontSize: '10px'}, 'https://www.hydrosheds.org/products/hydrorivers'));
 panel.add(label('Data sources, methods & limitations', {fontSize: '11px'}, 'https://github.com/TristansCloud/stickleback-environmental-metrics/blob/codex/provisional-habitat-pilots/docs/full_review_workflow.md'));
-// A persistent toggle keeps the map accessible on narrow screens too.
+// The narrow-screen map must not remain inside a SplitPanel whose fixed
+// 410px first pane can consume the entire viewport. In map-only mode, detach
+// the SAME map widget and attach it directly to ui.root. This also preserves
+// its center, layers, selection and click handlers.
 var sidebarVisible = true;
-var toggle = ui.Button('Show map / hide details', function() {
-  sidebarVisible = !sidebarVisible;
-  panel.style().set({shown: sidebarVisible, width: sidebarVisible ? '410px' : '0px'});
-  toggle.setLabel(sidebarVisible ? 'Show map / hide details' : 'Show site details');
-});
+var toggle = ui.Button('Show map / hide details');
 map.style().set('stretch', 'both');
-var toolbar = ui.Panel([toggle, label('Stickleback environmental review', {fontWeight: 'bold', margin: '10px'})], ui.Panel.Layout.flow('horizontal'));
+var toolbar = ui.Panel([toggle, label('Stickleback environmental review',
+  {fontWeight: 'bold', margin: '10px'})], ui.Panel.Layout.flow('horizontal'));
 var workspace = ui.SplitPanel({
   firstPanel: panel,
   secondPanel: map,
   orientation: 'horizontal',
   style: {stretch: 'both', minHeight: '0px', margin: '0px'}
 });
-// Constrain the application to the viewport so excess sidebar content scrolls
-// inside the sidebar while the map and toolbar stay in place.
 var frame = ui.Panel([toolbar, workspace], ui.Panel.Layout.flow('vertical'), {
   position: 'top-left', width: '100%', height: '100%', padding: '0px', margin: '0px'
+});
+toggle.onClick(function() {
+  sidebarVisible = !sidebarVisible;
+  if (!sidebarVisible) {
+    // A hidden first pane still reserves space on some mobile browsers.
+    // Remove the map from SplitPanel before making it the root widget.
+    workspace.setSecondPanel(ui.Panel());
+    ui.root.clear();
+    map.style().set({position: 'top-left', width: '100%', height: '100%'});
+    ui.root.add(map);
+    toolbar.style().set({position: 'top-left', backgroundColor: '#ffffff'});
+    map.add(toolbar);
+    toggle.setLabel('Show site details');
+  } else {
+    map.remove(toolbar);
+    ui.root.clear();
+    map.style().set({position: 'top-left', width: null, height: null, stretch: 'both'});
+    workspace.setSecondPanel(map);
+    ui.root.add(frame);
+    toolbar.style().set({position: null, backgroundColor: null});
+    toggle.setLabel('Show map / hide details');
+  }
 });
 ui.root.clear();
 ui.root.setLayout(ui.Panel.Layout.absolute());
