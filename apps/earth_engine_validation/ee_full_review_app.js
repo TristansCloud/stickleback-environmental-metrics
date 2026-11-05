@@ -1,4 +1,4 @@
-/** Public full-dataset review App. Frozen measurements; imagery is context only.
+/** Public full-dataset review App. Stored measurements; imagery is context only.
  * Generate a configured copy with scripts/configure_ee_full_review.py.
  * No writes, live OSM queries or environmental sampling are performed here.
  */
@@ -104,7 +104,7 @@ function updateImagery() {
   lookupBox.setShown(Boolean(lookup) && vectorsOnly);
   if (vectorsOnly) {
     map.setOptions('Vectors', {Vectors: [{stylers: [{visibility: 'off'}]}]});
-    imageryStatus.setValue(lookup ? 'Gray outline: ArcGIS query box. Colored lines: selected candidates.' : 'Vector view of the frozen evidence.');
+    imageryStatus.setValue(lookup ? 'Gray outline: ArcGIS query box. Colored lines: selected candidates.' : 'Vector view of the stored evidence.');
     return;
   }
   if (!clear) {
@@ -260,7 +260,7 @@ var copyReview = ui.Button('Prepare review record for copying', function() {
 var downloadStatus = label('', {fontSize: '11px', whiteSpace: 'pre-wrap'});
 var downloads = ui.Panel();
 var download = ui.Button('Create full-precision dataset download links', function() {
-  download.setDisabled(true); downloadStatus.setValue('Preparing links for this frozen release…');
+  download.setDisabled(true); downloadStatus.setValue('Preparing links for this release…');
   // EE only serializes stored assets; no resampling or measurement calculation.
   var exportSites = meritMaxima ? sites.map(attachMerit) : sites;
   exportSites.getDownloadURL({format: 'CSV', filename: RELEASE + '_sites'}, function(url, error) {
@@ -279,7 +279,7 @@ var download = ui.Button('Create full-precision dataset download links', functio
 });
 panel.add(label('STICKLEBACK · ENVIRONMENTAL ATLAS', {fontSize: '11px', color: '#0284c7', fontWeight: 'bold'}));
 panel.add(label('Explore the study sites', {fontSize: '24px', fontWeight: 'bold', color: '#0f172a'}));
-panel.add(label('599 original sites · frozen review release', {fontSize: '13px', color: '#475569'}));
+panel.add(label('599 original sites · review release', {fontSize: '13px', color: '#475569'}));
 panel.add(search); panel.add(habitat); panel.add(coverage); panel.add(selector); panel.add(status);
 panel.add(ui.Button('Show all matching sites', function() { if (visibleIndex.length) map.centerObject(filtered); }));
 panel.add(label('Imagery & map layers', {fontWeight: 'bold', margin: '18px 0 6px'}));
