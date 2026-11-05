@@ -28,7 +28,7 @@ map.setControlVisibility({all: true});
 map.setCenter(-30, 55, 3);
 var colors = {lake: '38bdf8', stream: 'a3e635', marine: '818cf8', transition: 'fb923c', unknown: 'cbd5e1'};
 var generation = 0, current = null, index = [], visibleIndex = [];
-var panel = ui.Panel({style: {width: '410px', padding: '16px', backgroundColor: '#f8fafc'}});
+var panel = ui.Panel({style: {width: '410px', height: '100%', padding: '16px', backgroundColor: '#f8fafc'}});
 var details = ui.Panel();
 var status = ui.Label('Loading release…', {color: '#475569', whiteSpace: 'pre-wrap'});
 function label(text, style, url) { return ui.Label(text, style || {}, url); }
@@ -307,13 +307,25 @@ panel.add(label('Data sources, methods & limitations', {fontSize: '11px'}, 'http
 var sidebarVisible = true;
 var toggle = ui.Button('Show map / hide details', function() {
   sidebarVisible = !sidebarVisible;
-  panel.style().set('shown', sidebarVisible);
+  panel.style().set({shown: sidebarVisible, width: sidebarVisible ? '410px' : '0px'});
   toggle.setLabel(sidebarVisible ? 'Show map / hide details' : 'Show site details');
 });
 map.style().set('stretch', 'both');
 var toolbar = ui.Panel([toggle, label('Stickleback environmental review', {fontWeight: 'bold', margin: '10px'})], ui.Panel.Layout.flow('horizontal'));
-var workspace = ui.Panel([panel, map], ui.Panel.Layout.flow('horizontal'), {stretch: 'both'});
-ui.root.clear(); ui.root.setLayout(ui.Panel.Layout.flow('vertical')); ui.root.add(toolbar); ui.root.add(workspace);
+var workspace = ui.SplitPanel({
+  firstPanel: panel,
+  secondPanel: map,
+  orientation: 'horizontal',
+  style: {stretch: 'both', minHeight: '0px', margin: '0px'}
+});
+// Constrain the application to the viewport so excess sidebar content scrolls
+// inside the sidebar while the map and toolbar stay in place.
+var frame = ui.Panel([toolbar, workspace], ui.Panel.Layout.flow('vertical'), {
+  position: 'top-left', width: '100%', height: '100%', padding: '0px', margin: '0px'
+});
+ui.root.clear();
+ui.root.setLayout(ui.Panel.Layout.absolute());
+ui.root.add(frame);
 var fields = ['sample_id','population_name','working_waterbody_type','has_lake_polygon','has_river_attributes','has_shoreline_profile'];
 sites.select(fields).toList(1000).map(function(f) { return ee.Feature(f).toDictionary(fields); }).evaluate(function(rows, error) {
   if (error || !rows) { status.setValue('Could not load release. Check asset access: ' + error); return; }
