@@ -12,14 +12,14 @@ from enviro_data.ee_app_assets import _sha256
 
 
 def load_bundle(path):
-    manifest = json.loads((path / 'manifest.json').read_text())
+    manifest = json.loads((path / 'manifest.json').read_text(encoding="utf-8"))
     if manifest.get('schema_version') != 'ee_full_review_v1' or manifest['counts'].get('sites') != 599:
         raise ValueError('Not a complete supported 599-site review release')
     collections = {}
     for name, checksum in manifest['collection_checksums'].items():
         if Path(name).name != name or _sha256(path / name) != checksum:
             raise ValueError(f'Frozen collection checksum mismatch: {name}')
-        collection = json.loads((path / name).read_text())
+        collection = json.loads((path / name).read_text(encoding="utf-8"))
         if len(collection['features']) != manifest['counts'][Path(name).stem]:
             raise ValueError(f'Collection count mismatch: {name}')
         if any(f['properties'].get('app_release_id') != manifest['app_release_id'] for f in collection['features']):
@@ -32,7 +32,7 @@ def load_bundle(path):
 
 def verify_release(ee, root, manifest, bundle):
     """Fail before sharing anything if any of the four tables is incomplete."""
-    expected_tasks = json.loads((bundle / 'upload_tasks.json').read_text())
+    expected_tasks = json.loads((bundle / 'upload_tasks.json').read_text(encoding="utf-8"))
     for name, count in manifest['counts'].items():
         record = expected_tasks['tables'][name]
         if record['asset'] != root + '/' + name:
@@ -81,7 +81,10 @@ def main():
                   'manifest_sha256': _sha256(args.bundle / 'manifest.json'), 'tables': {}}
         for name, collection in collections.items():
             # GeoJSON straight edges are retained; do not replace with geodesic arcs.
-            features = [ee.Feature(ee.Geometry(f['geometry'], 'EPSG:4326', False), f['properties'])
+            features = [ee.Feature(
+                ee.Geometry(f['geometry'], 'EPSG:4326',
+                            geodesic=None if f['geometry']['type'] == 'Point' else False),
+                f['properties'])
                         for f in collection['features']]
             task = ee.batch.Export.table.toAsset(collection=ee.FeatureCollection(features),
                 description=name + '_' + manifest['app_release_id'], assetId=root + '/' + name)

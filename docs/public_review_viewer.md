@@ -117,8 +117,8 @@ Google; do not invent a URL from the project or proposed App name.
    median RGB at native 10 m, and a bounded 20 km site region. Gaps can reveal
    the Google basemap beneath. Cloud masking does not guarantee gap-free,
    cloud-free or snow-free imagery. Annual composites mix seasons.
-6. Check map layer toggles, hillshade, legends and original-coordinate marker.
-   GLO-30 hillshade is context; stored shoreline elevations came from GLO-90.
+6. Check map layer toggles, the yellow outline for the selected lake candidate,
+   legends and the original-coordinate marker.
 7. Download CSV and lake/river GeoJSON; verify counts, nulls, units and original
    IDs/coordinates. Source values retain their full stored precision.
 8. Open the actual published URL while signed out; all four evidence assets

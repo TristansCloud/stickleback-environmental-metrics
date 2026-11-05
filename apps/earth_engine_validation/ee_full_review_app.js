@@ -6,6 +6,8 @@ var ROOT = 'REPLACE_WITH_FULL_REVIEW_ASSET_ROOT';
 if (ROOT.indexOf('REPLACE_WITH_') === 0) throw new Error('Configure the uploaded full-review release first.');
 var RELEASE = ROOT.split('/').pop();
 var sites = ee.FeatureCollection(ROOT + '/sites');
+var LOOKUP_ROOT = 'REPLACE_WITH_LOOKUP_ASSET';
+var lookup = LOOKUP_ROOT.indexOf('REPLACE_WITH_') === 0 ? null : ee.FeatureCollection(LOOKUP_ROOT);
 var lakes = ee.FeatureCollection(ROOT + '/lake_candidates');
 var rivers = ee.FeatureCollection(ROOT + '/river_candidates');
 var shorelineSamples = ee.FeatureCollection(ROOT + '/shoreline_samples');
@@ -38,23 +40,23 @@ var habitat = ui.Select({items: ['All habitats', 'lake', 'stream', 'marine', 'tr
 var coverage = ui.Select({items: ['All coverage', 'Lake polygon available', 'River attributes available', 'Shoreline profile available', 'Lake polygon missing'],
   value: 'All coverage', style: {stretch: 'horizontal'}});
 var selector = ui.Select({placeholder: 'Select a study site', style: {stretch: 'horizontal'}});
-var imagery = ui.Select({items: ['Google satellite + labels', 'Google satellite', 'Google terrain', 'Sentinel-2 clear composite'],
+var imagery = ui.Select({items: ['Google satellite + labels', 'Google satellite', 'Google terrain', 'Vector only', 'Sentinel-2 clear composite'],
   value: 'Google satellite + labels', style: {stretch: 'horizontal'}});
 var imageryYear = ui.Select({items: ['2025', '2024', '2023', '2022', '2021', '2020'], value: '2025'});
 var imageryStatus = label('Google imagery is contextual; dates vary by location.', {fontSize: '11px', whiteSpace: 'pre-wrap'});
-var hillshade = ui.Checkbox('Terrain hillshade (context; not sampled DEM)', false);
 var satelliteLayer = ui.Map.Layer(ee.Image(0).selfMask(), {}, 'Sentinel-2 cloud-masked composite', false);
-var terrainLayer = ui.Map.Layer(ee.Terrain.hillshade(ee.ImageCollection('COPERNICUS/DEM/GLO30').select('DEM').mosaic()),
-  {min: 0, max: 255}, 'Copernicus GLO-30 hillshade — context, not GLO-90 evidence', false, 0.45);
 var allLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Study sites by provisional habitat');
 var lakeLayer = ui.Map.Layer(lakes.style({color: '22d3ee', fillColor: '22d3ee18', width: 1}), {}, 'All lake candidates — identity unverified', false);
 var riverLayer = ui.Map.Layer(rivers.filter(ee.Filter.eq('role', 'candidate_reach')).style({color: 'a3e635', width: 2}), {}, 'All candidate river reaches', false);
 var selectedLakeLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Selected lake candidate');
-var selectedRiverLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Selected river evidence');
+var selectedRiverLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Earlier river evidence', !lookup);
 var sampleLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Shoreline DEM sampling locations — not independent cells', false);
+var lookupBox = ui.Map.Layer(ee.FeatureCollection([]), {}, 'ArcGIS query bounds', false);
+var lookupVectors = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Closest eligible lookup vectors');
+var lookupStatus = label('Select a site to inspect lookup evidence.', {fontSize:'12px', whiteSpace:'pre-wrap'});
+var lookupColors = {channel:'19b9e9', coast:'a78bfa', wetland:'84cc16', river_polygon:'2dd4bf', inland_water:'f59e0b', coastal_water:'60a5fa'};
 var selectedPointLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Original sample coordinate');
-[satelliteLayer, terrainLayer, allLayer, lakeLayer, riverLayer, selectedLakeLayer, selectedRiverLayer, sampleLayer, selectedPointLayer].forEach(function(layer) { map.layers().add(layer); });
-hillshade.onChange(function(value) { terrainLayer.setShown(value); });
+[satelliteLayer, allLayer, lakeLayer, riverLayer, selectedLakeLayer, selectedRiverLayer, sampleLayer, lookupBox, lookupVectors, selectedPointLayer].forEach(function(layer) { map.layers().add(layer); });
 var filter = ee.Filter;
 var filtered = sites;
 function applyFilters() {
@@ -76,11 +78,28 @@ function applyFilters() {
   }).style({styleProperty: 'map_style'}));
   status.setValue(visibleIndex.length + ' / ' + index.length + ' sites match. All habitat labels and waterbody matches remain provisional.');
 }
-search.onChange(applyFilters); habitat.onChange(applyFilters); coverage.onChange(applyFilters);
+search.onChange(function() {
+  applyFilters();
+  var query = (search.getValue() || '').trim().toUpperCase();
+  if (visibleIndex.length === 1 && visibleIndex[0].sample_id === query) {
+    selector.setValue(query, false);
+    showSite(query);
+  }
+});
+habitat.onChange(applyFilters); coverage.onChange(applyFilters);
 function updateImagery() {
   var choice = imagery.getValue();
   var clear = choice === 'Sentinel-2 clear composite';
   satelliteLayer.setShown(clear);
+  var vectorsOnly = choice === 'Vector only';
+  selectedLakeLayer.setShown(!vectorsOnly);
+  lookupBox.setShown(Boolean(lookup) && vectorsOnly);
+  if (vectorsOnly) selectedRiverLayer.setShown(false);
+  if (vectorsOnly) {
+    map.setOptions('Vectors', {Vectors: [{stylers: [{visibility: 'off'}]}]});
+    imageryStatus.setValue(lookup ? 'Gray outline: ArcGIS query box. Colored lines: selected candidates.' : 'Vector view of the frozen evidence.');
+    return;
+  }
   if (!clear) {
     map.setOptions(choice === 'Google terrain' ? 'TERRAIN' : choice === 'Google satellite' ? 'SATELLITE' : 'HYBRID');
     imageryStatus.setValue('Google imagery is contextual; dates vary by location.');
@@ -130,8 +149,22 @@ function showSite(id, recenter) {
   reviewClass.setValue('unreviewed');
   status.setValue('Loading ' + id + '…');
   var point = sites.filter(filter.eq('sample_id', id));
+  if (lookup) {
+    var siteLookup = lookup.filter(filter.eq('sample_id', id));
+    lookupStatus.setValue('Loading rule-based lookup…');
+    lookupBox.setEeObject(siteLookup.filter(filter.eq('role','query_box')).style({color:'cbd5e1',width:2}));
+    lookupVectors.setEeObject(siteLookup.filter(filter.inList('role',Object.keys(lookupColors))).map(function(feature) {
+      return feature.set('lookup_style', {color:ee.Dictionary(lookupColors).get(feature.get('role'))});
+    }).style({styleProperty:'lookup_style', width:4}));
+    siteLookup.filter(filter.eq('role','status')).first().evaluate(function(feature,error) {
+      if (token !== generation) return;
+      if (error || !feature) { lookupStatus.setValue('Lookup evidence unavailable.'); return; }
+      var p = feature.properties;
+      lookupStatus.setValue(p.lookup_status.replace(/_/g,' ') + (p.lookup_summary ? '\n' + p.lookup_summary : ''));
+    });
+  }
   selectedPointLayer.setEeObject(point.style({color: 'fb7185', pointSize: 9, width: 2}));
-  selectedLakeLayer.setEeObject(lakes.filter(filter.eq('sample_id', id)).style({color: '22d3ee', fillColor: '22d3ee22', width: 3}));
+  selectedLakeLayer.setEeObject(lakes.filter(filter.eq('sample_id', id)).style({color: 'fde047', fillColor: 'fde04722', width: 4}));
   selectedRiverLayer.setEeObject(rivers.filter(filter.eq('sample_id', id)).style({color: 'bef264', pointSize: 5, width: 3}));
   sampleLayer.setEeObject(shorelineSamples.filter(filter.eq('sample_id', id)).map(function(f) {
     return f.set('point_style', {color: ee.Dictionary({lake_surface: 'ffffff', shore_50m: 'fde047', shore_100m: 'fb923c', shore_250m: 'ef4444'}).get(f.get('group'), 'ffffff'), pointSize: 4});
@@ -240,8 +273,13 @@ panel.add(search); panel.add(habitat); panel.add(coverage); panel.add(selector);
 panel.add(ui.Button('Show all matching sites', function() { if (visibleIndex.length) map.centerObject(filtered); }));
 panel.add(label('Imagery & map layers', {fontWeight: 'bold', margin: '18px 0 6px'}));
 panel.add(imagery); panel.add(ui.Panel([label('Composite year'), imageryYear], ui.Panel.Layout.flow('horizontal')));
-panel.add(imageryStatus); panel.add(hillshade);
-panel.add(label('Use the map Layers control to toggle boundaries and river evidence.', {fontSize: '11px', color: '#64748b', whiteSpace: 'pre-wrap'}));
+panel.add(imageryStatus);
+if (lookup) {
+  panel.add(label('Closest eligible water features', {fontWeight:'bold'}));
+  panel.add(lookupStatus);
+  panel.add(label('Rule-based proposals. Marine and transition matches describe nearby context.', {fontSize:'11px', whiteSpace:'pre-wrap'}));
+}
+panel.add(label('Select a site to see its available evidence. The selected lake candidate has a yellow outline. Use map Layers to toggle evidence.', {fontSize: '11px', color: '#64748b', whiteSpace: 'pre-wrap'}));
 var legend = ui.Panel({layout: ui.Panel.Layout.flow('horizontal')});
 Object.keys(colors).forEach(function(key) { legend.add(label('● ' + key, {color: '#' + colors[key], fontSize: '10px', margin: '3px'})); });
 panel.add(legend); panel.add(details);

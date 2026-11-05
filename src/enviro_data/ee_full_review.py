@@ -60,10 +60,10 @@ def prepare_full_review(bundle: Path, output_root: Path, expected_sites: int = 5
     original, table = rows("original_sites.csv"), rows("stickleback_full_review_v1.csv")
     if original.keys() != table.keys():
         raise ValueError("Review IDs differ from original sites")
-    points = json.loads((bundle / "sample_points.geojson").read_text())["features"]
+    points = json.loads((bundle / "sample_points.geojson").read_text(encoding="utf-8"))["features"]
     if len(points) != expected_sites or {f["properties"]["sample_id"] for f in points} != original.keys():
         raise ValueError("Point collection IDs differ from original sites")
-    provenance = json.loads((bundle / "source_provenance.json").read_text())
+    provenance = json.loads((bundle / "source_provenance.json").read_text(encoding="utf-8"))
     features = []
     for point in sorted(points, key=lambda f: f["properties"]["sample_id"]):
         sample = point["properties"]["sample_id"]
@@ -86,7 +86,7 @@ def prepare_full_review(bundle: Path, output_root: Path, expected_sites: int = 5
         features.append({"type": "Feature", "geometry": copy.deepcopy(point["geometry"]), "properties": props})
     collections = {"sites": features}
     for name in ("lake_candidates", "river_candidates"):
-        evidence = json.loads((bundle / (name + ".geojson")).read_text())["features"]
+        evidence = json.loads((bundle / (name + ".geojson")).read_text(encoding="utf-8"))["features"]
         converted = []
         for item in evidence:
             item = copy.deepcopy(item)
@@ -122,7 +122,7 @@ def prepare_full_review(bundle: Path, output_root: Path, expected_sites: int = 5
     manifest = {"schema_version": SCHEMA, "app_release_id": release,
                 "source_manifest_sha256": source_digest, "source_manifest": source_manifest,
                 "counts": {name: len(values) for name, values in collections.items()},
-                "coverage": json.loads((bundle / "coverage_summary.json").read_text()),
+                "coverage": json.loads((bundle / "coverage_summary.json").read_text(encoding="utf-8")),
                 "collection_checksums": {name: hashlib.sha256(body).hexdigest() for name, body in contents.items()},
                 "notice": "Frozen provisional evidence; no new environmental measurements. Display rounding only."}
     contents["manifest.json"] = _canonical(manifest)
