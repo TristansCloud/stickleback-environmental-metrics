@@ -10,7 +10,7 @@ from shapely.affinity import scale
 from shapely.geometry import Point, LineString, Polygon, shape, box, mapping
 from shapely.ops import nearest_points
 from shapely.strtree import STRtree
-from enviro_data.lake_polygons import name_agreement
+from enviro_data.lake_polygons import name_agreement, polygon_metrics
 
 repo = Path(sys.argv[1])
 retry_radius = int(sys.argv[3]) if len(sys.argv) > 3 else 500
@@ -20,7 +20,8 @@ output = work / "outputs"
 output.mkdir(exist_ok=True)
 data = repo / "data/ee_full_review"
 release = data / "ee_full_review_v1_3d571ff57e659c91"
-with (data / "source_2026-11-01/stickleback_full_review_v1.csv").open(encoding="utf-8-sig", newline="") as f:
+site_table = Path(sys.argv[5]) if len(sys.argv) > 5 else data / "source_2026-11-01/stickleback_full_review_v1.csv"
+with site_table.open(encoding="utf-8-sig", newline="") as f:
     rows = list(csv.DictReader(f))
 assert len({r["sample_id"] for r in rows}) == len(rows) == 599
 coverage = json.loads((repo / "data/cache/geofabrik/study_coverage.json").read_bytes())
@@ -120,8 +121,18 @@ for filename in ("lake_candidates", "river_candidates"):
         else:
             key = p.get("reach_id")
             source = "HydroRIVERS"
+        if source == "HydroLAKES v1.0":
+            continue
         if (item := record(f, source, key)):
             by_site[p["sample_id"]].append(item)
+
+supplement = Path(sys.argv[6]) if len(sys.argv) > 6 else None
+if supplement:
+    for feature in json.loads(supplement.read_bytes())["features"]:
+        p = feature["properties"]
+        candidate = record(feature, p["source"], p["feature_id"])
+        if candidate:
+            by_site[p["sample_id"]].append(candidate)
 
 for f in (repo / "data/cache/osm_map").glob("*.json"):
     elements = json.loads(f.read_bytes())["elements"]
@@ -214,12 +225,19 @@ for row in rows:
         chosen = selected["inland_water"]
         geometry = next(geom for kind, source, key, name, geom in by_site[sid]
                         if kind == "inland_water" and source == chosen["source"] and key == chosen["feature_id"])
+        polygons = [[list(poly.exterior.coords), *[list(r.coords) for r in poly.interiors]]
+                    for poly in ([geometry] if geometry.geom_type == "Polygon" else geometry.geoms)]
+        shape_metrics = polygon_metrics(polygons)
         merit_regions.append({"type": "Feature", "geometry": mapping(geometry),
                               "properties": {"sample_id": sid, "method": "lake_polygon_max",
                                              "polygon_source": chosen["source"], "polygon_id": chosen["feature_id"],
                                              "lake_match_method": chosen["match_method"],
                                              "lake_shore_distance_m": chosen["distance_m"],
-                                             "lake_name_evidence": chosen["name_evidence"]}})
+                                              "lake_name_evidence": chosen["name_evidence"],
+                                             "lake_geometry_source": chosen["source"],
+                                             "lake_geometry_status": "candidate_polygon",
+                                             "lake_polygon_feature_id": chosen["feature_id"],
+                                             **shape_metrics}})
     if not replica:
         continue
     extent = search_box(row)

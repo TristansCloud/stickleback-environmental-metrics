@@ -27,7 +27,7 @@ def main():
         parser.error("--lake-cell-budget must be positive")
     identity = {"regions_sha256": hashlib.sha256(raw).hexdigest(), "dataset": "MERIT/Hydro/v1_0_1",
                 "band": "upa", "stream_radius_m": 150, "selection": "native_cell_centres",
-                "lake_cell_budget": args.lake_cell_budget, "version": 2}
+                "lake_cell_budget": args.lake_cell_budget, "sites_sha256": hashlib.sha256(args.sites.read_bytes()).hexdigest(), "version": 4}
     digest = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()[:16]
     target = args.output / digest
     target.mkdir(parents=True, exist_ok=True)
@@ -54,7 +54,8 @@ def main():
                     "merit_polygon_source": props["polygon_source"],
                     "lake_match_method": props.get("lake_match_method"), "lake_shore_distance_m": props.get("lake_shore_distance_m"),
                     "lake_name_evidence": props.get("lake_name_evidence"),
-                    "merit_dataset": identity["dataset"], "merit_release": digest}
+                    "merit_dataset": identity["dataset"], "merit_release": digest,
+                    **{k: props.get(k) for k in ("lake_geometry_source", "lake_geometry_status", "lake_polygon_feature_id", "lake_area_m2", "lake_perimeter_m", "lake_area_perimeter_m", "lake_shoreline_development")}}
                 continue
         bounded.append(feature)
     regions = bounded
@@ -89,7 +90,8 @@ def main():
                 "merit_polygon_id": p.get("polygon_id"), "merit_polygon_source": p.get("polygon_source"),
                 "lake_match_method": p.get("lake_match_method"), "lake_shore_distance_m": p.get("lake_shore_distance_m"),
                 "lake_name_evidence": p.get("lake_name_evidence"),
-                "merit_dataset": identity["dataset"], "merit_release": digest}
+                "merit_dataset": identity["dataset"], "merit_release": digest,
+                **{k: p.get(k) for k in ("lake_geometry_source", "lake_geometry_status", "lake_polygon_feature_id", "lake_area_m2", "lake_perimeter_m", "lake_area_perimeter_m", "lake_shoreline_development")}}
         print(f"MERIT regions {min(offset+20,len(regions))}/{len(regions)}", flush=True)
     with args.sites.open(encoding="utf-8-sig", newline="") as file:
         sites = list(csv.DictReader(file))
@@ -103,7 +105,16 @@ def main():
             "merit_dataset": identity["dataset"], "merit_release": digest})
         output.append({"type": "Feature", "geometry": {"type": "Point",
                       "coordinates": [float(site["longitude"]),float(site["latitude"])]},
-                      "properties": {"sample_id": sid, **props}})
+                       "properties": {"sample_id": sid, **props,
+                                     "working_waterbody_type": site["working_waterbody_type"],
+                                     "working_type_basis": site["working_type_basis"],
+                                     "habitat_evidence_url": site.get("habitat_evidence_url", ""),
+                                     "name_inferred_waterbody_type": site["name_inferred_waterbody_type"],
+                                     "matched_terms": site["matched_terms"],
+                                     "name_inference_confidence": site["name_inference_confidence"],
+                                     "classification_status": site["classification_status"],
+                                     "has_lake_polygon": props.get("merit_method") == "lake_polygon_max",
+                                     "review_required": site["review_required"].lower() == "true"}})
     result_path = target / "merit_maxima.geojson"
     result_path.write_text(json.dumps({"type":"FeatureCollection","features":output},indent=2),encoding="utf-8")
     print(Counter(f["properties"]["merit_status"] for f in output),flush=True)

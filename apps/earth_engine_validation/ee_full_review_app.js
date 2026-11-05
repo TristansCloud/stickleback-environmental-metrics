@@ -12,10 +12,13 @@ function attachMerit(feature) {
   feature = ee.Feature(feature);
   var id = feature.get('sample_id');
   var result = meritMaxima.filter(ee.Filter.eq('sample_id', id)).first();
-  var combined = ee.Feature(feature.set(ee.Feature(result).toDictionary()));
+  var earlierLakeFields = feature.propertyNames().filter(ee.Filter.stringStartsWith('item','lake_'));
+  var base = feature.select(feature.propertyNames().removeAll(earlierLakeFields));
+  var combined = ee.Feature(base.set(ee.Feature(result).toDictionary()));
   var earlier = combined.propertyNames().filter(ee.Filter.stringStartsWith('item','river_'));
   return combined.select(combined.propertyNames().removeAll(earlier));
 }
+if (meritMaxima) sites = sites.map(attachMerit);
 var LOOKUP_ROOT = 'REPLACE_WITH_LOOKUP_ASSET';
 var lookup = LOOKUP_ROOT.indexOf('REPLACE_WITH_') === 0 ? null : ee.FeatureCollection(LOOKUP_ROOT);
 var lakes = ee.FeatureCollection(ROOT + '/lake_candidates');
@@ -178,7 +181,7 @@ function showSite(id, recenter) {
   satelliteLayer.setShown(false);
   if (recenter !== false) map.centerObject(point, 13);
   ui.url.set('site', id);
-  var detailFeature = meritMaxima ? attachMerit(point.first()) : point.first();
+  var detailFeature = point.first();
   detailFeature.evaluate(function(feature, error) {
     if (token !== generation) return;
     if (error || !feature) { status.setValue('Could not load ' + id + ': ' + (error || 'unknown ID')); return; }
@@ -197,6 +200,7 @@ function showSite(id, recenter) {
     if (current.climate_status === 'ok') chartClimate();
     section('Lake boundary & shape');
     text('Geometry status', 'lake_geometry_status'); text('Source', 'lake_geometry_source');
+    text('Selected polygon ID', 'lake_polygon_feature_id');
     metric('Surface area', 'lake_area_m2', 2, 'ha', 10000);
     metric('Total shoreline (including islands)', 'lake_perimeter_m', 3, 'km', 1000);
     metric('Area / shoreline', 'lake_area_perimeter_m', 0, 'm');
@@ -215,7 +219,8 @@ function showSite(id, recenter) {
     }
     metric('Native cells evaluated', 'merit_valid_cell_count', 0, '');
     note('Streams use the maximum native MERIT area within 150 m of the original point. Lakes use the maximum inside the selected polygon. Nearby tributaries or downstream channels can influence the maximum.');
-    section('Exploratory shoreline terrain');
+    section('Earlier shoreline terrain');
+    note('These stored profiles predate the current OSM polygon selection.');
     text('Profile status', 'shoreline_elevation_status');
     metric('Lake-interior DSM proxy', 'lake_surface_dem_proxy_m', 0, 'm');
     ['50','100','250'].forEach(function(band, i) {
@@ -262,12 +267,13 @@ var downloads = ui.Panel();
 var download = ui.Button('Create full-precision dataset download links', function() {
   download.setDisabled(true); downloadStatus.setValue('Preparing links for this release…');
   // EE only serializes stored assets; no resampling or measurement calculation.
-  var exportSites = meritMaxima ? sites.map(attachMerit) : sites;
+  var exportSites = sites;
   exportSites.getDownloadURL({format: 'CSV', filename: RELEASE + '_sites'}, function(url, error) {
     if (error || !url) { downloadStatus.setValue('Download failed: ' + error); download.setDisabled(false); return; }
     downloads.clear(); downloads.add(label('All sites + measurements (CSV)', {color: '#0284c7'}, url));
-    lakes.getDownloadURL({format: 'GEO_JSON', filename: RELEASE + '_lakes'}, function(lakeUrl, lakeError) {
-      if (lakeUrl) downloads.add(label('Candidate lake boundaries (GeoJSON)', {color: '#0284c7'}, lakeUrl));
+    var lakeEvidence = lookup ? lookup.filter(ee.Filter.eq('role','inland_water')) : osmLakes;
+    lakeEvidence.getDownloadURL({format: 'GEO_JSON', filename: RELEASE + '_osm_lake_outlines'}, function(lakeUrl, lakeError) {
+      if (lakeUrl) downloads.add(label('Displayed OSM lake outlines (GeoJSON)', {color: '#0284c7'}, lakeUrl));
       var riverEvidence = lookup ? lookup.filter(ee.Filter.eq('role','channel')).filter(ee.Filter.neq('source','HydroRIVERS')) : ee.FeatureCollection([]);
       riverEvidence.getDownloadURL({format: 'GEO_JSON', filename: RELEASE + '_osm_channels'}, function(riverUrl, riverError) {
         if (riverUrl) downloads.add(label('OSM channel geometry (GeoJSON)', {color: '#0284c7'}, riverUrl));
