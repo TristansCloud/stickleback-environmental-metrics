@@ -19,6 +19,7 @@ function attachMerit(feature) {
 var LOOKUP_ROOT = 'REPLACE_WITH_LOOKUP_ASSET';
 var lookup = LOOKUP_ROOT.indexOf('REPLACE_WITH_') === 0 ? null : ee.FeatureCollection(LOOKUP_ROOT);
 var lakes = ee.FeatureCollection(ROOT + '/lake_candidates');
+var osmLakes = lakes.filter(ee.Filter.eq('source','OpenStreetMap'));
 var rivers = ee.FeatureCollection(ROOT + '/river_candidates');
 var shorelineSamples = ee.FeatureCollection(ROOT + '/shoreline_samples');
 var map = ui.Map();
@@ -56,8 +57,8 @@ var imageryYear = ui.Select({items: ['2025', '2024', '2023', '2022', '2021', '20
 var imageryStatus = label('Google imagery is contextual; dates vary by location.', {fontSize: '11px', whiteSpace: 'pre-wrap'});
 var satelliteLayer = ui.Map.Layer(ee.Image(0).selfMask(), {}, 'Sentinel-2 cloud-masked composite', false);
 var allLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Study sites by provisional habitat');
-var lakeLayer = ui.Map.Layer(lakes.style({color: '22d3ee', fillColor: '22d3ee18', width: 1}), {}, 'All lake candidates — identity unverified', false);
-var selectedLakeLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Selected lake candidate');
+var lakeLayer = ui.Map.Layer(osmLakes.style({color: '22d3ee', fillColor: '22d3ee18', width: 1}), {}, 'Earlier OSM lake candidates', false);
+var selectedLakeLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Earlier OSM lake candidate', !lookup);
 var sampleLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Shoreline DEM sampling locations — not independent cells', false);
 var lookupBox = ui.Map.Layer(ee.FeatureCollection([]), {}, 'ArcGIS query bounds', false);
 var lookupVectors = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Closest eligible lookup vectors');
@@ -99,7 +100,7 @@ function updateImagery() {
   var clear = choice === 'Sentinel-2 clear composite';
   satelliteLayer.setShown(clear);
   var vectorsOnly = choice === 'Vector only';
-  selectedLakeLayer.setShown(!vectorsOnly);
+  selectedLakeLayer.setShown(!vectorsOnly && !lookup);
   lookupBox.setShown(Boolean(lookup) && vectorsOnly);
   if (vectorsOnly) {
     map.setOptions('Vectors', {Vectors: [{stylers: [{visibility: 'off'}]}]});
@@ -159,7 +160,7 @@ function showSite(id, recenter) {
     var siteLookup = lookup.filter(filter.eq('sample_id', id));
     lookupStatus.setValue('Loading rule-based lookup…');
     lookupBox.setEeObject(siteLookup.filter(filter.eq('role','query_box')).style({color:'cbd5e1',width:2}));
-    lookupVectors.setEeObject(siteLookup.filter(filter.inList('role',Object.keys(lookupColors))).filter(filter.neq('source','HydroRIVERS')).map(function(feature) {
+    lookupVectors.setEeObject(siteLookup.filter(filter.inList('role',Object.keys(lookupColors))).filter(filter.inList('source',['OSM via Esri','OpenStreetMap','Geofabrik Iceland (2025)'])).map(function(feature) {
       return feature.set('lookup_style', {color:ee.Dictionary(lookupColors).get(feature.get('role'))});
     }).style({styleProperty:'lookup_style', width:4}));
     siteLookup.filter(filter.eq('role','status')).first().evaluate(function(feature,error) {
@@ -170,7 +171,7 @@ function showSite(id, recenter) {
     });
   }
   selectedPointLayer.setEeObject(point.style({color: 'fb7185', pointSize: 9, width: 2}));
-  selectedLakeLayer.setEeObject(lakes.filter(filter.eq('sample_id', id)).style({color: 'fde047', fillColor: 'fde04722', width: 4}));
+  selectedLakeLayer.setEeObject(osmLakes.filter(filter.eq('sample_id', id)).style({color: 'fde047', fillColor: 'fde04722', width: 4}));
   sampleLayer.setEeObject(shorelineSamples.filter(filter.eq('sample_id', id)).map(function(f) {
     return f.set('point_style', {color: ee.Dictionary({lake_surface: 'ffffff', shore_50m: 'fde047', shore_100m: 'fb923c', shore_250m: 'ef4444'}).get(f.get('group'), 'ffffff'), pointSize: 4});
   }).style({styleProperty: 'point_style'}));
@@ -289,7 +290,7 @@ if (lookup) {
   panel.add(lookupStatus);
   panel.add(label('Rule-based proposals. Marine and transition matches describe nearby context.', {fontSize:'11px', whiteSpace:'pre-wrap'}));
 }
-panel.add(label('Select a site to see its available evidence. The selected lake candidate has a yellow outline. Use map Layers to toggle evidence.', {fontSize: '11px', color: '#64748b', whiteSpace: 'pre-wrap'}));
+panel.add(label('Select a site to see its available OSM water geometry. Use map Layers to toggle evidence.', {fontSize: '11px', color: '#64748b', whiteSpace: 'pre-wrap'}));
 var legend = ui.Panel({layout: ui.Panel.Layout.flow('horizontal')});
 Object.keys(colors).forEach(function(key) { legend.add(label('● ' + key, {color: '#' + colors[key], fontSize: '10px', margin: '3px'})); });
 panel.add(legend); panel.add(details);
