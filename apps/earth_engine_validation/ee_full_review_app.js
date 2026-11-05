@@ -12,7 +12,7 @@ function attachMerit(feature) {
   feature = ee.Feature(feature);
   var id = feature.get('sample_id');
   var result = meritMaxima.filter(ee.Filter.eq('sample_id', id)).first();
-  var combined = feature.setMulti(ee.Feature(result).toDictionary());
+  var combined = ee.Feature(feature.set(ee.Feature(result).toDictionary()));
   var earlier = combined.propertyNames().filter(ee.Filter.stringStartsWith('item','river_'));
   return combined.select(combined.propertyNames().removeAll(earlier));
 }
