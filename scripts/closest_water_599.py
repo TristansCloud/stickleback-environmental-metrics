@@ -147,6 +147,7 @@ eligible = {
 }
 results = []
 lookup_features = []
+merit_regions = []
 atlas = {}
 for row in rows:
     sid = row["sample_id"]
@@ -195,6 +196,16 @@ for row in rows:
                     "replica_layers_completed": "|".join(sorted(set(completed))),
                     "replica_errors": " | ".join(dict.fromkeys(errors)),
                     "candidates": selected})
+    if habitat == "stream":
+        merit_regions.append({"type": "Feature", "geometry": mapping(point),
+                              "properties": {"sample_id": sid, "method": "point_buffer_max_150m"}})
+    elif habitat == "lake" and selected.get("inland_water"):
+        chosen = selected["inland_water"]
+        geometry = next(geom for kind, source, key, name, geom in by_site[sid]
+                        if kind == "inland_water" and source == chosen["source"] and key == chosen["feature_id"])
+        merit_regions.append({"type": "Feature", "geometry": mapping(geometry),
+                              "properties": {"sample_id": sid, "method": "lake_polygon_max",
+                                             "polygon_source": chosen["source"], "polygon_id": chosen["feature_id"]}})
     if not replica:
         continue
     extent = search_box(row)
@@ -258,3 +269,6 @@ if replica:
     (work / "lookup_overlay.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": lookup_features},
                                                             ensure_ascii=False), encoding="utf-8")
     (work / "lookup_atlas.json").write_text(json.dumps(atlas, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+
+(work / "merit_regions.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": merit_regions},
+                                                       ensure_ascii=False), encoding="utf-8")

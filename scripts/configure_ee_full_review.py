@@ -10,6 +10,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--bundle', type=Path, required=True)
     parser.add_argument('--asset-parent', required=True)
+    parser.add_argument('--merit-asset', help='Optional verified MERIT maxima table')
     parser.add_argument('--lookup-asset', help='Optional verified closest-water overlay asset')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
@@ -27,6 +28,10 @@ def main():
         if not re.fullmatch(r"projects/[A-Za-z0-9_-]+/assets/[A-Za-z0-9_/-]+", args.lookup_asset):
             parser.error("Expected a projects/PROJECT/assets/… lookup asset")
         app = app.replace("'REPLACE_WITH_LOOKUP_ASSET'", json.dumps(args.lookup_asset))
+    if args.merit_asset:
+        if not re.fullmatch(r"projects/[A-Za-z0-9_-]+/assets/[A-Za-z0-9_/-]+", args.merit_asset):
+            parser.error("Expected a projects/PROJECT/assets/… MERIT asset")
+        app = app.replace("'REPLACE_WITH_MERIT_MAXIMA_ASSET'", json.dumps(args.merit_asset))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(app, encoding="utf-8")
     print(args.output)

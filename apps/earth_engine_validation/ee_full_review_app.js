@@ -6,6 +6,16 @@ var ROOT = 'REPLACE_WITH_FULL_REVIEW_ASSET_ROOT';
 if (ROOT.indexOf('REPLACE_WITH_') === 0) throw new Error('Configure the uploaded full-review release first.');
 var RELEASE = ROOT.split('/').pop();
 var sites = ee.FeatureCollection(ROOT + '/sites');
+var MERIT_ROOT = 'REPLACE_WITH_MERIT_MAXIMA_ASSET';
+var meritMaxima = MERIT_ROOT.indexOf('REPLACE_WITH_') === 0 ? null : ee.FeatureCollection(MERIT_ROOT);
+function attachMerit(feature) {
+  feature = ee.Feature(feature);
+  var id = feature.get('sample_id');
+  var result = meritMaxima.filter(ee.Filter.eq('sample_id', id)).first();
+  var combined = feature.setMulti(ee.Feature(result).toDictionary());
+  var earlier = combined.propertyNames().filter(ee.Filter.stringStartsWith('item','river_'));
+  return combined.select(combined.propertyNames().removeAll(earlier));
+}
 var LOOKUP_ROOT = 'REPLACE_WITH_LOOKUP_ASSET';
 var lookup = LOOKUP_ROOT.indexOf('REPLACE_WITH_') === 0 ? null : ee.FeatureCollection(LOOKUP_ROOT);
 var lakes = ee.FeatureCollection(ROOT + '/lake_candidates');
@@ -37,7 +47,7 @@ function text(title, key) { details.add(label(title + ': ' + (missing(current[ke
   {fontSize: '12px', whiteSpace: 'pre-wrap', margin: '3px 0'})); }
 var search = ui.Textbox({placeholder: 'Search sample ID or population name', style: {stretch: 'horizontal'}});
 var habitat = ui.Select({items: ['All habitats', 'lake', 'stream', 'marine', 'transition', 'unknown'], value: 'All habitats', style: {stretch: 'horizontal'}});
-var coverage = ui.Select({items: ['All coverage', 'Lake polygon available', 'River attributes available', 'Shoreline profile available', 'Lake polygon missing'],
+var coverage = ui.Select({items: ['All coverage', 'Lake polygon available', 'Shoreline profile available', 'Lake polygon missing'],
   value: 'All coverage', style: {stretch: 'horizontal'}});
 var selector = ui.Select({placeholder: 'Select a study site', style: {stretch: 'horizontal'}});
 var imagery = ui.Select({items: ['Google satellite + labels', 'Google satellite', 'Google terrain', 'Vector only', 'Sentinel-2 clear composite'],
@@ -47,16 +57,14 @@ var imageryStatus = label('Google imagery is contextual; dates vary by location.
 var satelliteLayer = ui.Map.Layer(ee.Image(0).selfMask(), {}, 'Sentinel-2 cloud-masked composite', false);
 var allLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Study sites by provisional habitat');
 var lakeLayer = ui.Map.Layer(lakes.style({color: '22d3ee', fillColor: '22d3ee18', width: 1}), {}, 'All lake candidates — identity unverified', false);
-var riverLayer = ui.Map.Layer(rivers.filter(ee.Filter.eq('role', 'candidate_reach')).style({color: 'a3e635', width: 2}), {}, 'All candidate river reaches', false);
 var selectedLakeLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Selected lake candidate');
-var selectedRiverLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Earlier river evidence', !lookup);
 var sampleLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Shoreline DEM sampling locations — not independent cells', false);
 var lookupBox = ui.Map.Layer(ee.FeatureCollection([]), {}, 'ArcGIS query bounds', false);
 var lookupVectors = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Closest eligible lookup vectors');
 var lookupStatus = label('Select a site to inspect lookup evidence.', {fontSize:'12px', whiteSpace:'pre-wrap'});
 var lookupColors = {channel:'19b9e9', coast:'a78bfa', wetland:'84cc16', river_polygon:'2dd4bf', inland_water:'f59e0b', coastal_water:'60a5fa'};
 var selectedPointLayer = ui.Map.Layer(ee.FeatureCollection([]), {}, 'Original sample coordinate');
-[satelliteLayer, allLayer, lakeLayer, riverLayer, selectedLakeLayer, selectedRiverLayer, sampleLayer, lookupBox, lookupVectors, selectedPointLayer].forEach(function(layer) { map.layers().add(layer); });
+[satelliteLayer, allLayer, lakeLayer, selectedLakeLayer, sampleLayer, lookupBox, lookupVectors, selectedPointLayer].forEach(function(layer) { map.layers().add(layer); });
 var filter = ee.Filter;
 var filtered = sites;
 function applyFilters() {
@@ -66,7 +74,6 @@ function applyFilters() {
     return (h === 'All habitats' || row.working_waterbody_type === h) &&
       (!query || (row.sample_id + ' ' + row.population_name).toLowerCase().indexOf(query) !== -1) &&
       (c !== 'Lake polygon available' || row.has_lake_polygon) &&
-      (c !== 'River attributes available' || row.has_river_attributes) &&
       (c !== 'Shoreline profile available' || row.has_shoreline_profile) &&
       (c !== 'Lake polygon missing' || (row.working_waterbody_type === 'lake' && !row.has_lake_polygon));
   });
@@ -94,7 +101,6 @@ function updateImagery() {
   var vectorsOnly = choice === 'Vector only';
   selectedLakeLayer.setShown(!vectorsOnly);
   lookupBox.setShown(Boolean(lookup) && vectorsOnly);
-  if (vectorsOnly) selectedRiverLayer.setShown(false);
   if (vectorsOnly) {
     map.setOptions('Vectors', {Vectors: [{stylers: [{visibility: 'off'}]}]});
     imageryStatus.setValue(lookup ? 'Gray outline: ArcGIS query box. Colored lines: selected candidates.' : 'Vector view of the frozen evidence.');
@@ -153,7 +159,7 @@ function showSite(id, recenter) {
     var siteLookup = lookup.filter(filter.eq('sample_id', id));
     lookupStatus.setValue('Loading rule-based lookup…');
     lookupBox.setEeObject(siteLookup.filter(filter.eq('role','query_box')).style({color:'cbd5e1',width:2}));
-    lookupVectors.setEeObject(siteLookup.filter(filter.inList('role',Object.keys(lookupColors))).map(function(feature) {
+    lookupVectors.setEeObject(siteLookup.filter(filter.inList('role',Object.keys(lookupColors))).filter(filter.neq('source','HydroRIVERS')).map(function(feature) {
       return feature.set('lookup_style', {color:ee.Dictionary(lookupColors).get(feature.get('role'))});
     }).style({styleProperty:'lookup_style', width:4}));
     siteLookup.filter(filter.eq('role','status')).first().evaluate(function(feature,error) {
@@ -165,14 +171,14 @@ function showSite(id, recenter) {
   }
   selectedPointLayer.setEeObject(point.style({color: 'fb7185', pointSize: 9, width: 2}));
   selectedLakeLayer.setEeObject(lakes.filter(filter.eq('sample_id', id)).style({color: 'fde047', fillColor: 'fde04722', width: 4}));
-  selectedRiverLayer.setEeObject(rivers.filter(filter.eq('sample_id', id)).style({color: 'bef264', pointSize: 5, width: 3}));
   sampleLayer.setEeObject(shorelineSamples.filter(filter.eq('sample_id', id)).map(function(f) {
     return f.set('point_style', {color: ee.Dictionary({lake_surface: 'ffffff', shore_50m: 'fde047', shore_100m: 'fb923c', shore_250m: 'ef4444'}).get(f.get('group'), 'ffffff'), pointSize: 4});
   }).style({styleProperty: 'point_style'}));
   satelliteLayer.setShown(false);
   if (recenter !== false) map.centerObject(point, 13);
   ui.url.set('site', id);
-  point.first().evaluate(function(feature, error) {
+  var detailFeature = meritMaxima ? attachMerit(point.first()) : point.first();
+  detailFeature.evaluate(function(feature, error) {
     if (token !== generation) return;
     if (error || !feature) { status.setValue('Could not load ' + id + ': ' + (error || 'unknown ID')); return; }
     current = feature.properties;
@@ -197,15 +203,12 @@ function showSite(id, recenter) {
     note('Candidate identity needs review. Shorelines retain source resolution; normalization is pending. HydroLAKES generally excludes lakes smaller than 10 ha.');
     if (current.lake_osm_id && current.lake_osm_type) details.add(label('View source OSM object', {color: '#0284c7'},
       'https://www.openstreetmap.org/' + current.lake_osm_type + '/' + current.lake_osm_id));
-    section('River context');
-    text('Vector status', 'river_vector_status'); text('Reach ID', 'river_reach_id');
-    metric('Distance to candidate reach', 'river_snap_distance_m', 0, 'm');
-    metric('Reach-outlet upstream area', 'river_reach_upstream_area_km2', 2, 'km²');
-    metric('Strahler order', 'river_reach_strahler_order', 0, '');
-    metric('Estimated long-term discharge', 'river_reach_average_discharge_m3_s', 2, 'm³/s');
-    text('MERIT alignment', 'river_merit_alignment_status');
-    metric('Sample-aligned MERIT upstream area', 'river_snapped_upstream_drainage_area_km2', 2, 'km²');
-    note('HydroRIVERS attributes refer to a reach outlet. They are separate from sample-cell MERIT drainage estimates. Flow connection and identity remain unverified.');
+    section('Upstream drainage area · MERIT Hydro');
+    text('Status', 'merit_status');
+    metric('Maximum upstream drainage area', 'merit_max_upstream_area_km2', 2, 'km²');
+    text('Extraction method', 'merit_method');
+    metric('Native cells evaluated', 'merit_valid_cell_count', 0, '');
+    note('Streams use the maximum native MERIT area within 150 m of the original point. Lakes use the maximum inside the selected polygon. Nearby tributaries or downstream channels can influence the maximum.');
     section('Exploratory shoreline terrain');
     text('Profile status', 'shoreline_elevation_status');
     metric('Lake-interior DSM proxy', 'lake_surface_dem_proxy_m', 0, 'm');
@@ -217,7 +220,7 @@ function showSite(id, recenter) {
     text('Depth status', 'lake_depth_status');
     section('Stored evidence & provenance');
     var rawPanel = ui.Panel({style: {shown: false}});
-    Object.keys(current).sort().forEach(function(key) {
+    Object.keys(current).filter(function(key) { return key.indexOf('river_') !== 0; }).sort().forEach(function(key) {
       rawPanel.add(label(key + ': ' + (missing(current[key]) ? 'Unavailable' : String(current[key])),
         {fontSize: '10px', whiteSpace: 'pre-wrap', margin: '2px 0'}));
     });
@@ -253,13 +256,15 @@ var downloads = ui.Panel();
 var download = ui.Button('Create full-precision dataset download links', function() {
   download.setDisabled(true); downloadStatus.setValue('Preparing links for this frozen release…');
   // EE only serializes stored assets; no resampling or measurement calculation.
-  sites.getDownloadURL({format: 'CSV', filename: RELEASE + '_sites'}, function(url, error) {
+  var exportSites = meritMaxima ? sites.map(attachMerit) : sites;
+  exportSites.getDownloadURL({format: 'CSV', filename: RELEASE + '_sites'}, function(url, error) {
     if (error || !url) { downloadStatus.setValue('Download failed: ' + error); download.setDisabled(false); return; }
     downloads.clear(); downloads.add(label('All sites + measurements (CSV)', {color: '#0284c7'}, url));
     lakes.getDownloadURL({format: 'GEO_JSON', filename: RELEASE + '_lakes'}, function(lakeUrl, lakeError) {
       if (lakeUrl) downloads.add(label('Candidate lake boundaries (GeoJSON)', {color: '#0284c7'}, lakeUrl));
-      rivers.getDownloadURL({format: 'GEO_JSON', filename: RELEASE + '_rivers'}, function(riverUrl, riverError) {
-        if (riverUrl) downloads.add(label('River evidence (GeoJSON)', {color: '#0284c7'}, riverUrl));
+      var riverEvidence = lookup ? lookup.filter(ee.Filter.eq('role','channel')).filter(ee.Filter.neq('source','HydroRIVERS')) : ee.FeatureCollection([]);
+      riverEvidence.getDownloadURL({format: 'GEO_JSON', filename: RELEASE + '_osm_channels'}, function(riverUrl, riverError) {
+        if (riverUrl) downloads.add(label('OSM channel geometry (GeoJSON)', {color: '#0284c7'}, riverUrl));
         downloadStatus.setValue(lakeError || riverError ? 'Some GIS links could not be generated; retry.' : 'Full stored precision; candidate geometries remain unverified. Links expire.');
         download.setDisabled(false);
       });
