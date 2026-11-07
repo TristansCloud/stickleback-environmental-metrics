@@ -8,6 +8,13 @@ class SiteHabitatInferenceTests(unittest.TestCase):
         self.assertEqual(infer_site_habitat("Hópsvatn", "freshwater").working_waterbody_type, "lake")
         self.assertEqual(infer_site_habitat("Pulmankijärvi", "freshwater").working_waterbody_type, "lake")
 
+    def test_swiss_multilingual_habitat_terms(self):
+        for name in ("Moerigen_Biel.Lakeside_BE", "Eymatt_Jordeweiher_BE", "Lac Leman", "Lago Maggiore"):
+            self.assertEqual(infer_site_habitat(name, "freshwater").working_waterbody_type, "lake", name)
+        for name in ("Moehlin_Moehlinbach_AG", "Bach in Diepoldsau", "Zihlkanal_BE", "Canal_des_Chambettes_VS", "AizuHakusan_AgaRiver", "Kinugawa"):
+            self.assertEqual(infer_site_habitat(name, "freshwater").working_waterbody_type, "stream", name)
+        self.assertEqual(infer_site_habitat("Saint Sulpice", "freshwater").working_waterbody_type, "unknown")
+
     def test_river_mouth_is_transition(self):
         result = infer_site_habitat("Perperidere River mouth", "freshwater")
         self.assertEqual(result.name_inferred_waterbody_type, "transition")
