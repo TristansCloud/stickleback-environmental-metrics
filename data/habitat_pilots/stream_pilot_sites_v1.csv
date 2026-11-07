@@ -1,0 +1,8 @@
+sample_id,Population.name,population.abbreviation,Latitude,Longitude,Ecotype,pilot_class,validation_role,selection_basis,name_inferred_waterbody_type,matched_terms,name_inference_confidence,working_waterbody_type,working_type_basis,manual_review,classification_status,review_required,reviewed_waterbody_class,reviewer,review_notes
+S0024,Keret River,KER,66.2728,33.5546,freshwater,stream,core,name_and_ecotype_agree,stream,river,high,stream,population_name,False,provisional_unverified,True,,,
+S0480,Black River,BLR,46.1575,-61.275,freshwater,stream,core,name_and_ecotype_agree,stream,river,high,stream,population_name,False,provisional_unverified,True,,,
+S0580,Putah_Creek,PC,38.54491,-121.74052,freshwater,stream,core,name_and_ecotype_agree,stream,creek,high,stream,population_name,False,provisional_unverified,True,,,
+S0587,Ribeira do Torgal River,TOR,37.63778,-8.61944,freshwater,stream,core,name_and_ecotype_agree,stream,river,high,stream,population_name,False,provisional_unverified,True,,,
+S0592,Mugla River,MUG,36.83492,28.7954,freshwater,stream,core,name_and_ecotype_agree,stream,river,high,stream,population_name,False,provisional_unverified,True,,,
+S0162,Luga River,GFLU,59.64928,28.24668,marine,stream,challenge,missing_ambiguous_or_conflicting_name_evidence,stream,river,high,marine,ecotype:marine,True,provisional_unverified,True,,,
+S0319,Village Bay Stream,VBLS,50.17188,-125.19774,freshwater,stream,challenge,missing_ambiguous_or_conflicting_name_evidence,stream,stream;bay,low,stream,population_name,True,provisional_unverified,True,,,

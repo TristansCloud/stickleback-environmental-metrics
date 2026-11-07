@@ -1,0 +1,52 @@
+{
+  "selection_version": "provisional-habitat-pilots-v1",
+  "source_file": "site_overview_v1_clean.csv",
+  "source_sha256": "4410e5dca068f696a3812d2ae281b0f4d5c226af596f9ad1236dd802d7d6e017",
+  "source_records": 599,
+  "core_per_class": 5,
+  "challenge_per_class": 2,
+  "method": "name/ecotype queues; unique normalized names and coordinates; farthest-point great-circle spread; sample_id ties",
+  "classification_status": "provisional_unverified",
+  "confirmed_labels": 0,
+  "cohorts": {
+    "stream": {
+      "file": "stream_pilot_sites_v1.csv",
+      "sample_ids": [
+        "S0024",
+        "S0480",
+        "S0580",
+        "S0587",
+        "S0592",
+        "S0162",
+        "S0319"
+      ],
+      "sha256": "3918eeec6963286f896f972927ccfd8cf8b6029beada243a34b7338241a0ce6c"
+    },
+    "marine": {
+      "file": "marine_pilot_sites_v1.csv",
+      "sample_ids": [
+        "S0001",
+        "S0032",
+        "S0160",
+        "S0208",
+        "S0394",
+        "S0517",
+        "S0531"
+      ],
+      "sha256": "f3d3b799382d78e213e6bcdfa15f74f055c05566abd5aa021b0034df40348730"
+    },
+    "transition": {
+      "file": "transition_pilot_sites_v1.csv",
+      "sample_ids": [
+        "S0132",
+        "S0253",
+        "S0419",
+        "S0581",
+        "S0596",
+        "S0392",
+        "S0530"
+      ],
+      "sha256": "3d0e8e1231e76f1d09001ec59fefcd1c9cb9ea06730cadd7426e77b6588d3b08"
+    }
+  }
+}

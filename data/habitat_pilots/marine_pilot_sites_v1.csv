@@ -1,0 +1,8 @@
+sample_id,Population.name,population.abbreviation,Latitude,Longitude,Ecotype,pilot_class,validation_role,selection_basis,name_inferred_waterbody_type,matched_terms,name_inference_confidence,working_waterbody_type,working_type_basis,manual_review,classification_status,review_required,reviewed_waterbody_class,reviewer,review_notes
+S0001,Barents Sea pelagic,BAR,72.5801,37.0803,marine,marine,core,name_and_ecotype_agree,marine,sea;pelagic,high,marine,ecotype:marine,False,provisional_unverified,True,,,
+S0032,Húsavík Harbour,ISAO_MARINE,66.04633,-17.34651,marine,marine,core,name_and_ecotype_agree,marine,harbour,high,marine,ecotype:marine,False,provisional_unverified,True,,,
+S0160,Resurrection Bay,REBA,60.12519,-149.41967,marine,marine,core,name_and_ecotype_agree,marine,bay,high,marine,ecotype:marine,False,provisional_unverified,True,,,
+S0208,Norsminde Fjord,NOR,56.00933,10.26291,marine,marine,core,name_and_ecotype_agree,marine,fjord,high,marine,ecotype:marine,False,provisional_unverified,True,,,
+S0394,Sea of Okhotsk Site A,OHKA,48.91833,165.21722,marine,marine,core,name_and_ecotype_agree,marine,sea,high,marine,ecotype:marine,False,provisional_unverified,True,,,
+S0517,South Slough; Coos Bay,SOSL,43.2892,-124.321,marine,marine,challenge,missing_ambiguous_or_conflicting_name_evidence,marine,bay,high,marine,ecotype:marine,False,provisional_unverified,True,,,
+S0531,Nelson Island,NEI,42.74421,-70.82954,marine,marine,challenge,missing_ambiguous_or_conflicting_name_evidence,unknown,,none,marine,ecotype:marine,False,provisional_unverified,True,,,
