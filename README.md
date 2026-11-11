@@ -14,6 +14,24 @@ The lake-polygon workflow was introduced in
 Use its dedicated commands below for whole-lake retrieval; the original
 point-pilot commands remain separate workflows.
 
+### Other habitat development sets
+
+[Provisional stream, marine, and estuary/brackish cohorts](docs/provisional_habitat_pilots.md)
+are available in `data/habitat_pilots/`: five core examples and two ambiguity
+cases per workflow. They retain the source ecotype and inference evidence;
+all require review and none is a confirmed habitat label. Generate them offline
+with `python scripts/prepare_habitat_pilots.py` after installing the package.
+
+### Full review dataset
+
+The [full review workflow](docs/full_review_workflow.md) starts with the test
+cohorts, then combines point elevation/climate, local lake polygons, river-reach
+attributes, and exploratory shoreline elevation. Raw geofiles and generated
+review bundles stay under ignored `data/cache/`; they are not committed.
+Run `python -m scripts.generate_full_review` to reproduce from caches, or add
+`--live` to opt into missing downloads. Use
+`python scripts/package_full_review.py` to validate and package the review table.
+
 ## Quick start
 
 ### Lake polygon pilot
@@ -165,6 +183,12 @@ keeps network access disabled by default and caps the scope at 40 sites.
 The repository does not yet ship DEM/climate rasters or execute a production-scale OSM/catchment run. Those inputs and source/version configuration remain the next integration step.
 
 ### Earth Engine validation viewer
+
+For the new full 599-site public reviewer map, see
+[the full-dataset viewer guide](docs/public_review_viewer.md). The code and
+offline release preparation are available; cloud upload, visual acceptance and
+publication require the authorized Earth Engine account.
+
 
 The new 40-lake lookup has a dedicated frozen review bundle and
 [lake candidate viewer](apps/earth_engine_validation/README.md#new-lake-polygon-review)

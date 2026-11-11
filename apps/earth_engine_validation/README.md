@@ -1,4 +1,13 @@
-# Earth Engine pilot validation viewer
+# Earth Engine validation viewers
+
+## Full-dataset public viewer
+
+The new 599-site App is `ee_full_review_app.js`. See
+[the public-viewer guide](../../docs/public_review_viewer.md) for preparation,
+upload, explicit public sharing and publication checks. It is separate from
+the older private 40-site Apps below. The full release is prepared offline;
+Google authentication, live visual QA and publication remain pending.
+
 
 ## New lake polygon review
 
