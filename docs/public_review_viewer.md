@@ -1,5 +1,40 @@
 # Public full-dataset reviewer App
 
+## Download-button repair (2026-11-11)
+
+The published `stickleback-atlas` App was tested directly on 2026-11-11.
+Clicking **Create full-precision dataset download links** immediately raised
+`TypeError: e.format.toUpperCase is not a function` in the browser console and
+left the button disabled on “Preparing links”. This was a JavaScript argument
+error, before any dataset download, rather than evidence of slow sampling.
+
+`FeatureCollection.getDownloadURL` accepts positional arguments or one named
+options object. The previous calls mixed an options object with a second,
+positional callback, causing the object to be interpreted as the format string.
+The callback now lives inside the options object. Geometry downloads also use
+the documented `geojson` format instead of `GEO_JSON` (a batch-export spelling).
+The three links prepare independently, report errors by file, and allow retry
+after 30 seconds with late responses ignored. The timeout covers link creation,
+not the subsequent file transfer after a link is opened.
+
+Offline regression checks (Node.js required):
+
+```sh
+node --test tests/ee_downloads.test.cjs
+node --check apps/earth_engine_validation/ee_full_review_app.js
+```
+
+To apply this repair to the existing published App, replace only the block from
+`var downloadStatus =` through the end of the `var download = ui.Button(...)`
+declaration in the deployed Code Editor script with that block from
+`apps/earth_engine_validation/ee_full_review_app.js`. Keep the deployed asset
+constants and map layout. Run the script, create the links, open the CSV and
+both GeoJSON files, then update the existing App through **Apps**. Verify again
+at the public URL while signed out, including 599 CSV rows and original IDs.
+No asset upload, permission change or environmental rerun is needed for this
+repair. The source repair and offline tests alone do not update the live App;
+successful live downloads after republishing remain to be verified.
+
 This is the new public viewer for the full environmental review. It is separate
 from the historical 40-site private pilot and lake-QC Apps. Public sharing was
 requested by the project owner on 2026-11-01. The older restricted Apps and

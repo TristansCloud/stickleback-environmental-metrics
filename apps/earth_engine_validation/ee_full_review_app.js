@@ -263,24 +263,49 @@ var copyReview = ui.Button('Prepare review record for copying', function() {
 var downloadStatus = label('', {fontSize: '11px', whiteSpace: 'pre-wrap'});
 var downloads = ui.Panel();
 var download = ui.Button('Create full-precision dataset download links', function() {
-  download.setDisabled(true); downloadStatus.setValue('Preparing links for this release…');
-  // EE only serializes stored assets; no resampling or measurement calculation.
-  var exportSites = sites;
-  exportSites.getDownloadURL({format: 'CSV', filename: RELEASE + '_sites'}, function(url, error) {
-    if (error || !url) { downloadStatus.setValue('Download failed: ' + error); download.setDisabled(false); return; }
-    downloads.clear(); downloads.add(label('All sites + measurements (CSV)', {color: '#0284c7'}, url));
-    var lakeEvidence = lookup ? lookup.filter(ee.Filter.eq('role','inland_water')) : osmLakes;
-    lakeEvidence.getDownloadURL({format: 'GEO_JSON', filename: RELEASE + '_osm_lake_outlines'}, function(lakeUrl, lakeError) {
-      if (lakeUrl) downloads.add(label('Displayed OSM lake outlines (GeoJSON)', {color: '#0284c7'}, lakeUrl));
-      var riverEvidence = lookup ? lookup.filter(ee.Filter.eq('role','channel')).filter(ee.Filter.neq('source','HydroRIVERS')) : ee.FeatureCollection([]);
-      riverEvidence.getDownloadURL({format: 'GEO_JSON', filename: RELEASE + '_osm_channels'}, function(riverUrl, riverError) {
-        if (riverUrl) downloads.add(label('OSM channel geometry (GeoJSON)', {color: '#0284c7'}, riverUrl));
-        downloadStatus.setValue(lakeError || riverError ? 'Some GIS links could not be generated; retry.' : 'Full stored precision; candidate geometries remain unverified. Links expire.');
-        download.setDisabled(false);
-      });
-    });
-  });
+  download.setDisabled(true);
+  downloads.clear();
+  downloadStatus.setValue('Preparing 3 download links…');
+  var remaining = 3, failures = 0;
+  // Each request is independent: GIS failures must not block the site CSV.
+  function request(collection, format, suffix, title) {
+    var row = label(title + ': preparing…', {fontSize: '11px', whiteSpace: 'pre-wrap'});
+    downloads.add(row);
+    var finished = false;
+    var timer = ui.util.setTimeout(function() { finish(null, 'Link preparation timed out after 30 seconds. Retry.'); }, 30000);
+    function finish(url, error) {
+      if (finished) return; // Ignore late responses after a timeout or retry.
+      finished = true;
+      ui.util.clearTimeout(timer);
+      if (error || !url) {
+        failures++;
+        row.setValue(title + ': ' + (error || 'No download URL returned. Retry.'));
+      } else {
+        row.setValue(title);
+        row.setUrl(url);
+        row.style().set('color', '#0284c7');
+      }
+      remaining--;
+      downloadStatus.setValue(remaining ? 'Preparing links: ' + remaining + ' remaining. Ready links can be opened now.' :
+        failures ? failures + ' download link(s) failed. Ready links remain available; click the button to retry.' :
+        'Choose a link to download. Full stored precision; candidate geometries remain unverified. Links expire.');
+      if (!remaining) download.setDisabled(false);
+    }
+    try {
+      // Use a single named-argument object, including callback. Mixing an options
+      // object with a positional callback makes EE treat the object as format.
+      collection.getDownloadURL({format: format, filename: RELEASE + suffix, callback: finish});
+    } catch (error) {
+      finish(null, String(error));
+    }
+  }
+  request(sites, 'csv', '_sites', 'All sites + measurements (CSV)');
+  var lakeEvidence = lookup ? lookup.filter(ee.Filter.eq('role','inland_water')) : osmLakes;
+  request(lakeEvidence, 'geojson', '_osm_lake_outlines', 'Displayed OSM lake outlines (GeoJSON)');
+  var riverEvidence = lookup ? lookup.filter(ee.Filter.eq('role','channel')).filter(ee.Filter.neq('source','HydroRIVERS')) : ee.FeatureCollection([]);
+  request(riverEvidence, 'geojson', '_osm_channels', 'OSM channel geometry (GeoJSON)');
 });
+
 panel.add(label('STICKLEBACK · ENVIRONMENTAL ATLAS', {fontSize: '11px', color: '#0284c7', fontWeight: 'bold'}));
 panel.add(label('Explore the study sites', {fontSize: '24px', fontWeight: 'bold', color: '#0f172a'}));
 panel.add(label('599 original sites · review release', {fontSize: '13px', color: '#475569'}));
