@@ -1,6 +1,8 @@
 """Selection/review regressions, not habitat ground-truth tests."""
 
 import csv
+import hashlib
+import json
 from collections import Counter
 from pathlib import Path
 
@@ -89,10 +91,28 @@ def test_regeneration_is_identical_and_cannot_erase_review(tmp_path):
         assert (tmp_path / name).read_bytes() == snapshot[name]
 
 
-def test_committed_cohorts_match_the_reproducible_selection(tmp_path):
-    write_habitat_pilots(ROOT / "site_overview_v1_clean.csv", tmp_path)
-    for generated in tmp_path.iterdir():
-        assert (
-            generated.read_bytes()
-            == (ROOT / "data/habitat_pilots" / generated.name).read_bytes()
-        )
+def test_frozen_cohorts_match_their_manifest_and_original_sites():
+    # These cohorts predate later name-inference rules (e.g. Kinugawa).
+    # Validate the historical evidence without silently replacing its members.
+    directory = ROOT / "data/habitat_pilots"
+    manifest = json.loads((directory / "selection_manifest.json").read_text())
+    source = ROOT / manifest["source_file"]
+    assert hashlib.sha256(source.read_bytes()).hexdigest() == manifest["source_sha256"]
+    originals = {record.sample_id: record for record in load_sites(source, strict=True).records}
+    assert len(originals) == manifest["source_records"]
+    for kind, cohort in manifest["cohorts"].items():
+        path = directory / cohort["file"]
+        assert hashlib.sha256(path.read_bytes()).hexdigest() == cohort["sha256"]
+        with path.open(newline="") as handle:
+            rows = list(csv.DictReader(handle))
+        assert [row["sample_id"] for row in rows] == cohort["sample_ids"]
+        assert Counter(row["validation_role"] for row in rows) == {
+            "core": manifest["core_per_class"], "challenge": manifest["challenge_per_class"]}
+        for row in rows:
+            assert row["pilot_class"] == kind
+            original = originals[row["sample_id"]]
+            assert row["Population.name"] == original.population_name
+            assert row["population.abbreviation"] == original.population_abbreviation
+            assert row["Ecotype"] == original.ecotype
+            assert float(row["Latitude"]) == original.latitude
+            assert float(row["Longitude"]) == original.longitude

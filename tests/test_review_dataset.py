@@ -156,3 +156,23 @@ def test_local_hydrolakes_bbox_scan_preserves_holes_and_metrics(tmp_path):
     results = json.loads((out / "lake_results.json").read_text())
     assert results["S1"]["hylak_id"] == 1 and "S2" not in results
     assert results["S1"]["lake_area_m2"] > 0 and results["S1"]["review_required"]
+
+
+def test_denser_shoreline_samples_are_repeatable_and_in_the_correct_land_bands():
+    import math
+
+    geometry = {"type": "Polygon", "coordinates": [[
+        [-0.01, -0.01], [0.01, -0.01], [0.01, 0.01], [-0.01, 0.01], [-0.01, -0.01]
+    ]]}
+    plan = sample_plan(geometry)
+    assert plan == sample_plan(geometry)
+    lower = 0
+    for upper in (50, 100, 250):
+        points = plan["groups"][f"shore_{upper}m"]
+        assert 100 <= len(points) <= 200
+        assert len({tuple(point) for point in points}) == len(points)
+        for lon, lat in points:
+            # At the equator, distance outside this square is analytic.
+            distance = math.hypot(max(abs(lon) - 0.01, 0), max(abs(lat) - 0.01, 0)) * 111195
+            assert lower - 0.01 <= distance <= upper + 0.01
+        lower = upper

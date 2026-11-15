@@ -40,6 +40,11 @@ _PATTERNS: tuple[tuple[str, tuple[str, ...]], ...] = (
         "lake",
         (
             r"\blake\b",
+            r"\blakeside\b",
+            r"\blac\b",
+            r"\blago\b",
+            r"\betang\b",
+            r"\b[a-z]*weiher\b",
             r"\bpond\b",
             r"\breservoir\b",
             r"\bloch\b",
@@ -53,6 +58,15 @@ _PATTERNS: tuple[tuple[str, tuple[str, ...]], ...] = (
         "stream",
         (
             r"\briver\b",
+            r"\bbach\b",
+            r"\b[a-z]+bach\b",
+            r"\b[a-z]*kanal\b",
+            r"\bcanal\b",
+            r"\bruisseau\b",
+            r"\briviere\b",
+            r"\bfiume\b",
+            r"\btorrente\b",
+            r"\b[a-z]+gawa\b",
             r"\bstream\b",
             r"\bcreek\b",
             r"\bbrook\b",
@@ -79,7 +93,8 @@ _PATTERNS: tuple[tuple[str, tuple[str, ...]], ...] = (
 
 def normalize_site_name(value: object) -> str:
     """Return lower-case ASCII-ish tokens while preserving word boundaries."""
-    decomposed = unicodedata.normalize("NFKD", str(value or ""))
+    text = re.sub(r"(?<=[a-z])(?=[A-Z][a-z])", " ", str(value or ""))
+    decomposed = unicodedata.normalize("NFKD", text)
     ascii_text = "".join(char for char in decomposed if not unicodedata.combining(char))
     return re.sub(r"[^a-z0-9]+", " ", ascii_text.lower()).strip()
 

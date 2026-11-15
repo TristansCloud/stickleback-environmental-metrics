@@ -11,9 +11,10 @@ import hashlib
 import json
 import logging
 from pathlib import Path
-import shutil
 import time
 from urllib.request import Request, urlopen
+
+from enviro_data.osm_disk import log_usage, require_space
 
 LOG = logging.getLogger(__name__)
 HEADERS = {"User-Agent": "stickleback-environmental-metrics/0.1 (study extracts)"}
@@ -59,6 +60,7 @@ def download(item, output):
             if offset > item["bytes"]:
                 raise ValueError(f"partial file exceeds expected size: {part}")
             if offset < item["bytes"]:
+                require_space(output, item["bytes"] - offset)
                 headers = {"Range": f"bytes={offset}-"} if offset else {}
                 with request(item["url"], headers=headers) as response:
                     if offset and response.status == 206:
@@ -67,10 +69,14 @@ def download(item, output):
                         mode = "ab"
                     else:
                         offset, mode = 0, "wb"
+                    require_space(output, item["bytes"] - offset)
                     LOG.info("download_start %s size_gb=%.3f offset=%d attempt=%d", item["name"], item["bytes"]/1e9, offset, attempt)
                     last_log = time.monotonic()
                     with part.open(mode) as file:
                         while chunk := response.read(4 * 1024 * 1024):
+                            if offset + len(chunk) > item["bytes"]:
+                                raise ValueError(f"download exceeds expected size: {part}")
+                            require_space(output, len(chunk))
                             file.write(chunk)
                             offset += len(chunk)
                             if time.monotonic() - last_log > 30:
@@ -86,6 +92,14 @@ def download(item, output):
             if attempt == 3:
                 raise
             time.sleep(2 * attempt)
+
+
+def write_manifest(path, manifest):
+    payload = json.dumps(manifest, indent=2).encode("utf-8")
+    require_space(path.parent, len(payload))
+    partial = path.with_suffix(".tmp")
+    partial.write_bytes(payload)
+    partial.replace(path)
 
 
 def main():
@@ -105,17 +119,16 @@ def main():
         with ThreadPoolExecutor(max_workers=4) as pool:
             items = list(pool.map(metadata, coverage["regions"]))
         manifest = {"source": "OpenStreetMap contributors / Geofabrik, ODbL", "items": items, "completed": {}}
-        manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+        write_manifest(manifest_path, manifest)
     total = sum(item["bytes"] for item in manifest["items"])
-    LOG.info("plan regions=%d total_gb=%.3f free_gb=%.3f", len(manifest["items"]), total/1e9, shutil.disk_usage(args.output_dir).free/1e9)
+    LOG.info("plan regions=%d total_gb=%.3f", len(manifest["items"]), total/1e9)
+    log_usage(args.output_dir)
     if not args.download:
         return
-    existing = sum(p.stat().st_size for p in args.output_dir.glob("*.osm.pbf*"))
-    if shutil.disk_usage(args.output_dir).free < max(0, total-existing) + 3*1024**3:
-        raise ValueError("insufficient free disk space")
     for item in manifest["items"]:
         manifest["completed"][item["id"]] = download(item, args.output_dir)
-        manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+        write_manifest(manifest_path, manifest)
+        log_usage(args.output_dir)
     LOG.info("all_downloads_verified regions=%d", len(manifest["items"]))
 
 

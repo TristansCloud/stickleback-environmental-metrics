@@ -10,7 +10,7 @@ from enviro_data.river_sources import sha
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def run(polygons, output_dir, *, live=False, limit=3, local_dem=False):
+def run(polygons, output_dir, *, live=False, limit=3, local_dem=False, ring_count=200):
     out = Path(output_dir)
     out.mkdir(parents=True, exist_ok=True)
     features = json.loads(Path(polygons).read_text())["features"][:limit]
@@ -21,7 +21,7 @@ def run(polygons, output_dir, *, live=False, limit=3, local_dem=False):
         dest = out / f"{sid}.json"
         identity = (
             __import__("hashlib")
-            .sha256(json.dumps(feature, sort_keys=True).encode())
+            .sha256(json.dumps({"feature": feature, "sampling_version": 2, "surface_count": 12, "ring_count": ring_count}, sort_keys=True).encode())
             .hexdigest()
         )
         if dest.exists():
@@ -32,7 +32,7 @@ def run(polygons, output_dir, *, live=False, limit=3, local_dem=False):
                 results[sid] = prior
                 continue
         try:
-            plan = sample_plan(feature["geometry"])
+            plan = sample_plan(feature["geometry"], ring_count=ring_count)
             coordinates = [p for group in plan["groups"].values() for p in group]
             if local_dem:
                 from enviro_data.local_dem import sample_coordinates
@@ -101,6 +101,7 @@ if __name__ == "__main__":
         "--output-dir", type=Path, default=ROOT / "data/cache/shoreline_review"
     )
     p.add_argument("--limit", type=int, default=3)
+    p.add_argument("--ring-count", type=int, default=200, help="Maximum deterministic sample points per land-side band")
     p.add_argument("--live", action="store_true")
     p.add_argument("--local-dem", action="store_true")
     a = p.parse_args()
@@ -115,6 +116,7 @@ if __name__ == "__main__":
                 live=a.live,
                 limit=a.limit,
                 local_dem=a.local_dem,
+                ring_count=a.ring_count,
             ),
             indent=2,
         )
