@@ -1,5 +1,14 @@
 # Public full-dataset reviewer App
 
+> Release scope: the 98-lake counts, four-table upload recipe and initial
+> preparation status below belong to the November 1 base release. The current
+> source also accepts later lookup and MERIT/site-metrics assets. See
+> [current status](current_status.md), [MERIT](merit_upstream_area.md) and
+> [whole-band shoreline](whole_band_shoreline.md) before configuring a refresh.
+> Record the exact asset IDs and release checksums together; do not apply the
+> old coverage counts as acceptance targets for a later release. This
+> documentation update did not verify the live App or cloud assets.
+
 ## Download-button repair (2026-11-11)
 
 The published `stickleback-atlas` App was tested directly on 2026-11-11.
@@ -40,18 +49,20 @@ from the historical 40-site private pilot and lake-QC Apps. Public sharing was
 requested by the project owner on 2026-11-01. The older restricted Apps and
 registry are not changed by this workflow.
 
-## Implementation and current release
+## Implementation and original prepared base release
 
 `apps/earth_engine_validation/ee_full_review_app.js` supports all 599 original
 sites, search and habitat/coverage filters, click selection, shareable `site` URL
 state, climate charts, source properties, browser-only reviewer notes, and
 full-precision CSV/GeoJSON download links. Original coordinates stay unchanged.
 Lake/river identity and habitat classes remain provisional; missing values are
-not converted to zero. MERIT sample-cell values remain separate from HydroRIVERS
-reach-outlet attributes. Depth remains unestimated.
+not converted to zero. The later MERIT overlay supplies polygon/buffer maxima,
+which differ from historical sample-cell and HydroRIVERS reach-outlet values.
+The configured current CSV omits earlier river fields when that overlay is
+used. Depth remains unestimated.
 
 The source is the extracted `stickleback_review_2026-11-01.zip`, whose own
-manifest checksums are verified before conversion. Current prepared release:
+manifest checksums are verified before conversion. Original prepared base release:
 
 - `ee_full_review_v1_3d571ff57e659c91`
 - 599 sites, 98 candidate lake polygons, 153 river-evidence features.
@@ -135,7 +146,7 @@ Publish using **Apps → New App**, select `stickleback-507923`, choose the scri
 and leave Google Group restriction off. Record the actual URL returned by
 Google; do not invent a URL from the project or proposed App name.
 
-## Visual acceptance checks before declaring publication complete
+## Original base-release acceptance checks
 
 1. Verify 599 sites, including unresolved/marine records. Filter lake polygon
    available → 98 sites; river attributes → 36; shoreline profile → 91.
@@ -165,13 +176,15 @@ to two decimals; elevation/relative elevation uses whole metres; temperature
 uses one decimal. Precipitation is mm/day to two decimals. Rounding is to nearest,
 not truncation, and communicates no improvement in source accuracy.
 
-## Deployment status
+## Deployment status at original preparation
 
 The implementation, offline prepared release and tests are ready. At preparation
 time this workspace had no Earth Engine credentials and the browser was signed
-out of Google. No new cloud assets, public ACLs or public App URL have been
-created or verified yet. Live API/UI and signed-out visual acceptance remain
-required before this is described as a published viewer.
+out of Google. At that preparation stage, no new cloud assets, public ACLs or
+public App URL had been created or verified. A published atlas was subsequently inspected on
+November 11, as documented in the download repair above. Live API/UI checks
+and signed-out acceptance must be recorded for each refreshed release; this
+historical paragraph is not a statement of current account authentication.
 
 Primary platform references:
 

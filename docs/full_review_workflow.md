@@ -1,5 +1,13 @@
 # Full environmental review workflow
 
+> Scope: historical November 1 base workflow. These commands reproduce the
+> original mixed OSM/HydroLAKES review and sampled shoreline profiles. Later
+> OSM-only selections, MERIT maxima and native-cell whole-band summaries use
+> separate refresh scripts. Start with [current status](current_status.md) and
+> [scientific next steps](scientific_validation_plan.md) for those methods.
+> The missing-MERIT and credential statements below describe that original run;
+> they do not mean the later MERIT maxima product is unavailable.
+
 This workflow produces a reviewable row for every one of the 599 original
 samples, with provisional classes and available environmental context. The
 immutable input and reviewed labels are separate. Marine-specific variables,
@@ -77,14 +85,15 @@ source-returned baseline instead of labelling it as 2001–2020.
 The review table includes both `lake_area_perimeter_m = A/P` and the distinct,
 dimensionless `lake_shoreline_development = P/(2*sqrt(pi*A))`.
 
-## Shoreline exploration
+## Historical point-sampled shoreline exploration
 
 Lake-interior sample points are selected from a 90 m inset where possible.
 A deterministic grid provides up to 12 interior and 20 terrain samples per
 external band: **0–50 m, 50–100 m, and 100–250 m** from water boundaries,
-including island shores. These are disjoint bands, not the thesis's unknown
-variable-buffer rule. The 50 m band is below nominal DEM resolution and is
-labelled accordingly; sample points are not independent raster cells.
+including island shores. These are disjoint bands. The owner has since
+confirmed that the thesis used a perimeter ring; its exact width, statistic
+and island treatment have not yet been recovered. The 50 m band is below
+nominal DEM resolution and is labelled accordingly; sample points are not independent raster cells.
 
 A water-surface proxy is withheld from relative calculations if the inset is
 unavailable, too few valid interior samples exist, or their elevation range
@@ -97,7 +106,7 @@ The next scientific input remains the thesis equation, buffer selection rule,
 and definition of lake surface elevation. Existing DSM-derived relative terrain
 values can support that work, but must not be presented as measured lake depth.
 
-## River matching and missing MERIT
+## Historical river matching and missing sample-cell MERIT
 
 The seven-site stream pilot includes two deliberate classification challenges;
 they are retained for inspection without assigning definitive channel metrics.

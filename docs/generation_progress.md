@@ -1,5 +1,11 @@
 # Full dataset generation progress
 
+> Historical report: completed November 1, 2026. The counts and unavailable
+> inputs below belong to that snapshot. Later OSM, MERIT maxima and whole-band
+> shoreline results are indexed in [current status](current_status.md), with
+> [scientific next steps](scientific_validation_plan.md). No counts in this
+> historical report were overwritten by the documentation reconciliation.
+
 Scope: all 599 original sites, retaining stable IDs and original ecotype.
 All inferred classes remain provisional. Marine-specific metrics stay empty.
 External coordinate lookups are authorized by the user.
@@ -15,12 +21,12 @@ External coordinate lookups are authorized by the user.
    expand successful remote paths only after pilot checks.
 5. Add exploratory shoreline-buffer relative elevation where complete lake
    geometry and terrain inputs exist. Do not infer lake depth without the thesis
-   equation and variable-buffer rule.
+   equation and ring definition (exact width/statistic still to be recovered).
 6. Save the review bundle, tests, source provenance, error/coverage summary, and
    reproducible laptop commands. Expert corrections must remain separate from
    immutable source data. Report incomplete metrics honestly.
 
-## Starting state
+## Starting state of the November 1 run
 
 The previous river implementation was interrupted before testing when automatic
 review rejected a public coordinate lookup. The user has since explicitly
@@ -40,7 +46,7 @@ and lake outputs are examined before acquiring replacements.
 | Reproduction | Complete workflow reproduced from caches with network disabled |
 | Verification | 93 tests pass; original 599 IDs, coordinates, and ecotypes preserved; raw geofiles excluded from Git |
 
-## Explicit remaining scientific gaps
+## Scientific gaps recorded on November 1
 
 - New sample-cell MERIT accumulation remains unavailable: local MERIT rasters
   and Earth Engine configuration/credentials are absent. River reach-outlet

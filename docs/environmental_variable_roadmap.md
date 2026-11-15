@@ -1,5 +1,13 @@
 # Environmental-variable expansion roadmap
 
+> This roadmap describes the original source catalog and expansion options.
+> It is not a current collection-status report. Full-site climate, OSM lake
+> selections, MERIT maxima and whole-band shoreline work have since been
+> implemented; see [current status](current_status.md). Immediate priorities
+> are release reconciliation and the [scientific validation plan](scientific_validation_plan.md).
+> The marine-source options below remain deferred, rather than a new collection
+> commitment.
+
 ## Design rule
 
 The pipeline treats freshwater, marine–freshwater transition, and marine
@@ -55,7 +63,7 @@ but does not perform network access.
 and `enviro_data.temporal` retains mean, extrema, range, standard deviation,
 coefficient of variation, and missing-value counts for retrieved series.
 
-## Recommended implementation sequence
+## Original source-expansion sequence (after current validation priorities)
 
 1. Validate JRC water occurrence/seasonality and ERA5-Land monthly summaries on
    the 40 sites. Compute long-term mean, seasonal amplitude, relevant extreme,
@@ -87,9 +95,10 @@ coefficient of variation, and missing-value counts for retrieved series.
 - Temporal windows should be aligned to collection/breeding dates when those
   dates are available; otherwise the climatology period must be explicit.
 
-## Full-run gate
+## Validation criteria for future source expansions
 
-Do not expand automatically to 599 sites until the 40-site review has checked:
+For each new source or changed method, check a bounded representative cohort
+before expanding to all 599 sites:
 
 - habitat routing and point placement;
 - spatial support and nearest-valid-water behavior;
