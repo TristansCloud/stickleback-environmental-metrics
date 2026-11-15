@@ -1,11 +1,14 @@
 # Stickleback environmental data pipeline
 
-This repository contains the first implementation layer for enriching global water-sample coordinates. The checked-in `site_overview_v1_clean.csv` is an immutable source artifact. It contains 599 validated WGS84 (`EPSG:4326`) records with stable `sample_id` values.
+This repository enriches global water-sample coordinates with environmental context and reviewable lake geometry, drainage-area and shoreline-terrain measurements. The checked-in `site_overview_v1_clean.csv` is an immutable source artifact. It contains 599 validated WGS84 (`EPSG:4326`) records with stable `sample_id` values.
 
 ## Repository guide
 
-Start with [the maintenance map](docs/repository_maintenance.md) for active
-workflows, older public helpers, historical evidence, and retirement decisions.
+Start with [current status](docs/current_status.md) for implemented methods and
+recorded coverage, and [scientific next steps](docs/scientific_validation_plan.md)
+for shoreline, thesis-method and drainage validation. The
+[maintenance map](docs/repository_maintenance.md) records earlier cleanup
+decisions and public helper retention.
 The original commit includes both working pilot code and future interfaces;
 file age alone does not indicate which is used.
 
@@ -24,13 +27,17 @@ with `python scripts/prepare_habitat_pilots.py` after installing the package.
 
 ### Full review dataset
 
-The [full review workflow](docs/full_review_workflow.md) starts with the test
+The [November 1 full review workflow](docs/full_review_workflow.md) starts with the test
 cohorts, then combines point elevation/climate, local lake polygons, river-reach
 attributes, and exploratory shoreline elevation. Raw geofiles and generated
 review bundles stay under ignored `data/cache/`; they are not committed.
 Run `python -m scripts.generate_full_review` to reproduce from caches, or add
 `--live` to opt into missing downloads. Use
-`python scripts/package_full_review.py` to validate and package the review table.
+`python scripts/package_full_review.py` to validate and package that review table.
+This orchestration retains the earlier HydroLAKES fallback and sampled
+shoreline path; it does not reproduce the later OSM-only lookup, MERIT maxima
+and whole-band refresh automatically. See [current status](docs/current_status.md)
+for their separate entry points and release reconciliation requirements.
 
 ## Quick start
 
@@ -48,7 +55,7 @@ also recognize reservoirs. High confidence describes the name cue, not a
 verified waterbody identity. The runner still derives its selection from the
 immutable source CSV; this snapshot records the current 40-site baseline.
 
-The current OSM candidate filter accepts lake, reservoir, pond, basin, and
+The original lake-pilot OSM candidate filter accepts lake, reservoir, pond, basin, and
 unspecified-water classes. A complete polygon containing the sample is therefore
 only a candidate, not proof that it represents the intended lake. Before using
 its metrics, review the OSM waterbody class, name evidence, whole-waterbody
@@ -56,7 +63,7 @@ boundary, and islands. A drainage catchment polygon describes a different
 spatial unit and must not substitute for a lake surface polygon in lake area
 or shoreline calculations.
 
-The lake pipeline first asks Overpass for OSM water areas containing the sample
+The original lake-pilot pipeline first asks Overpass for OSM water areas containing the sample
 point. If this yields no validated candidate, it searches nearby shorelines
 within 100 m, then 500 m. It requests complete geometry for at most three ranked
 lake candidates at each distance. It accepts lake geometry only if it is
@@ -105,8 +112,10 @@ after two consecutive failed sites. Results and caches remain local under
 islands (m), area/perimeter (m), and dimensionless shoreline development.
 GeoJSON stores the corresponding whole candidate polygons. A candidate is
 not a confirmed waterbody. Nothing computes lake depth yet; that requires
-the precise equation from the user's thesis and a defined shoreline terrain
-sampling policy. Climate sources are catalogued but not collected by this run.
+the precise thesis equation and predictor definitions. The owner confirms a
+ring around the lake perimeter; its width, summary and island treatment still
+need to be checked against the thesis. Climate sources are catalogued but not
+collected by this pilot run.
 
 For each cached polygon, run `python scripts/report_lake_resolution.py` to
 compare raw geometry with 5, 10, 25, and 50 m Douglas–Peucker shoreline
@@ -180,14 +189,19 @@ selection is provisional: a later pilot-only comparison will exchange data
 sources and compare outputs using the recorded provenance. The configuration
 keeps network access disabled by default and caps the scope at 40 sites.
 
-The repository does not yet ship DEM/climate rasters or execute a production-scale OSM/catchment run. Those inputs and source/version configuration remain the next integration step.
+Bulk DEM/climate rasters and generated full-review outputs are not shipped in
+Git. Full-site collection and later OSM/MERIT/shoreline refreshes have recorded
+results; exact current-release coverage still needs reconciliation. Catchment
+delineation and thesis-based lake depth remain unfinished.
 
 ### Earth Engine validation viewer
 
-For the new full 599-site public reviewer map, see
-[the full-dataset viewer guide](docs/public_review_viewer.md). The code and
-offline release preparation are available; cloud upload, visual acceptance and
-publication require the authorized Earth Engine account.
+For the full 599-site public reviewer map, see
+[the full-dataset viewer guide](docs/public_review_viewer.md). The guide
+distinguishes the original base release from later lookup and
+site-metrics assets. Source changes do not update a published App; the merged
+download repair still requires republishing and live verification in the
+authorized Earth Engine account.
 
 
 The new 40-lake lookup has a dedicated frozen review bundle and

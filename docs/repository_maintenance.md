@@ -1,10 +1,16 @@
 # Repository maintenance map
 
+Current navigation: [project status](current_status.md) and
+[scientific next steps](scientific_validation_plan.md). The usage review and
+retention decisions below are dated November 1; they are not an inventory of
+all later acquisition work. In particular, PR #2 and the full-review workflow
+are now merged into main.
+
 Reviewed 2026-11-01 against `main` at `83d7688` and lake-polygon draft PR #2
 at `eb863b2`. Usage below means in-repository callers and tests, not proof
 that nobody imports a public helper from a laptop or notebook.
 
-## What to use
+## Original maintenance inventory (November 1)
 
 | Task | Entry point | State |
 | --- | --- | --- |
@@ -16,7 +22,7 @@ that nobody imports a public helper from a laptop or notebook.
 | Build ecological metrics from frozen rows | `scripts/enrich_cached_pilot.py`, `cached_enrichment.py`, `metrics.py` | Working offline conversion |
 | Prepare terrain/MERIT viewer assets | `scripts/prepare_ee_app_assets.py`, `ee_app_assets.py` | Working offline preparation |
 | Open the current terrain/MERIT viewer | `apps/earth_engine_validation/ee_pilot_validation_app_current.js` | Registry-based viewer; canonical directory has deployment guidance |
-| Retrieve and review whole-lake polygons | PR #2: `run_lake_polygon_pilot.py`, `lake_lookup.py`, `lake_polygons.py`, local OSM scripts | Separate experimental branch; do not merge implicitly during cleanup |
+| Retrieve and review whole-lake polygons | PR #2: `run_lake_polygon_pilot.py`, `lake_lookup.py`, `lake_polygons.py`, local OSM scripts | Merged later; see current status for OSM lookup and review paths |
 
 ## Keep, retire, or revisit
 
@@ -33,7 +39,7 @@ that nobody imports a public helper from a laptop or notebook.
 | Root `apps/ee_pilot_validation_app.js` | Byte-identical to canonical `apps/earth_engine_validation/ee_pilot_validation_app.js`; tests read the canonical file | Removed duplicate; old README now redirects to canonical sources |
 | Canonical placeholder template, pinned v3 viewer, current registry viewer | Distinct deployment roles, documented and tested | Keep all three; pinned releases are historical evidence, not accidental duplicates |
 | `site_overview_v1_clean.csv`, `pilot_sites_v1.csv`, frozen validation bundles, OSM pilot evidence, derived table | Inputs/provenance or inputs to offline scripts and viewers | Keep; ignored directories can still contain intentionally tracked snapshots |
-| Dated reports under `docs/` | Explain earlier runs and limitations | Keep as history; use this map and the README for current navigation |
+| Dated reports under `docs/` | Explain earlier runs and limitations | Keep as history; use current_status.md and the README for current navigation |
 
 ## Readability changes in this pass
 
